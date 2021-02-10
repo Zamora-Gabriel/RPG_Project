@@ -7,18 +7,27 @@ using System.Threading.Tasks;
 
 namespace RPG_Project
 {
+
+    //TODO: Uncomment when weapons are available
+    //TODO: Think of inventory Implementation
+    //Maybe: Energy/Skills
     class Player
     {
-        /*Variables*/
+        /***Variables***/
+        
         string name;
-        int life;
-        int attack;
-        int speed;
         int exp;
         int level;
         int money;
 
-        /*Properties*/
+        //Stats
+        int health;
+        int attack;
+        int defense;
+        int speed;
+        
+
+        /***Properties***/
 
         public string Name
         { 
@@ -29,15 +38,15 @@ namespace RPG_Project
             } 
         }
 
-        public int Life
+        public int Health
         {
-            get { return life; }
+            get { return health; }
             set
             {
-                life = value;
+                health = value;
 
                 //Check if player dies
-                if(life <= 0)
+                if(health <= 0)
                 {
                     PlayerDies();
                 }
@@ -54,7 +63,18 @@ namespace RPG_Project
                 attack = value;
             }
         }
-        
+
+        public int Defense
+        {
+            get { return defense; }
+
+            //Can't modify attack outside of the class
+            private set
+            {
+                defense = value;
+            }
+        }
+
         public int Speed
         {
             get { return speed; }
@@ -102,18 +122,22 @@ namespace RPG_Project
             }
         }
 
-        /*Constructors*/
+        /***Constructors***/
+
         Player(string name1)
         {
             //Provisional values
             Name = name1;
-            Life = 5;
+            Health = 15;
             Attack = 5;
+            Speed = 5;
+            Defense = 5;
             Exp = 0;
             Level = 0;
         }
 
-        /*Methods*/
+        /***Methods***/
+
         private void PlayerDies()
         {
             Console.WriteLine("{0}, has been defeated", Name);
@@ -125,6 +149,41 @@ namespace RPG_Project
             Console.WriteLine("Congratulations {0}! Now you're level {1}", Name, Level);
         }
 
-        //TODO: Inflicting damage, receiving damage
+        public int AtkDamage(/*Enemy object*/)
+        {
+            //Calculate damage to enemy
+            //damage -= Attack - Enemy.Defense;
+            //return damage;
+
+            return 0; //--Placeholder
+        }
+
+        public void RcvDamage(int damage)
+        {
+            Health -= damage;
+        }
+
+        private void EquipWeapon(/*Weapon*/)
+        {
+            //Sum weapons' bonuses
+            //Attack += weapon.AtkBonus;
+            //Defense += Weapon.DefBonus;
+            //Speed += weapon.SpdBonus; 
+        }
+
+        private void UnequipWeapon(/*Weapon*/)
+        {
+            //Substract weapons' bonuses
+            //Attack -= weapon.AtkBonus;
+            //Defense -= Weapon.DefBonus;
+            //Speed -= weapon.SpdBonus;
+        }
+
+        public void ChangeWeapons(/*equipedWeapon, NewEquipWeapon*/)
+        {
+            //UnequipWeapon(NewEquipWeapon);
+            //EquipWeapon(equipedWeapon);
+        }
+
     }
 }
