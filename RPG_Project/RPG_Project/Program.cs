@@ -19,25 +19,36 @@ namespace RPG_Project
             Weapon weap2 = new Weapon("pistol");
             Console.WriteLine(weap2.Name);
 
+            Potion pot1 = new Potion(1,1);
+            
+            x.PrintStats();
+
+
             //Player class Test
             x.Exp = 120;
             Console.WriteLine("Exp: {0}", x.Exp);
 
+            x.PrintInvent();
+
+            x.AddPotionToInvent(pot1);
+            x.AddWeaponToInvent(weap2);
+            x.EquipWeapon(0);
+            x.EquipWeapon(1);
+            x.ChangeWeapons(0, 1);
+
             x.PrintStats();
 
-            x.EquipWeapon(weap1);
-            x.EquipWeapon(weap2);
-            x.ChangeWeapons(weap1, weap2);
+            x.PrintInvent();
 
-            x.PrintStats();
-
-            x.RcvDamage(5);
+            x.RcvDamage(6);
             Console.WriteLine("Current Health {0}:", x.Health);
             
-            x.RcvDamage(5);
+            x.RcvDamage(6);
             Console.WriteLine("Current Health {0}:", x.Health);
-            
-            x.RcvDamage(5);
+
+            x.DrinkPotion(0);
+
+            x.RcvDamage(6);
             Console.WriteLine("Current Health {0}:", x.Health);
             
             Console.ReadLine();

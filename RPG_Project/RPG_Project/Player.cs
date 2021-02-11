@@ -20,12 +20,18 @@ namespace RPG_Project
         int level;
         int money;
         string equipedWeapon;
+        Inventory invent;
 
         //Stats
         int health;
+        int energy;
         int attack;
         int defense;
         int speed;
+
+        //Limits
+        int healthLimit;
+        int energyLimit;
         
 
         /***Properties***/
@@ -46,10 +52,31 @@ namespace RPG_Project
             {
                 health = value;
 
+                //Check if energy surpasses limits
+                if (health > healthLimit)
+                {
+                    health = healthLimit;
+                }
+
                 //Check if player dies
-                if(health <= 0)
+                if (health <= 0)
                 {
                     PlayerDies();
+                }
+            }
+        }
+
+        public int Energy
+        {
+            get { return energy; }
+            set
+            {
+                energy = value;
+
+                //Check if energy surpasses limits
+                if (energy > energyLimit)
+                {
+                    energy = energyLimit;
                 }
             }
         }
@@ -138,13 +165,19 @@ namespace RPG_Project
         {
             //Provisional values
             Name = name1;
+
+            healthLimit = 15;
+            energyLimit = 15;
+
             Health = 15;
+            Energy = 15;
             Attack = 5;
             Speed = 5;
             Defense = 5;
             Exp = 0;
             Level = 0;
             EquipedWeapon = "";
+            invent = new Inventory();
         }
 
         /***Methods***/
@@ -154,9 +187,14 @@ namespace RPG_Project
             Console.WriteLine("{0} has been defeated", Name);
         }
 
-        private void LevelUp()
+         private void LevelUp()
         {
             Level++;
+
+            healthLimit+= 2;
+            energyLimit+= 2;
+            Health = healthLimit;
+            Energy = energyLimit;
             Attack++;
             Defense++;
             Speed++;
@@ -177,24 +215,40 @@ namespace RPG_Project
             Health -= damage;
         }
 
-        public void EquipWeapon(Weapon weap)
+        public void EquipWeapon(int weapNum)
         {
             //Case the user already has an equiped weapon
-            if(EquipedWeapon != "")
+            if (EquipedWeapon != "")
             {
                 Console.WriteLine("Wait, you already have a weapon equiped!");
                 return;
             }
-            //Sum weapons' bonuses
-            Attack += weap.AtkBonus;
-            Defense += weap.DefBonus;
-            Speed += weap.SpdBonus;
-            EquipedWeapon = weap.Name;
-            Console.WriteLine("Succesfully equiped weapon: {0}", EquipedWeapon);
+            //check if user has that weapon on inventory
+            try
+            {
+                Weapon weap = invent.CheckWeapon(weapNum);
+                if(weap == null)
+                {
+                    //Throw exception when no weapon is found
+                    throw new Exception();
+                }
+                //Sum weapons' bonuses
+                Attack += weap.AtkBonus;
+                Defense += weap.DefBonus;
+                Speed += weap.SpdBonus;
+                EquipedWeapon = weap.Name;
+                Console.WriteLine("Succesfully equiped weapon: {0}", EquipedWeapon);
+                return;
+            }
+            catch
+            {
+                Console.WriteLine("It seems you don't have that weapon...");
+                return;
+            }
         }
 
         //TODO: Make it public if user can fight barehanded
-        private bool UnequipWeapon(Weapon weap)
+        private bool UnequipWeapon(int weapNum)
         {
             if (EquipedWeapon == "")
             {
@@ -202,31 +256,58 @@ namespace RPG_Project
                 return false;
             }
 
-            //User tries to unequip a weapon that hasn't equiped
-            if (EquipedWeapon != weap.Name)
+            try
             {
-                Console.WriteLine("Wait... You don't have that weapon equiped!");
+                Weapon weap = invent.CheckWeaponByName(EquipedWeapon);
+
+                if (weap == null)
+                {
+                    //Throw exception when no weapon is found
+                    throw new Exception();
+                }
+
+                //Substract weapons' bonuses
+                Attack -= weap.AtkBonus;
+                Defense -= weap.DefBonus;
+                Speed -= weap.SpdBonus;
+
+                //Restart equiped weapon's id to discriminate
+                EquipedWeapon = "";
+                Console.WriteLine("Succesfully unequiped weapon: {0}", weap.Name);
+            } 
+            catch
+            {
+                Console.WriteLine("Wait... You didn't had that weapon to start with!");
                 return false;
             }
-            //Substract weapons' bonuses
-            Attack -= weap.AtkBonus;
-            Defense -= weap.DefBonus;
-            Speed -= weap.SpdBonus;
-
-            //Restart equiped weapon's id to discriminate
-            EquipedWeapon = "";
-            Console.WriteLine("Succesfully unequiped weapon: {0}", weap.Name);
-
             return true;
         }
 
-        public void ChangeWeapons(Weapon equiped, Weapon newEquip)
+        public void ChangeWeapons(int weap1, int weap2)
         {
             //Unequipment succeed
-            if (UnequipWeapon(equiped))
+            if (UnequipWeapon(weap1))
             {
-                EquipWeapon(newEquip);
+                EquipWeapon(weap2);
                 return;
+            }
+        }
+
+        public void AddWeaponToInvent(Weapon weap)
+        {
+            //check if user has that weapon on inventory
+            if (invent.AddWeapon(weap))
+            {
+                Console.WriteLine("Succesfully added weapon: {0}", weap.Name);
+            }
+        }
+
+        public void AddPotionToInvent(Potion pot)
+        {
+            //check if user has that potion on inventory
+            if (invent.AddPotion(pot))
+            {
+                Console.WriteLine("Succesfully added potion!");
             }
         }
 
@@ -241,19 +322,45 @@ namespace RPG_Project
             Console.WriteLine("Money: {0}", Money);
         }
 
-        public void DrinkPotion(/*Inventory, string PotName*/)
+        public void PrintInvent()
         {
-            //Check potions list
-            /*if(inv.Potion > 0)
-             {
-              //Only health potions?
-              inv.Potion--;
-              Health += 10;
-             }
-             else
-             {
-                Console.WriteLine("You have no potions!");
-             }*/
+            invent.PrintWeapons();
+            invent.PrintPotions();
+        }
+
+        public void DrinkPotion(int potNum)
+        {
+            //check if user has that potion on inventory
+            try
+            {
+                Potion pot = invent.CheckPotion(potNum);
+                if (pot == null)
+                {
+                    //Throw exception when no matching potion is found
+                    throw new Exception();
+                }
+                //add bonus and remove potion from list
+                if (invent.RemovePotion(pot))
+                {
+                    if ( pot.Type == 0)
+                    {
+                        //Regain health
+                        Health = pot.amount;
+                    } 
+                    else
+                    {
+                        Energy = pot.amount;
+                    }
+                    Console.WriteLine("Succesfully used potion");
+                    return;
+                }
+                
+            }
+            catch
+            {
+                Console.WriteLine("It seems you don't have that type of... potion...");
+                return;
+            }
         }
 
     }
