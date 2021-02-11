@@ -124,7 +124,7 @@ namespace RPG_Project
 
         /***Constructors***/
 
-        Player(string name1)
+        public Player(string name1)
         {
             //Provisional values
             Name = name1;
@@ -140,7 +140,7 @@ namespace RPG_Project
 
         private void PlayerDies()
         {
-            Console.WriteLine("{0}, has been defeated", Name);
+            Console.WriteLine("{0} has been defeated", Name);
         }
 
         private void LevelUp()
@@ -183,6 +183,21 @@ namespace RPG_Project
         {
             //UnequipWeapon(NewEquipWeapon);
             //EquipWeapon(equipedWeapon);
+        }
+
+        public void DrinkPotion(/*Inventory, string PotName*/)
+        {
+            //Check potions list
+            /*if(inv.Potion > 0)
+             {
+              //Only health potions?
+              inv.Potion--;
+              Health += 10;
+             }
+             else
+             {
+                Console.WriteLine("You have no potions!");
+             }*/
         }
 
     }
