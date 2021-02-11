@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 
 namespace RPG_Project
 {
+    enum AiPersonality
+    {
+        Defensive,
+        Aggresive,
+        Supportive //Possibly allows the enemy to heal allies?
+    }
+
     class BasicEnemy : Enemy
     {
 
         int moneyValue;
-
 
         //Constructor 
         public BasicEnemy()
@@ -18,6 +24,7 @@ namespace RPG_Project
 
         }
 
+        /*Getters and Setters*/
         public int MoneyValue
         {
             get { return moneyValue; }
@@ -27,6 +34,12 @@ namespace RPG_Project
             }
         }
 
+
+
+        void HealOther(int healAmmount)
+        {
+
+        }
     }
 
 }

@@ -105,7 +105,18 @@ namespace RPG_Project
             return 0;
         }
 
-        void Die()
+        void Block()
+        {
+            //TODO decide how this will work,
+            //will it just increase defense stat for the turn or two?
+        }
+
+        public void TakeDamage(int damage)
+        {
+            Health -= damage;
+        }
+
+        protected virtual void Die()
         {
             //TODO
             //Give exp
@@ -113,13 +124,7 @@ namespace RPG_Project
             //Remove self <- possibly done in the game object
         }
 
-        //Can do all damage taking by simply using the setter with health and a negative number, 
-        //if this does not work can easily use below function
 
-        //public void TakeDamage(int damage)
-        //{
-        //    Health -= damage;
-        //}
 
     }
 }
