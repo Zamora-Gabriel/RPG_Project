@@ -19,6 +19,7 @@ namespace RPG_Project
         int exp;
         int level;
         int money;
+        string equipedWeapon;
 
         //Stats
         int health;
@@ -122,6 +123,15 @@ namespace RPG_Project
             }
         }
 
+        public string EquipedWeapon
+        {
+            get { return equipedWeapon; } 
+            private set
+            {
+                equipedWeapon = value;
+            }
+        }
+
         /***Constructors***/
 
         public Player(string name1)
@@ -134,6 +144,7 @@ namespace RPG_Project
             Defense = 5;
             Exp = 0;
             Level = 0;
+            EquipedWeapon = "";
         }
 
         /***Methods***/
@@ -146,6 +157,9 @@ namespace RPG_Project
         private void LevelUp()
         {
             Level++;
+            Attack++;
+            Defense++;
+            Speed++;
             Console.WriteLine("Congratulations {0}! Now you're level {1}", Name, Level);
         }
 
@@ -163,26 +177,68 @@ namespace RPG_Project
             Health -= damage;
         }
 
-        private void EquipWeapon(/*Weapon*/)
+        public void EquipWeapon(Weapon weap)
         {
+            //Case the user already has an equiped weapon
+            if(EquipedWeapon != "")
+            {
+                Console.WriteLine("Wait, you already have a weapon equiped!");
+                return;
+            }
             //Sum weapons' bonuses
-            //Attack += weapon.AtkBonus;
-            //Defense += Weapon.DefBonus;
-            //Speed += weapon.SpdBonus; 
+            Attack += weap.AtkBonus;
+            Defense += weap.DefBonus;
+            Speed += weap.SpdBonus;
+            EquipedWeapon = weap.Name;
+            Console.WriteLine("Succesfully equiped weapon: {0}", EquipedWeapon);
         }
 
-        private void UnequipWeapon(/*Weapon*/)
+        //TODO: Make it public if user can fight barehanded
+        private bool UnequipWeapon(Weapon weap)
         {
+            if (EquipedWeapon == "")
+            {
+                Console.WriteLine("Wait... You don't have an equiped weapon!");
+                return false;
+            }
+
+            //User tries to unequip a weapon that hasn't equiped
+            if (EquipedWeapon != weap.Name)
+            {
+                Console.WriteLine("Wait... You don't have that weapon equiped!");
+                return false;
+            }
             //Substract weapons' bonuses
-            //Attack -= weapon.AtkBonus;
-            //Defense -= Weapon.DefBonus;
-            //Speed -= weapon.SpdBonus;
+            Attack -= weap.AtkBonus;
+            Defense -= weap.DefBonus;
+            Speed -= weap.SpdBonus;
+
+            //Restart equiped weapon's id to discriminate
+            EquipedWeapon = "";
+            Console.WriteLine("Succesfully unequiped weapon: {0}", weap.Name);
+
+            return true;
         }
 
-        public void ChangeWeapons(/*equipedWeapon, NewEquipWeapon*/)
+        public void ChangeWeapons(Weapon equiped, Weapon newEquip)
         {
-            //UnequipWeapon(NewEquipWeapon);
-            //EquipWeapon(equipedWeapon);
+            //Unequipment succeed
+            if (UnequipWeapon(equiped))
+            {
+                EquipWeapon(newEquip);
+                return;
+            }
+        }
+
+        public void PrintStats()
+        {
+            Console.WriteLine("{0} Stats", Name);
+            Console.WriteLine("Level: {0}", Level);
+            Console.WriteLine("Exp: {0}", Exp);
+            Console.WriteLine("Attack: {0}", Attack);
+            Console.WriteLine("Defense: {0}", Defense);
+            Console.WriteLine("Speed: {0}", Speed);
+            Console.WriteLine("Money: {0}", Money);
         }
 
         public void DrinkPotion(/*Inventory, string PotName*/)
