@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Inventory.cs" />
+    <Compile Include="Potion.cs" />
+    <Compile Include="Weapon.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="BasicEnemy.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Program.cs" />
