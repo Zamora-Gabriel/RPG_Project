@@ -57,7 +57,6 @@ namespace RPG_Project
             switch (aiType)
             {
                 case AiPersonality.Neutral:
-                    Console.WriteLine(choice);
                     if (choice <= 50)
                     {
                         printer.PrintSingle("{0}, attacked you for {1} damage!!", true, true, Name, AttackPlayer(player));

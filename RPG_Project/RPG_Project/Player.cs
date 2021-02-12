@@ -35,7 +35,7 @@ namespace RPG_Project
         int speed;
 
         //Limits
-        int healthLimit;
+
         int energyLimit;
 
 
@@ -67,9 +67,9 @@ namespace RPG_Project
                 health = value;
 
                 //Check if energy surpasses limits
-                if (health > healthLimit)
+                if (health > maxHealth)
                 {
-                    health = healthLimit;
+                    health = maxHealth;
                 }
 
                 //Check if player dies
@@ -180,7 +180,7 @@ namespace RPG_Project
             //Provisional values
             Name = name1;
 
-            healthLimit = 15;
+            maxHealth = 15;
             energyLimit = 15;
 
             Health = 15;
@@ -207,9 +207,9 @@ namespace RPG_Project
         {
             Level++;
 
-            healthLimit += 2;
+            maxHealth += 2;
             energyLimit += 2;
-            Health = healthLimit;
+            Health = maxHealth;
             Energy = energyLimit;
             Attack++;
             Defense++;

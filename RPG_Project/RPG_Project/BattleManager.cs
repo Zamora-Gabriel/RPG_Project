@@ -114,7 +114,6 @@ namespace RPG_Project
                     return;
                 }    
             }
-            Console.WriteLine(deadEnemies);
             //Determine next move by speed. 
             //Currently the player or enemy can move multiple times in a row if they have high enough speed.
             while (true)
