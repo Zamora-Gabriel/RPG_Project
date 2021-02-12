@@ -15,6 +15,9 @@ namespace RPG_Project
     {
         /***Variables***/
 
+        //TMP REMOVE ONCE PLAYER ART IS FINALIZED
+        public string[] art = new string[] { "", "HP: {0}/{1}", "PP:     ", "o", "/|\\", "|", "/ \\", "{2}" };
+
         string name;
         int exp;
         int level;
@@ -23,6 +26,7 @@ namespace RPG_Project
         Inventory invent;
 
         //Stats
+        int maxHealth;
         int health;
         int energy;
         int attack;
@@ -42,6 +46,15 @@ namespace RPG_Project
             private set
             {
                 name = value;
+            }
+        }
+
+        public int MaxHealth
+        {
+            get { return maxHealth; }
+            private set
+            {
+                maxHealth = value;
             }
         }
 
@@ -201,13 +214,18 @@ namespace RPG_Project
             Console.WriteLine("Congratulations {0}! Now you're level {1}", Name, Level);
         }
 
-        public int AtkDamage(/*Enemy object*/)
+        public int AtkDamage(Enemy enemy)
         {
-            //Calculate damage to enemy
-            //damage -= Attack - Enemy.Defense;
-            //return damage;
+            int outgoingDmg = Attack;
 
-            return 0; //--Placeholder
+            //Calculate damage to enemy
+            outgoingDmg -= enemy.Defense;
+            if (outgoingDmg < 0)
+            {
+                outgoingDmg = 0;
+            }
+            //return damage;
+            return outgoingDmg;
         }
 
         public void RcvDamage(int damage)

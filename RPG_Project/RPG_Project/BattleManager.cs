@@ -151,7 +151,7 @@ namespace RPG_Project
             printer.PrintTopScreen(centeredObjects);
 
             //Update and pack player
-            printer.PrintMiddleScreen(printer.PrepareString(player.art, player.Health, player.MaXHealth, player.Name));
+            printer.PrintMiddleScreen(printer.PrepareString(player.art, player.Health, player.MaxHealth, player.Name));
 
             //Print bottom interface
             printer.PrintBottomScreen(bottomButtons);
@@ -171,7 +171,7 @@ namespace RPG_Project
             printer.PrintTopScreen(centeredObjects);
 
             //Update and pack player
-            printer.PrintMiddleScreen(printer.PrepareString(player.art, player.Health, player.MaXHealth, player.Name));
+            printer.PrintMiddleScreen(printer.PrepareString(player.art, player.Health, player.MaxHealth, player.Name));
 
             switch (choice)
             {

@@ -53,7 +53,6 @@ namespace RPG_Project
             x.RcvDamage(6);
             Console.WriteLine("Current Health {0}:", x.Health);
             
-            Console.ReadLine();
             Printer printer = new Printer();
             Player player = new Player("Player Name");
             BasicEnemy[] enemies = new BasicEnemy[3];
