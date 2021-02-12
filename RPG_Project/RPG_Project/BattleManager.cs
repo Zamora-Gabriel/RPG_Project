@@ -24,6 +24,7 @@ namespace RPG_Project
         string[] bottomButtons = new string[] { "", "[ 1) Attack ]    [ 2) Abilites ]", "[ 3) Items  ]    [ 4) Run      ]" };
         string[] bottumPotionList = new string[] {"[ 1) Normal-HP Potion: {0}] [ 2) Super-HP Potion: {1} ] [ 2) Mega-HP Potion: {2}]", "[ 1) Normal-PP Potion: {0}] [ 2) Super-PP Potion: {1} ] [ 2) Mega-PP Potion: {2}]","TmpBack" };
         string[] bottomAttacks;
+        string[] bottomAbilitiesList = new string[] {"[ 1){0}] [ 2){1} ] [ 2){2}]", "[ 3){0}] [ 4){1} ] [ 5){2}]","TmpBack"};
 
         static int SPEED_TO_MOVE = 50;
 
@@ -208,6 +209,13 @@ namespace RPG_Project
 
                 case 2:
                     //TODO pull abilities list and print out options to use
+                    string[,] abilitiesList = player.ReturnUnlockedAbilities();
+                    for (int i = 0; i < bottomAbilitiesList.Length - 1; i++)
+                    {
+                        bottomAbilitiesList[i] = string.Format(bottomAbilitiesList[i], abilitiesList[i, 0], abilitiesList[i, 1], abilitiesList[i, 2]);
+                    }
+                    bottomAbilitiesList[2] = string.Format("[ 7): Return to menu ]");
+                    printer.PrintBottomScreen(bottomAbilitiesList);
                     break;
                 case 3:
                     //TODO pull list of items in inventory and options to use
@@ -301,12 +309,14 @@ namespace RPG_Project
 
 
         //Takes player input and uses potion if available.
-        //NOT WORKING
+        //NOT WORKING: Update the list shown on the battle screen
         void ChoosePotion()
         {
             while (true)
             {
                 int[,] currentPotions = player.ReturnPotions();
+                //debugging, printInvent method is used to check list
+                player.PrintInvent();
                 int playerChoice = ReturnChoice();
                 switch (playerChoice)
                 {
@@ -340,7 +350,7 @@ namespace RPG_Project
                     case 4:
                         if (currentPotions[1, 0] != 0)
                         {
-                            player.DrinkPotion(0);
+                            player.DrinkPotion(3);
                             return;
                         }
                         PlayerChoice(3);
@@ -349,7 +359,7 @@ namespace RPG_Project
                     case 5:
                         if (currentPotions[1, 1] != 0)
                         {
-                            player.DrinkPotion(1);
+                            player.DrinkPotion(4);
                             return;
                         }
                         PlayerChoice(3);
@@ -358,7 +368,7 @@ namespace RPG_Project
                     case 6:
                         if (currentPotions[1, 2] != 0)
                         {
-                            player.DrinkPotion(2);
+                            player.DrinkPotion(5);
                             return;
                         }
                         PlayerChoice(3);
@@ -395,6 +405,8 @@ namespace RPG_Project
                     //Abilitiy
                     case 2:
                         //TODO ADD ABILITIES
+                        UpdateBoard(playerChoice);
+                        //TODO: Let player use abilities
                         return;
                     //Items
                     case 3:
