@@ -34,6 +34,8 @@ namespace RPG_Project
         int xpFromBattle;
         int goldFromBattle;
 
+        int deadEnemies;
+
         BattleState current = BattleState.DeterminingState;
 
         bool inCombat = true;
@@ -101,11 +103,18 @@ namespace RPG_Project
         void SwitchState()
         {
             //If all enemies or player is dead end combat
-            if (player.Health <= 0 && enemy[0].Health <= 0)
+            deadEnemies = 0;
+            foreach(Enemy enmy in enemy)
             {
-                current = BattleState.End;
+                if (enmy.HasDied)
+                    deadEnemies++;
+                if(deadEnemies == enemy.Length)
+                {
+                    current = BattleState.End;
+                    return;
+                }    
             }
-
+            Console.WriteLine(deadEnemies);
             //Determine next move by speed. 
             //Currently the player or enemy can move multiple times in a row if they have high enough speed.
             while (true)
@@ -127,12 +136,21 @@ namespace RPG_Project
                     }
                 }
 
-                for (int i = 0; i < enemy.Length; i++)
-                {
-                    CombatentsSpeed[i + 1] += enemy[0].Speed;
-                }
                 //Increase cumulative speed
                 CombatentsSpeed[0] += player.Speed;
+                for (int i = 0; i < enemy.Length; i++)
+                {
+                    if (enemy[i].HasDied)
+                    {
+                        CombatentsSpeed[i + 1] = 0;
+                    }
+                    else
+                    {
+                        CombatentsSpeed[i + 1] += enemy[0].Speed;
+                    }
+                    
+                }
+                
 
 
             }
@@ -200,7 +218,6 @@ namespace RPG_Project
                     }
                     bottumPotionList[2] = string.Format("[ 7): Return to menu ]");
                     printer.PrintBottomScreen(bottumPotionList);
-                    Console.ReadLine();
                     break;
                 case 4:
                     //TODO Runaway
@@ -258,12 +275,13 @@ namespace RPG_Project
                         }
 
                         enemy[2].TakeDamage(player.AtkDamage(enemy[2]));
-                        if (enemy[3].HasDied)
+                        if (enemy[2].HasDied)
                         {
-                            IncreaseBattleRewards(3);
+                            IncreaseBattleRewards(2);
                         }
 
                         return;
+
                     case 4:
                         if(enemy.Length <= 3)
                         {
@@ -271,6 +289,90 @@ namespace RPG_Project
                             PlayerChoice();
                             return;
                         }
+                        break;
+
+                    default:
+                        UpdateBoard();
+                        PlayerChoice();
+                        break;
+                }
+            }
+        }
+
+
+        //Takes player input and uses potion if available.
+        //NOT WORKING
+        void ChoosePotion()
+        {
+            while (true)
+            {
+                int[,] currentPotions = player.ReturnPotions();
+                int playerChoice = ReturnChoice();
+                switch (playerChoice)
+                {
+                    case 1:
+                        if(currentPotions[0,0] != 0)
+                        {
+                            player.DrinkPotion(0);
+                            return;
+                        }
+                        PlayerChoice(3);
+                        return;
+
+                    case 2:
+                        if (currentPotions[0, 1] != 0)
+                        {
+                            player.DrinkPotion(1);
+                            return;
+                        }
+                        PlayerChoice(3);
+                        return;
+
+                    case 3:
+                        if (currentPotions[0, 2] != 0)
+                        {
+                            player.DrinkPotion(2);
+                            return;
+                        }
+                        PlayerChoice(3);
+                        return;
+
+                    case 4:
+                        if (currentPotions[1, 0] != 0)
+                        {
+                            player.DrinkPotion(0);
+                            return;
+                        }
+                        PlayerChoice(3);
+                        return;
+
+                    case 5:
+                        if (currentPotions[1, 1] != 0)
+                        {
+                            player.DrinkPotion(1);
+                            return;
+                        }
+                        PlayerChoice(3);
+                        return;
+
+                    case 6:
+                        if (currentPotions[1, 2] != 0)
+                        {
+                            player.DrinkPotion(2);
+                            return;
+                        }
+                        PlayerChoice(3);
+                        return;
+
+                    case 7:
+                        UpdateBoard();
+                        PlayerChoice();
+                        break;
+
+                    default:
+                        //Exit on non valid number
+                        UpdateBoard();
+                        PlayerChoice();
                         break;
                 }
             }
@@ -287,7 +389,6 @@ namespace RPG_Project
                     case 1:
                         //Display enemies available to attack
                         UpdateBoard(playerChoice);
-
                         //Choose player to attack
                         ChooseAttack();
                         return;
@@ -299,6 +400,7 @@ namespace RPG_Project
                     case 3:
                         UpdateBoard(playerChoice);
                         //TODO LET PLAYER USE ITEMS
+                        ChoosePotion();
                         return;
                     //Run
                     case 4:
@@ -337,8 +439,8 @@ namespace RPG_Project
                         //TODO LET PLAYER USE ITEMS
                         UpdateBoard(choice);
                         //Choose player to attack and notify player that their choice is dead
-                        printer.PrintSingle("Choose a living target!");
-                        ChooseAttack();
+                        printer.PrintSingle("You don't have any of those potions!");
+                        ChoosePotion();
                         return;
                     //Run
                     case 4:

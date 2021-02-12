@@ -185,17 +185,12 @@ namespace RPG_Project
             return null;
         }
 
+        //returns 2d array of potions in inventory
         public int[,] ReturnPotionCount()
         {
             int[,] potions = new int[2, 3];
-            potions[0, 0] = 0;
-            potions[0, 1] = 0;
-            potions[0, 2] = 0;
-            potions[1, 0] = 0;
-            potions[1, 1] = 0;
-            potions[1, 2] = 0;
             int potionType = 0;
-            //string potionName = "";
+
             var potiont = (PotionType)0;
             foreach (Potion item in potionList)
             {

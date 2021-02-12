@@ -11,7 +11,7 @@ namespace RPG_Project
         static void Main(string[] args)
         {
             //Test
-            Player x = new Player("Raph");
+            Player player = new Player("Raph");
             Weapon weap1 = new Weapon("gauntlet");
             
             Console.WriteLine(weap1.Name);
@@ -21,40 +21,43 @@ namespace RPG_Project
             Console.WriteLine(weap2.Name);
 
             Potion pot1 = new Potion(1,1);
-            
-            x.PrintStats();
+            Potion pot2 = new Potion(0,1);
+            player.PrintStats();
 
 
 
             //Player class Test
-            x.Exp = 120;
-            Console.WriteLine("Exp: {0}", x.Exp);
+            player.Exp = 120;
+            Console.WriteLine("Exp: {0}", player.Exp);
 
-            x.PrintInvent();
+            player.PrintInvent();
 
-            x.AddPotionToInvent(pot1);
-            x.AddWeaponToInvent(weap2);
-            x.EquipWeapon(0);
-            x.EquipWeapon(1);
-            x.ChangeWeapons(0, 1);
+            player.AddPotionToInvent(pot1);
+            player.AddPotionToInvent(pot1);
+            player.AddPotionToInvent(pot2);
+            player.AddPotionToInvent(pot2);
+            player.AddWeaponToInvent(weap2);
+            player.EquipWeapon(0);
+            player.EquipWeapon(1);
+            player.ChangeWeapons(0, 1);
 
-            x.PrintStats();
+            player.PrintStats();
 
-            x.PrintInvent();
+            player.PrintInvent();
 
-            x.RcvDamage(6);
-            Console.WriteLine("Current Health {0}:", x.Health);
-            
-            x.RcvDamage(6);
-            Console.WriteLine("Current Health {0}:", x.Health);
+            player.RcvDamage(6);
+            Console.WriteLine("Current Health {0}:", player.Health);
 
-            x.DrinkPotion(0);
+            player.RcvDamage(6);
+            Console.WriteLine("Current Health {0}:", player.Health);
 
-            x.RcvDamage(6);
-            Console.WriteLine("Current Health {0}:", x.Health);
+            player.DrinkPotion(0);
+
+            player.RcvDamage(6);
+            Console.WriteLine("Current Health {0}:", player.Health);
             
             Printer printer = new Printer();
-            Player player = new Player("Player Name");
+
             BasicEnemy[] enemies = new BasicEnemy[3];
             enemies[0] = new BasicEnemy("tmp ", printer);
             enemies[1] = new BasicEnemy("tmp ", printer);

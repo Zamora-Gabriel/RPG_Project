@@ -25,6 +25,7 @@ namespace RPG_Project
         string equipedWeapon;
         Inventory invent;
 
+        Printer printer;
         //Stats
         int maxHealth;
         int health;
@@ -191,6 +192,8 @@ namespace RPG_Project
             Level = 0;
             EquipedWeapon = "";
             invent = new Inventory();
+
+            printer = new Printer();
         }
 
         /***Methods***/
@@ -346,10 +349,17 @@ namespace RPG_Project
             invent.PrintPotions();
         }
 
+        //Checks inventory for potion count
         public int[,] ReturnPotions()
         {
             return (invent.ReturnPotionCount());
         }
+
+        /// <summary>
+        /// TODO: Make player correctly use potions
+        /// Not to sure why but it's not currently finding potions the player has when called externally
+        /// Possibly needs to pass more than just the potNum and include a second int or a bool for potion type
+        /// </summary>
 
         public void DrinkPotion(int potNum)
         {
@@ -374,9 +384,11 @@ namespace RPG_Project
                     {
                         Energy = pot.amount;
                     }
-                    Console.WriteLine("Succesfully used potion");
+                    printer.PrintSingle("Succesfully used potion");
+                    Console.ReadLine();
                     return;
                 }
+                Console.ReadLine();
 
             }
             catch
