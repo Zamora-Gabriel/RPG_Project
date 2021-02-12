@@ -41,7 +41,6 @@ namespace RPG_Project
             player.EquipWeapon(1);
             player.ChangeWeapons(0, 1);
 
-            Console.WriteLine("Math Try {0}", s);
 
             player.PrintStats();
 

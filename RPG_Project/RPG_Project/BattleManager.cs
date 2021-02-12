@@ -24,7 +24,7 @@ namespace RPG_Project
         string[] bottomButtons = new string[] { "", "[ 1) Attack ]    [ 2) Abilites ]", "[ 3) Items  ]    [ 4) Run      ]" };
         string[] bottumPotionList = new string[] {"[ 1) Normal-HP Potion: {0}] [ 2) Super-HP Potion: {1} ] [ 2) Mega-HP Potion: {2}]", "[ 1) Normal-PP Potion: {0}] [ 2) Super-PP Potion: {1} ] [ 2) Mega-PP Potion: {2}]","TmpBack" };
         string[] bottomAttacks;
-        string[] bottomAbilitiesList = new string[] {"[ 1){0}] [ 2){1} ] [ 2){2}]", "[ 3){0}] [ 4){1} ] [ 5){2}]","TmpBack"};
+        string[] bottomAbilitiesList = new string[] {"[ 1){0}] [ 2){1} ] [ 3){2}]", "[ 4){0}] [ 5){1} ] [ 6){2}]","TmpBack"};
 
         static int SPEED_TO_MOVE = 50;
 
@@ -307,6 +307,159 @@ namespace RPG_Project
             }
         }
 
+        void ChooseAbility()
+        {
+            while (true)
+            {
+                string[,] abilities = player.ReturnUnlockedAbilities();
+                int playerChoice = ReturnChoice();
+                switch (playerChoice)
+                {
+                    case 1:
+                        if (abilities[0, 0] != "Locked")
+                        {
+                            printer.PrintSingle("Using "+(Abilities)1+" ability");
+                            ChooseAbilityTarget(playerChoice);
+                            return;
+                        }
+                        PlayerChoice(2);
+                        return;
+
+                    case 2:
+                        if (abilities[0, 1] != "Locked")
+                        {
+                            printer.PrintSingle("Using " + (Abilities)2 + " ability");
+                            ChooseAbilityTarget(playerChoice);
+                            return;
+                        }
+                        PlayerChoice(2);
+                        return;
+
+                    case 3:
+                        if (abilities[0, 2] != "Locked")
+                        {
+                            printer.PrintSingle("Using " + (Abilities)3 + " ability");
+                            ChooseAbilityTarget(playerChoice);
+                            return;
+                        }
+                        PlayerChoice(2);
+                        return;
+
+                    case 4:
+                        if (abilities[1, 0] != "Locked")
+                        {
+                            printer.PrintSingle("Using " + (Abilities)4 + " ability");
+                            ChooseAbilityTarget(playerChoice);
+                            return;
+                        }
+                        PlayerChoice(2);
+                        return;
+
+                    case 5:
+                        if (abilities[1, 1] != "Locked")
+                        {
+                            printer.PrintSingle("Using " + (Abilities)5 + " ability");
+                            ChooseAbilityTarget(playerChoice);
+                            return;
+                        }
+                        PlayerChoice(2);
+                        return;
+
+                    case 6:
+                        if (abilities[1, 2] != "Locked")
+                        {
+                            Console.WriteLine("Using {0} ability", (Abilities)6);
+                            ChooseAbilityTarget(playerChoice);
+                            return;
+                        }
+                        PlayerChoice(2);
+                        return;
+
+                    case 7:
+                        UpdateBoard();
+                        PlayerChoice();
+                        break;
+
+                    default:
+                        //Exit on non valid number
+                        UpdateBoard();
+                        PlayerChoice();
+                        break;
+                }
+            }
+        }
+
+        void ChooseAbilityTarget(int abilityChosen)
+        {
+            while (true)
+            {
+                int playerChoice = ReturnChoice();
+                switch (playerChoice)
+                {
+                    case 1:
+                        //Check if enemy is dead and prevent attacking it again.
+                        if (enemy[0].HasDied)
+                        {
+                            PlayerChoice(2);
+                            return;
+                        }
+                        //Attack enemy
+                        enemy[0].TakeDamage(player.UseAbility(abilityChosen,enemy[0]));
+                        //if the enemy dies increase battle rewards
+                        if (enemy[0].HasDied)
+                        {
+                            IncreaseBattleRewards(0);
+                        }
+                        return;
+
+                    case 2:
+                        if (enemy.Length <= 1)
+                        {
+                            UpdateBoard();
+                            PlayerChoice();
+                            return;
+                        }
+
+                        enemy[1].TakeDamage(player.UseAbility(abilityChosen, enemy[1]));
+                        if (enemy[1].HasDied)
+                        {
+                            IncreaseBattleRewards(1);
+                        }
+
+                        return;
+
+                    case 3:
+                        if (enemy.Length <= 2)
+                        {
+                            UpdateBoard();
+                            PlayerChoice();
+                            return;
+                        }
+
+                        enemy[2].TakeDamage(player.UseAbility(abilityChosen, enemy[2]));
+                        if (enemy[2].HasDied)
+                        {
+                            IncreaseBattleRewards(2);
+                        }
+
+                        return;
+
+                    case 4:
+                        if (enemy.Length <= 3)
+                        {
+                            UpdateBoard();
+                            PlayerChoice();
+                            return;
+                        }
+                        break;
+
+                    default:
+                        UpdateBoard();
+                        PlayerChoice();
+                        break;
+                }
+            }
+        }
 
         //Takes player input and uses potion if available.
         //NOT WORKING: Update the list shown on the battle screen
@@ -315,8 +468,10 @@ namespace RPG_Project
             while (true)
             {
                 int[,] currentPotions = player.ReturnPotions();
+                
                 //debugging, printInvent method is used to check list
                 player.PrintInvent();
+                
                 int playerChoice = ReturnChoice();
                 switch (playerChoice)
                 {
@@ -407,6 +562,7 @@ namespace RPG_Project
                         //TODO ADD ABILITIES
                         UpdateBoard(playerChoice);
                         //TODO: Let player use abilities
+                        ChooseAbility();
                         return;
                     //Items
                     case 3:

@@ -66,7 +66,6 @@ namespace RPG_Project
                     printer.PrintSingle("{0}, is trying to block your next attack!", true, true, Name);
                     Block();
                     return 0;
-                    break;
 
                 //TODO impliment other AI types
                 //case AiPersonality.Defensive:

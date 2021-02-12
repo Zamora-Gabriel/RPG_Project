@@ -13,7 +13,7 @@ namespace RPG_Project
         /// <summary>
         /// Temporary skills, list can be reduced or added
         /// </summary>
-        Heal = 0, //--- heals 5 hp multiplied by x which increases each 5 levels starting at 1
+        Heal = 1, //--- heals 5 hp multiplied by x which increases each 5 levels starting at 1
         Shatter, //--- Reduces 1/3 of enemy's defense for that attack only  
         AvengerSoul, //--- Adds half of player's current accrued damage to the attack
         Devour, //--- Takes 50% damage dealt to opponent as healing
@@ -417,7 +417,7 @@ namespace RPG_Project
             int column = 2;
             string[,] abilityList = new string[column, row];
             int multiplier = 1;
-            var abilityName = (Abilities)0;
+            var abilityName = (Abilities)1;
 
             for(int i = 0; i <= column-1; i++)
             {
@@ -430,7 +430,7 @@ namespace RPG_Project
                     }
                     else
                     {
-                        abilityList[i, j] = "Locked ability";
+                        abilityList[i, j] = "Locked";
                     }
                     multiplier++;
                 }
@@ -453,7 +453,7 @@ namespace RPG_Project
                  * WindGod //--- Five attacks at 50% of damage Translation = ((outgoingDmg/2)*5)
                  */
 
-                case 0:
+                case 1:
                     //Heal
                     int multiplier = Level/5;
                     if (multiplier <= 0)
@@ -463,7 +463,7 @@ namespace RPG_Project
                     Health += 5 * multiplier;
                     outgoingDmg = 0;
                     break;
-                case 1:
+                case 2:
                     //Shatter
                     outgoingDmg -= enemy.Defense;
                     outgoingDmg -= (enemy.Defense*2) / 3;
@@ -473,7 +473,7 @@ namespace RPG_Project
                         break;
                     }
                     break;
-                case 2:
+                case 3:
                     //AvengerSoul
                     int accruedDmg = maxHealth - Health;
                     outgoingDmg -= enemy.Defense - accruedDmg;
@@ -483,7 +483,7 @@ namespace RPG_Project
                         break;
                     }
                     break;
-                case 3:
+                case 4:
                     //Devour
                     outgoingDmg -= enemy.Defense;
                     if (outgoingDmg < 0)
@@ -493,7 +493,7 @@ namespace RPG_Project
                     }
                     Health += outgoingDmg / 2;
                     break;
-                case 4:
+                case 5:
                     //WindGod
                     outgoingDmg -= enemy.Defense;
                     if (outgoingDmg < 0)
@@ -507,8 +507,6 @@ namespace RPG_Project
                     Console.WriteLine("Error: Not a valid option");
                     break;
             }
-
-            Console.WriteLine("Using {0} ability", (Abilities)option);
             return outgoingDmg;
         }
     }
