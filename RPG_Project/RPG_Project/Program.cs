@@ -16,12 +16,14 @@ namespace RPG_Project
             
             Console.WriteLine(weap1.Name);
 
+            string[] enemyOneArt = new string[] {"HP: {0}\\{1}","", "o~\\", "|_-__\\", "", "{2}" };
             Weapon weap2 = new Weapon("pistol");
             Console.WriteLine(weap2.Name);
 
             Potion pot1 = new Potion(1,1);
             
             x.PrintStats();
+
 
 
             //Player class Test
@@ -52,6 +54,17 @@ namespace RPG_Project
             Console.WriteLine("Current Health {0}:", x.Health);
             
             Console.ReadLine();
+            Printer printer = new Printer();
+            Player player = new Player("Player Name");
+            BasicEnemy[] enemies = new BasicEnemy[3];
+            enemies[0] = new BasicEnemy("tmp ", printer);
+            enemies[1] = new BasicEnemy("tmp ", printer);
+            enemies[2] = new BasicEnemy("tmp ", printer);
+
+            //BasicEnemy enemy = new BasicEnemy();
+            BattleManager newManager = new BattleManager(printer, player, enemies);
+
+            newManager.BattleLoop();
         }
     }
 }

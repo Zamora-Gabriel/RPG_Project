@@ -11,28 +11,33 @@ namespace RPG_Project
 
         string name;
         int expValue;
-
+        int moneyValue;
         //Combat Stats
+        bool hasDied;
+
+        int maxHealth;
         int health;
         int speed;
-        int damage;
+        int attack;
         int defense;
         
         // Boss might not drop money. Tenativly commentted out
         //int moneyDropped;
 
         //Constructor
-        public Enemy()
+        public Enemy(string name)
         {
-            name = "Default";
-            expValue = 5;
 
+            this.name = name;
+            expValue = 5;
+            moneyValue = 5;
             //These are all temp and need to be removed eventually
+            maxHealth = 10;
             health = 5;
-            speed = 1;
-            damage = 1;
+            speed = 10;
+            attack = 1;
             defense = 1;
-            
+
         }
 
         /*Getters and Setters*/
@@ -53,8 +58,33 @@ namespace RPG_Project
                 expValue = value;
             }
         }
+        public int MoneyValue
+        {
+            get { return moneyValue; }
+            set
+            {
+                moneyValue = value;
+            }
+        }
+        public bool HasDied
+        {
+            get { return hasDied; }
+            private set
+            {
+                hasDied = value;
+                Die();
+            }
+        }
 
         //Combat properties
+        public int MaxHealth
+        {
+            get { return maxHealth; }
+            private set
+            {
+                maxHealth = value;
+            }
+        }
 
         public int Health
         {
@@ -63,7 +93,14 @@ namespace RPG_Project
             {
                 health = value;
                 if (health <= 0)
+                {
                     Die();
+                }
+                if(health < 0)
+                {
+                    Health = 0;
+                }
+                    
             }
         }
 
@@ -76,12 +113,12 @@ namespace RPG_Project
             }
         }
 
-        public int Damage
+        public int Attack
         {
-            get { return damage; }
+            get { return attack; }
             private set
             {
-                damage = value;
+                attack = value;
             }
         }
 
@@ -96,16 +133,21 @@ namespace RPG_Project
 
         /*Methods*/
 
-        int Attack()
+        protected int AttackPlayer(Player player)
         {
-            //TODO decide how to actually damage player
-            //Current idea is this returns an negative value that is passed to the players 
-            //life set. This would be done by the game object.
-            //ie thePlayer.life = theEnemy.Attack();
-            return 0;
+        
+            int outgoingDmg = attack;
+            //reduce by armour;
+            outgoingDmg -= player.Defense;
+            if(outgoingDmg < 0)
+            {
+                outgoingDmg = 0;
+            }
+
+            return outgoingDmg;
         }
 
-        void Block()
+        protected void Block()
         {
             //TODO decide how this will work,
             //will it just increase defense stat for the turn or two?
@@ -114,6 +156,10 @@ namespace RPG_Project
         public void TakeDamage(int damage)
         {
             Health -= damage;
+            if(Health <= 0)
+            {
+                HasDied = true;
+            }
         }
 
         protected virtual void Die()
@@ -122,6 +168,7 @@ namespace RPG_Project
             //Give exp
             //Give gold
             //Remove self <- possibly done in the game object
+            Name = "Dead";
         }
 
 
