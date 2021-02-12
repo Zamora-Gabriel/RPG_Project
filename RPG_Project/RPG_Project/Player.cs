@@ -346,6 +346,11 @@ namespace RPG_Project
             invent.PrintPotions();
         }
 
+        public int[,] ReturnPotions()
+        {
+            return (invent.ReturnPotionCount());
+        }
+
         public void DrinkPotion(int potNum)
         {
             //check if user has that potion on inventory

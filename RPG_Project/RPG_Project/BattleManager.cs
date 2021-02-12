@@ -22,6 +22,7 @@ namespace RPG_Project
     {
 
         string[] bottomButtons = new string[] { "", "[ 1) Attack ]    [ 2) Abilites ]", "[ 3) Items  ]    [ 4) Run      ]" };
+        string[] bottumPotionList = new string[] {"[ 1) Normal-HP Potion: {0}] [ 2) Super-HP Potion: {1} ] [ 2) Mega-HP Potion: {2}]", "[ 1) Normal-PP Potion: {0}] [ 2) Super-PP Potion: {1} ] [ 2) Mega-PP Potion: {2}]","TmpBack" };
         string[] bottomAttacks;
 
         static int SPEED_TO_MOVE = 50;
@@ -192,6 +193,14 @@ namespace RPG_Project
                     break;
                 case 3:
                     //TODO pull list of items in inventory and options to use
+                    int[,] potionList = player.ReturnPotions();
+                    for (int i = 0; i < bottumPotionList.Length-1; i++)
+                    {
+                        bottumPotionList[i] = string.Format(bottumPotionList[i], potionList[i,0], potionList[i, 1], potionList[i, 2]);
+                    }
+                    bottumPotionList[2] = string.Format("[ 7): Return to menu ]");
+                    printer.PrintBottomScreen(bottumPotionList);
+                    Console.ReadLine();
                     break;
                 case 4:
                     //TODO Runaway
@@ -288,6 +297,7 @@ namespace RPG_Project
                         return;
                     //Items
                     case 3:
+                        UpdateBoard(playerChoice);
                         //TODO LET PLAYER USE ITEMS
                         return;
                     //Run
@@ -320,10 +330,15 @@ namespace RPG_Project
                     //Abilitiy
                     case 2:
                         //TODO ADD ABILITIES
+
                         return;
                     //Items
                     case 3:
                         //TODO LET PLAYER USE ITEMS
+                        UpdateBoard(choice);
+                        //Choose player to attack and notify player that their choice is dead
+                        printer.PrintSingle("Choose a living target!");
+                        ChooseAttack();
                         return;
                     //Run
                     case 4:

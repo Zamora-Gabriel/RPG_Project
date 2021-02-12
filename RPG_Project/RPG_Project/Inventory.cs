@@ -185,6 +185,48 @@ namespace RPG_Project
             return null;
         }
 
+        public int[,] ReturnPotionCount()
+        {
+            int[,] potions = new int[2, 3];
+            potions[0, 0] = 0;
+            potions[0, 1] = 0;
+            potions[0, 2] = 0;
+            potions[1, 0] = 0;
+            potions[1, 1] = 0;
+            potions[1, 2] = 0;
+            int potionType = 0;
+            //string potionName = "";
+            var potiont = (PotionType)0;
+            foreach (Potion item in potionList)
+            {
+                if (item.Type == (int)PotionType.EnergyPotion)
+                {
+                    //if it's a Energy potion, change the default 
+                    potionType = 1;
+                    potiont = (PotionType)1;
+                }
+                else
+                {
+                    potionType = 0;
+                }
+                switch (item.Quality)
+                {
+                    case 0:
+                        potions[potionType, 0]++;
+                        break;
+                    case 1:
+                        potions[potionType, 1]++;
+                        break;
+                    case 2:
+                        potions[potionType, 2]++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return potions;
+        }
+
         public void PrintPotions()
         {
             if (potionList.Count == 0)
@@ -193,7 +235,7 @@ namespace RPG_Project
                 return;
             }
 
-            Console.WriteLine("---------------Weapon List--------------- \n");
+            Console.WriteLine("---------------Potion List--------------- \n");
             int count = 0;
             string potionName = "";
             var potiont = (PotionType)0;

@@ -60,7 +60,8 @@ namespace RPG_Project
             enemies[1] = new BasicEnemy("tmp ", printer);
             enemies[2] = new BasicEnemy("tmp ", printer);
 
-            //BasicEnemy enemy = new BasicEnemy();
+            Console.ReadLine();
+
             BattleManager newManager = new BattleManager(printer, player, enemies);
 
             newManager.BattleLoop();
