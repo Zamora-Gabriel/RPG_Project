@@ -474,6 +474,7 @@ namespace RPG_Project
             {
                 for (int j = 0; j <= row-1; j++)
                 {
+                    abilityName = (Abilities)multiplier;
                     //check level for locked or unlocked abilities
                     if (Level >= (1 * (multiplier)))
                     {

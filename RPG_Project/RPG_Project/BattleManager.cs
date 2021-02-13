@@ -415,8 +415,9 @@ namespace RPG_Project
                     case 3:
                         if (abilities[0, 2] != "Locked")
                         {
-                            printer.PrintSingle("Using " + (Abilities)3 + " ability");
-                            ChooseAbilityTarget(playerChoice, 0);
+                            printer.PrintSingle("Using " + (Abilities)2 + " ability");
+                            PlayerChoice(4);
+                            ChooseAbilityTarget(playerChoice, 4);
                             return;
                         }
                         PlayerChoice(2);
@@ -455,13 +456,13 @@ namespace RPG_Project
                     case 7:
                         UpdateBoard();
                         PlayerChoice();
-                        break;
+                        return;
 
                     default:
                         //Exit on non valid number
                         UpdateBoard();
                         PlayerChoice();
-                        break;
+                        return;
                 }
             }
         }
@@ -558,8 +559,8 @@ namespace RPG_Project
             {
                 int[,] currentPotions = player.ReturnPotions();
                 
-                //debugging, printInvent method is used to check list
-                player.PrintInvent();
+                ////debugging, printInvent method is used to check list
+                //player.PrintInvent();
                 
                 int playerChoice = ReturnChoice();
                 switch (playerChoice)
@@ -621,13 +622,13 @@ namespace RPG_Project
                     case 7:
                         UpdateBoard();
                         PlayerChoice();
-                        break;
+                        return;
 
                     default:
                         //Exit on non valid number
                         UpdateBoard();
                         PlayerChoice();
-                        break;
+                        return;
                 }
             }
         }

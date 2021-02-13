@@ -52,9 +52,9 @@ namespace RPG_Project
         ///
         void GrassLandEnemies()
         {
-            grassLandEnemy[0] = new BasicEnemy("  Spearman   ", 13, 2, 1, 5, 10, 5, spearmanArt); //Weak Spearman
-            grassLandEnemy[1] = new BasicEnemy("  Swordman   ", 10, 3, 1, 5, 5, 5, swordmanArt); //Weal Swordman;
-            grassLandEnemy[2] = new BasicEnemy("   Archer    ", 5, 6, 0, 5, 5, 5, archerArt); //Weal Archer;
+            grassLandEnemy[0] = new BasicEnemy("  Spearman   ", 13, 2, 1, 5, 100, 1, spearmanArt); //Weak Spearman
+            grassLandEnemy[1] = new BasicEnemy("  Swordman   ", 10, 3, 1, 5, 50, 5, swordmanArt); //Weal Swordman;
+            grassLandEnemy[2] = new BasicEnemy("   Archer    ", 5, 6, 0, 5, 50, 5, archerArt); //Weal Archer;
 
         }
 
