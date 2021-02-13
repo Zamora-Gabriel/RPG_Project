@@ -39,9 +39,9 @@ namespace RPG_Project
             player.AddPotionToInvent(pot2);
             player.AddPotionToInvent(pot2);
             player.AddWeaponToInvent(weap2);
-            player.EquipWeapon(0);
-            player.EquipWeapon(1);
-            player.ChangeWeapons(0, 1);
+            //player.EquipWeapon(0);
+            //player.EquipWeapon(1);
+            //player.ChangeWeapons(0, 1);
             player.AddWeaponToInvent(weap2);
 
             player.PrintStats();
@@ -77,21 +77,15 @@ namespace RPG_Project
             while (true)
             {
 
-                Weapon weap1 = new Weapon("gauntlet");
-                Weapon weap2 = new Weapon("sword");
+                Weapon weap1 = new Weapon("Sword");
+                Weapon weap2 = new Weapon("Hammer");
                 Printer printer = new Printer();
 
                 Player thePlayer = new Player(ChooseName(printer));
                 Console.WriteLine("Got here");
                 OverWorldManager worldManager = new OverWorldManager(thePlayer);
                 thePlayer.AddWeaponToInvent(weap1);
-                thePlayer.AddWeaponToInvent(weap1);
                 thePlayer.AddWeaponToInvent(weap2);
-                thePlayer.AddWeaponToInvent(weap2);
-                thePlayer.AddWeaponToInvent(weap1);
-                thePlayer.AddWeaponToInvent(weap1);
-                thePlayer.AddWeaponToInvent(weap1);
-
                 Console.ReadLine();
                 worldManager.DrawUi();
 

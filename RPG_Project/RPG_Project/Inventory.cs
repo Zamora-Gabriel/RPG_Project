@@ -116,12 +116,12 @@ namespace RPG_Project
         public string[] ReturnWeaponList()
         {
             int counter = 0;
-            int countPerLine = 0;
             string[] returnList = new string[weaponList.Count];
             foreach (Weapon item in weaponList)
             {
-                returnList[counter] += string.Format("{0}) {1}    ",countPerLine,item.Name);
+                returnList[counter] += string.Format("{0}) {1}    ", counter+1, item.Name);
                 counter++;
+
             }
             return returnList;
         }
@@ -134,6 +134,21 @@ namespace RPG_Project
             {
 
                 if (item.Name == name)
+                {
+                    return item;
+                }
+                counter++;
+            }
+            return null;
+        }
+
+        public Weapon CheckWeaponByType(Weapon type)
+        {
+            int counter = 0;
+            foreach (Weapon item in weaponList)
+            {
+
+                if (item == type)
                 {
                     return item;
                 }

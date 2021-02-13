@@ -13,6 +13,7 @@ namespace RPG_Project
         Inventory,
         Inventory_Potions,
         Inventory_Weapons,
+        Inventory_Weapon_Detail,
         Stats,
         Abilities,
         Dead
@@ -104,6 +105,9 @@ namespace RPG_Project
                     InventoryUiPotions();
                     break;
                 case ActiveMenu.Inventory_Weapons:
+                    InventoryUiWeapons();
+                    break;
+                case ActiveMenu.Inventory_Weapon_Detail:
                     InventoryUiWeapons();
                     break;
                 case ActiveMenu.Stats:
@@ -289,24 +293,25 @@ namespace RPG_Project
             return;
         }
 
-        //TODO MAKE THIS WORK
-        //Current issue with adding weapons to inventory, so moving on for now.
+        
+        //Generates list of weapons in inventory and dynamically sets number to each.
         void InventoryUiWeapons()
         {
             int choice;
             int count = 0;
             string[] formatedString;
 
+            //Format incomming string for better viewing
             if (player.ReturnWeaponList().Length % 3 != 0)
             {
-                formatedString = new string[(player.ReturnWeaponList().Length / 3) + 1];
+                formatedString = new string[(player.ReturnWeaponList().Length / 3) + 2];
             }
             else
             {
-                formatedString = new string[player.ReturnWeaponList().Length / 3];
+                formatedString = new string[(player.ReturnWeaponList().Length / 3) + 1];
             }
             
-            for (int i = 0; i < formatedString.Length; i++)
+            for (int i = 0; i < formatedString.Length -1 ; i++)
             {
                 for(int x = 0; x < 3; x++)
                 {
@@ -317,29 +322,90 @@ namespace RPG_Project
                     }
                 }
             }
-            //Format incomming string for better viewing
-
-
+            formatedString[formatedString.Length-1] += string.Format("{0}) Return     ", count+1);
+            //print formated string
             printer.PrintArray(formatedString);
+
             while (!player.HasDied)
             {
                 //loop through posible choices
-                choice = ReturnChoice();
+                choice = ReturnChoice()-1;
                 for(int i =0; i < player.ReturnWeaponList().Length; i++)
                 {
                     if(choice == i)
                     {
-                        InventoryStats();
-
+                        InventroyItemStats(choice);
                         break;
                     }
-                    if(choice == player.ReturnWeaponList().Length + 1)
+                    if(choice== player.ReturnWeaponList().Length)
                     {
                         currentMenu = ActiveMenu.Inventory;
                         DrawUi();
                         break;
                     }
                 }
+            }
+        }
+
+        void InventroyItemStats(int item)
+        {
+            bool isEquiped = false;
+            Weapon weapon = player.ReturnWeaponInt(item);
+
+            printer.PrintSingle(weapon.Name, true, false);
+            printer.PrintSingle(weapon.AtkBonus.ToString(), false, false);
+            printer.PrintSingle(weapon.DefBonus.ToString(), false, false);
+            printer.PrintSingle(weapon.SpdBonus.ToString(), false, false);
+
+            //Check if weapon is equiped
+            if (player.EquipedWeapon == weapon)
+            {
+                isEquiped = true;
+                printer.PrintSingle("1) Unequip weapon           2) Return", false, true);
+            }
+            else
+            {
+                printer.PrintSingle("1) Equip weapon             2) Return", false, true);
+            }
+
+            int choice;
+            while (true)
+            {
+                choice = ReturnChoice();
+                switch (choice)
+                {
+                    case 1:
+                        if (isEquiped)
+                        {
+                            Console.WriteLine("Unequping");
+                            player.UnequipWeapon(player.EquipedWeapon);
+                            currentMenu = ActiveMenu.Inventory_Weapons;
+                            DrawUi();
+                            return;
+                        }
+                        else
+                        {
+                            if(player.EquipedWeapon != null)
+                            {
+                                Console.WriteLine("Swapping");
+                                player.ChangeWeapons(player.EquipedWeapon, item);
+                                currentMenu = ActiveMenu.Inventory_Weapons;
+                                DrawUi();
+                                return;
+                            }
+                            Console.WriteLine("Equiping");
+                            player.EquipWeapon(item);
+                            currentMenu = ActiveMenu.Inventory_Weapons;
+                            DrawUi();
+                            return;
+                        }
+                        break;
+                    case 2:
+                        currentMenu = ActiveMenu.Inventory_Weapons;
+                        DrawUi();
+                        break;
+                }
+                UpdateMap();
             }
         }
 

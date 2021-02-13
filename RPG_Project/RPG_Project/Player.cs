@@ -32,7 +32,9 @@ namespace RPG_Project
         int exp;
         int level;
         int money;
-        string equipedWeapon;
+        //Testing
+        //string equipedWeapon;
+        Weapon equipedWeapon;
         Inventory invent;
 
         Printer printer;
@@ -181,7 +183,7 @@ namespace RPG_Project
             }
         }
 
-        public string EquipedWeapon
+        public Weapon EquipedWeapon
         {
             get { return equipedWeapon; }
             private set
@@ -216,7 +218,9 @@ namespace RPG_Project
             Defense = 1;
             Exp = 0;
             Level = 0;
-            EquipedWeapon = "";
+
+
+            EquipedWeapon = null;
             invent = new Inventory();
 
             printer = new Printer();
@@ -268,10 +272,14 @@ namespace RPG_Project
             return invent.ReturnWeaponList();
         }
 
+        public Weapon ReturnWeaponInt(int number)
+        {
+            return invent.CheckWeapon(number);
+        }
         public void EquipWeapon(int weapNum)
         {
             //Case the user already has an equiped weapon
-            if (EquipedWeapon != "")
+            if (EquipedWeapon != null)
             {
                 Console.WriteLine("Wait, you already have a weapon equiped!");
                 return;
@@ -289,7 +297,7 @@ namespace RPG_Project
                 Attack += weap.AtkBonus;
                 Defense += weap.DefBonus;
                 Speed += weap.SpdBonus;
-                EquipedWeapon = weap.Name;
+                EquipedWeapon = weap;
                 Console.WriteLine("Succesfully equiped weapon: {0}", EquipedWeapon);
                 return;
             }
@@ -301,9 +309,9 @@ namespace RPG_Project
         }
 
         //TODO: Make it public if user can fight barehanded
-        private bool UnequipWeapon(int weapNum)
+        public bool UnequipWeapon(Weapon weapon)
         {
-            if (EquipedWeapon == "")
+            if (EquipedWeapon == null)
             {
                 Console.WriteLine("Wait... You don't have an equiped weapon!");
                 return false;
@@ -311,7 +319,7 @@ namespace RPG_Project
 
             try
             {
-                Weapon weap = invent.CheckWeaponByName(EquipedWeapon);
+                Weapon weap = invent.CheckWeaponByType(weapon);
 
                 if (weap == null)
                 {
@@ -325,7 +333,7 @@ namespace RPG_Project
                 Speed -= weap.SpdBonus;
 
                 //Restart equiped weapon's id to discriminate
-                EquipedWeapon = "";
+                EquipedWeapon = null; ;
                 Console.WriteLine("Succesfully unequiped weapon: {0}", weap.Name);
             }
             catch
@@ -336,7 +344,7 @@ namespace RPG_Project
             return true;
         }
 
-        public void ChangeWeapons(int weap1, int weap2)
+        public void ChangeWeapons(Weapon weap1, int weap2)
         {
             //Unequipment succeed
             if (UnequipWeapon(weap1))
