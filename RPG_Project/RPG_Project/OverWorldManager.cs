@@ -44,7 +44,7 @@ namespace RPG_Project
         string[] inventoryUiBase = new string[] { "Inventory", "", "1) Weapons      2) Potions", "3) Back" };
         string[] inventroyUiPotions = new string[] {"[ 1) Normal-HP Potion: {0}] [ 2) Super-HP Potion: {1} ] [ 2) Mega-HP Potion: {2}]", "[ 1) Normal-PP Potion: {0}] [ 2) Super-PP Potion: {1} ] [ 2) Mega-PP Potion: {2}]", "TmpBack"};
         string[] inventoryStats = new string[] {"Player: {0}","","Health: {0}/{1}      Energy: {2}/{3}" , "Level: {0}          Exp: {1}       ", "Attack: {0}         Defense: {1}   ", "Speed {0}           Money: {1}     ","","1) Back"};
-        string[] deathMessage = new string[] {"{0}, you have died", "The demon lord will now surely rule this land forever", "Unless, you want to try again? ", "1) Yes     2) No  " };
+        
         //Constructor 
 
         public OverWorldManager(Player player)
@@ -83,7 +83,6 @@ namespace RPG_Project
             if (player.HasDied)
             {
                 currentMenu = ActiveMenu.Dead;
-                DeathChoice();
             }
             DrawOnlyMap();
 
@@ -166,6 +165,7 @@ namespace RPG_Project
                         DrawUi();
                         return;
                 }
+                EnterLocation(theMap.ReturnPlayerTileType());
                 EncounterGenerator(theMap.ReturnPlayerTileLevel(), theMap.ReturnPlayerTileType());
                 UpdateMap();
                 currentMenu = ActiveMenu.General;
@@ -316,26 +316,7 @@ namespace RPG_Project
             }
         }
 
-        void DeathChoice()
-        {
-            int choice;
-            while (true)
-            {
-                deathMessage[0] = string.Format(deathMessage[0], player.Name);
-                printer.PrintArray(deathMessage);
-                choice = ReturnChoice();
-                switch (choice)
-                {
-                    case 1:
-                        return;
-                    case 2:
-                        printer.PrintSingle("Good bye.");
-                        Console.ReadLine();
-                        System.Environment.Exit(1);
-                        break;
-                }
-            }
-        }
+
 
         int ReturnChoice()
         {
@@ -352,7 +333,6 @@ namespace RPG_Project
                 }
             }
         }
-        //TODO EnterShop
 
 
         //TODO EnterCombat
@@ -401,7 +381,7 @@ namespace RPG_Project
             switch (danger)
             {
                 case 1:
-                    enemylist.EasyForestEncounter();
+                    enemylist.EasyGrassLandsEncounter();
 
                     break;
             }
@@ -418,7 +398,35 @@ namespace RPG_Project
         }
         void WaterEncounterGen(int danger)
         {
+            EnemyGenerator enemyGenerator = new EnemyGenerator(player);
+            switch (danger)
+            {
+                case 1:
+                    enemyGenerator.EasyWaterEncounter();
+                    break;
+            }
+        }
 
+
+        //TODO EnterShop
+
+        //TODO Enter Dungeon
+
+        void EnterLocation(int tileType)
+        {
+            //Generate encounter based on difficulty and terrain type
+            switch (tileType)
+            {
+                case 4:
+                    //TODO ENTER SHOP INTERFACE
+                    break;
+                case 5:
+                    //ENTER BOSS FIGHT!!
+                    EnemyGenerator enemyGenerator = new EnemyGenerator(player);
+                    enemyGenerator.BossBattle();
+                    break;
+            }
+            return;
         }
 
     }

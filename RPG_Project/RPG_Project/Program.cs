@@ -76,19 +76,22 @@ namespace RPG_Project
         {
             while (true)
             {
+
+                
+
                 Printer printer = new Printer();
 
                 Player thePlayer = new Player(ChooseName(printer));
+                thePlayer.Exp += 200;
                 Console.WriteLine("Got here");
                 OverWorldManager worldManager = new OverWorldManager(thePlayer);
                 worldManager.DrawUi();
 
                 Console.Clear();
-                printer.PrintSingle("Hah I knew you'd try again!");
+                DeathChoice(printer, thePlayer);
             }
             
         }
-
 
         static string ChooseName(Printer thePrinter)
         {
@@ -127,7 +130,27 @@ namespace RPG_Project
                 }
             }
         }
-
+        static void DeathChoice(Printer printer, Player player)
+        {
+            int choice;
+            string[] deathMessage = new string[] { "{0}, you have died", "The demon lord will now surely rule this land forever", "Unless, you want to try again? ", "1) Yes     2) No  " };
+            while (true)
+            {
+                deathMessage[0] = string.Format(deathMessage[0], player.Name);
+                printer.PrintArray(deathMessage);
+                choice = ReturnChoice(printer);
+                switch (choice)
+                {
+                    case 1:
+                        return;
+                    case 2:
+                        printer.PrintSingle("Good bye.");
+                        Console.ReadLine();
+                        System.Environment.Exit(1);
+                        break;
+                }
+            }
+        }
         static int ReturnChoice(Printer thePrinter)
         {
             while (true)

@@ -17,7 +17,7 @@ namespace RPG_Project
     class BasicEnemy : Enemy
     {
 
-        string[] enemyArt = new string[] { "HP: {0}\\{1}", "        ", "   o~\\  ", " |_-__\\", "        ", "{2}" };
+        string[] enemyArt = new string[] { };
 
 
         AiPersonality aiType = AiPersonality.Neutral;
@@ -29,10 +29,10 @@ namespace RPG_Project
         
 
         //Constructor 
-        public BasicEnemy(string name, int maxHealth, int attack, int defense, int speed, int expValue, int moneyValue) : base(name, maxHealth, attack, defense, speed, expValue, moneyValue)
+        public BasicEnemy(string name, int maxHealth, int attack, int defense, int speed, int expValue, int moneyValue, string[] enemyArt) : base(name, maxHealth, attack, defense, speed, expValue, moneyValue)
         {
-            
-            this.printer = printer;
+            this.enemyArt = enemyArt;    
+
         }
 
         /*Getters and Setters*/

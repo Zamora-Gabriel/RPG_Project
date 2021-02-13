@@ -26,7 +26,7 @@ namespace RPG_Project
         /***Variables***/
 
         //TMP REMOVE ONCE PLAYER ART IS FINALIZED
-        public string[] art = new string[] { "", "HP: {0}/{1}", "PP:     ", "o", "/|\\", "|", "/ \\", "{2}" };
+        public string[] art = new string[] { "", "HP: {0}/{1}", "PP: {3}/{4} ", "o", "/|\\", "|", "/ \\", "{2}" };
 
         string name;
         int exp;
@@ -82,10 +82,10 @@ namespace RPG_Project
                 }
 
                 //Check if player dies
-                if (health <= 0)
-                {
-                    PlayerDies();
-                }
+                //if (health <= 0)
+                //{
+                //    PlayerDies();
+                //}
             }
         }
 
@@ -209,8 +209,8 @@ namespace RPG_Project
             maxHealth = 15;
             maxEnergy = 15;
 
-            Health = 15;
-            Energy = 15;
+            Health = maxHealth;
+            Energy = maxEnergy;
             Attack = 5;
             Speed = 5;
             Defense = 1;
@@ -224,10 +224,11 @@ namespace RPG_Project
 
         /***Methods***/
 
-        private void PlayerDies()
-        {
-            Console.WriteLine("{0} has been defeated", Name);
-        }
+        //Depreicated
+        //private void PlayerDies()
+        //{
+        //    Console.WriteLine("{0} has been defeated", Name);
+        //}
 
         private void LevelUp()
         {

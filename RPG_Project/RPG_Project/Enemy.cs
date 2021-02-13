@@ -149,7 +149,8 @@ namespace RPG_Project
 
         protected int AttackPlayer(Player player)
         {
-        
+            //Reset defense
+            Defense = Defense / 2;
             int outgoingDmg = attack;
             //reduce by armour;
             outgoingDmg -= player.Defense;
@@ -163,8 +164,9 @@ namespace RPG_Project
 
         protected void Block()
         {
+            //Doubles defense
             //TODO decide how this will work,
-            //will it just increase defense stat for the turn or two?
+            Defense += Defense;
         }
 
         public void TakeDamage(int damage)
@@ -182,7 +184,7 @@ namespace RPG_Project
             //Give exp
             //Give gold
             //Remove self <- possibly done in the game object
-            Name = "Dead";
+            Name = "    Dead";
         }
 
 

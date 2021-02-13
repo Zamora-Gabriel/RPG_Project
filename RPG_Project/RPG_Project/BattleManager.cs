@@ -72,22 +72,31 @@ namespace RPG_Project
                         break;
                     case BattleState.EnemyOneTurn:
                         //Determins if enemy attacks and sends damage to player
-                        player.RcvDamage(enemy[0].TakeAction(player));
-                        Console.ReadLine();
+                        if(enemy[0].Health > 0)
+                        {
+                            player.RcvDamage(enemy[0].TakeAction(player));
+                            Console.ReadLine();
+                        }
                         current = BattleState.DeterminingState;
                         //TODO Print message that enemy attackes
                         break;
                     case BattleState.EnemyTwoTurn:
                         //Determins if enemy attacks and sends damage to player
-                        player.RcvDamage(enemy[1].TakeAction(player));
-                        Console.ReadLine();
+                        if(enemy[1].Health > 0)
+                        {
+                            player.RcvDamage(enemy[1].TakeAction(player));
+                            Console.ReadLine();
+                        }
                         current = BattleState.DeterminingState;
                         //TODO Print message that enemy attackes
                         break;
                     case BattleState.EnemyThreeTurn:
                         //Determins if enemy attacks and sends damage to player
-                        player.RcvDamage(enemy[2].TakeAction(player));
-                        Console.ReadLine();
+                        if(enemy[2].Health > 0)
+                        {
+                            player.RcvDamage(enemy[2].TakeAction(player));
+                            Console.ReadLine();
+                        }
                         current = BattleState.DeterminingState;
                         //TODO Print message that enemy attackes
                         break;
@@ -206,7 +215,7 @@ namespace RPG_Project
             printer.PrintTopScreen(centeredObjects);
 
             //Update and pack player
-            printer.PrintMiddleScreen(printer.PrepareString(player.art, player.Health, player.MaxHealth, player.Name));
+            printer.PrintMiddleScreen(printer.PrepareString(player.art, player.Health, player.MaxHealth, player.Name, player.Energy, player.MaxEnergy));
 
             //Print bottom interface
             printer.PrintBottomScreen(bottomButtons);
@@ -226,7 +235,7 @@ namespace RPG_Project
             printer.PrintTopScreen(centeredObjects);
 
             //Update and pack player
-            printer.PrintMiddleScreen(printer.PrepareString(player.art, player.Health, player.MaxHealth, player.Name));
+            printer.PrintMiddleScreen(printer.PrepareString(player.art, player.Health, player.MaxHealth, player.Name, player.Energy, player.MaxEnergy));
 
             switch (choice)
             {
@@ -380,21 +389,24 @@ namespace RPG_Project
                 int playerChoice = ReturnChoice();
                 switch (playerChoice)
                 {
+                    //Self Heal
                     case 1:
-                        if (abilities[0, 0] != "Locked")
+                        if (abilities[0, 0] != "Locked" || player.Energy > 3)
                         {
-                            printer.PrintSingle("Using "+(Abilities)1+" ability");
-                            ChooseAbilityTarget(playerChoice);
+                            printer.PrintSingle("Using " + (Abilities)1 + " ability");
+                            player.UseAbility(1, enemy[0]);
+                            player.Energy -= 3;
                             return;
                         }
                         PlayerChoice(2);
                         return;
-
+                    //Shatter
                     case 2:
-                        if (abilities[0, 1] != "Locked")
+                        if (abilities[0, 1] != "Locked" || player.Energy > 4)
                         {
                             printer.PrintSingle("Using " + (Abilities)2 + " ability");
-                            ChooseAbilityTarget(playerChoice);
+                            PlayerChoice(4);
+                            ChooseAbilityTarget(playerChoice, 4);
                             return;
                         }
                         PlayerChoice(2);
@@ -404,7 +416,7 @@ namespace RPG_Project
                         if (abilities[0, 2] != "Locked")
                         {
                             printer.PrintSingle("Using " + (Abilities)3 + " ability");
-                            ChooseAbilityTarget(playerChoice);
+                            ChooseAbilityTarget(playerChoice, 0);
                             return;
                         }
                         PlayerChoice(2);
@@ -414,7 +426,7 @@ namespace RPG_Project
                         if (abilities[1, 0] != "Locked")
                         {
                             printer.PrintSingle("Using " + (Abilities)4 + " ability");
-                            ChooseAbilityTarget(playerChoice);
+                            ChooseAbilityTarget(playerChoice, 0);
                             return;
                         }
                         PlayerChoice(2);
@@ -424,7 +436,7 @@ namespace RPG_Project
                         if (abilities[1, 1] != "Locked")
                         {
                             printer.PrintSingle("Using " + (Abilities)5 + " ability");
-                            ChooseAbilityTarget(playerChoice);
+                            ChooseAbilityTarget(playerChoice, 0);
                             return;
                         }
                         PlayerChoice(2);
@@ -434,7 +446,7 @@ namespace RPG_Project
                         if (abilities[1, 2] != "Locked")
                         {
                             Console.WriteLine("Using {0} ability", (Abilities)6);
-                            ChooseAbilityTarget(playerChoice);
+                            ChooseAbilityTarget(playerChoice, 0);
                             return;
                         }
                         PlayerChoice(2);
@@ -454,7 +466,8 @@ namespace RPG_Project
             }
         }
 
-        void ChooseAbilityTarget(int abilityChosen)
+        //TODO Something is not quite right here, often targets twice. need to look further into this.
+        void ChooseAbilityTarget(int abilityChosen, int abilityCost)
         {
             while (true)
             {
@@ -484,13 +497,17 @@ namespace RPG_Project
                             PlayerChoice();
                             return;
                         }
-
+                        if (enemy[1].HasDied)
+                        {
+                            PlayerChoice(2);
+                            return;
+                        }
                         enemy[1].TakeDamage(player.UseAbility(abilityChosen, enemy[1]));
+                        player.Energy -= abilityCost;
                         if (enemy[1].HasDied)
                         {
                             IncreaseBattleRewards(1);
                         }
-
                         return;
 
                     case 3:
@@ -500,13 +517,16 @@ namespace RPG_Project
                             PlayerChoice();
                             return;
                         }
-
+                        if (enemy[2].HasDied)
+                        {
+                            PlayerChoice(2);
+                            return;
+                        }
                         enemy[2].TakeDamage(player.UseAbility(abilityChosen, enemy[2]));
                         if (enemy[2].HasDied)
                         {
                             IncreaseBattleRewards(2);
                         }
-
                         return;
 
                     case 4:
@@ -528,6 +548,8 @@ namespace RPG_Project
 
         //Takes player input and uses potion if available.
         //NOT WORKING: Update the list shown on the battle screen
+        //Fixed, it's an issue where it was overritting the formatting string. temp fix in place but it's ugly
+        //If there is time will update
         void ChoosePotion()
         {
             while (true)
@@ -687,7 +709,8 @@ namespace RPG_Project
                     //Abilitiy
                     case 2:
                         //TODO ADD ABILITIES
-
+                        printer.PrintSingle("You can't use that ability");
+                        ChooseAbility();
                         return;
                     //Items
                     case 3:
@@ -699,7 +722,8 @@ namespace RPG_Project
                         return;
                     //Run
                     case 4:
-                        //TODO RUNNING FROM FIGHTS
+                        UpdateBoard(1);
+                       
                         return;
                     //Catch for invalid input
                     default:

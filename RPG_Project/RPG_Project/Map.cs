@@ -295,6 +295,10 @@ namespace RPG_Project
                     return 2;
                 case MapTiles.Water:
                     return 3;
+                case MapTiles.Shop:
+                    return 4;
+                case MapTiles.Dungeon:
+                    return 5;
             }
             return 0;
         }

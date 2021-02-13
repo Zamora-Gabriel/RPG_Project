@@ -249,7 +249,7 @@ namespace RPG_Project
         }
 
 
-        public string[] PrepareString(string[] text, int currentHP, int maxHP, string Name, int colour = 0)
+        public string[] PrepareString(string[] text, int currentHP, int maxHP, string Name, int currentPP = 0, int maxPP = 0, int colour = 0)
         {
             string[] returnString = new string[text.Length];
             int windowSize = 15;
@@ -258,7 +258,7 @@ namespace RPG_Project
             for (int i = 0; i < text.Length; i++)
             {
                 string finalString;
-                string processedVar = string.Format(text[i], currentHP, maxHP, Name);
+                string processedVar = string.Format(text[i], currentHP, maxHP, Name, currentPP, maxPP);
                 finalString = string.Format("{0," + ((windowSize / 2) + (processedVar.Length / 2)) + "}", processedVar);
                 returnString[i] = finalString;
             }
