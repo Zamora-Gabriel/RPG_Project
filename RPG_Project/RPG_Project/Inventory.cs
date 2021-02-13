@@ -15,9 +15,13 @@ namespace RPG_Project
     class Inventory
     {
         /***Variables***/
+        const int INVENTORY_CAPACITY = 10;
+
         List<Weapon> weaponList;
         List<Potion> potionList;
         int capacity; //--How many items the user can carry 
+
+        
 
         /***Properties***/
         public List<Weapon> WeaponList
@@ -66,7 +70,7 @@ namespace RPG_Project
 
         private bool CheckCapacity()
         {
-            if (capacity >= 5)
+            if (capacity >= INVENTORY_CAPACITY)
             {
                 Console.WriteLine("Sorry, you can't carry more objects...");
                 return false;
@@ -113,13 +117,13 @@ namespace RPG_Project
         {
             int counter = 0;
             int countPerLine = 0;
-            string[] returnList = new string[weaponList.Count/3];
+            string[] returnList = new string[weaponList.Count];
             foreach (Weapon item in weaponList)
             {
                 returnList[counter] += string.Format("{0}) {1}    ",countPerLine,item.Name);
                 counter++;
             }
-            return null;
+            return returnList;
         }
 
         //Check weapon by name 

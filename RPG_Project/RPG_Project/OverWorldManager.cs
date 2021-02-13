@@ -36,7 +36,7 @@ namespace RPG_Project
         ActiveMenu currentMenu = ActiveMenu.General;
 
         bool hasMap = false;
-
+        bool inLocation = false;
 
         string[] enemyArt = new string[] { "Movement Controls", "", "1) North", "3) West   4) East", "2) South" };
         string[] movementUI = new string[] { "Movement Controls", "", "1) Up",    "3) Left   4) Right", "2) Down", "" ,"5) Back" };
@@ -148,6 +148,7 @@ namespace RPG_Project
         //Movement menu input
         void MovementUi()
         {
+
             int choice;
             while (!player.HasDied)
             {
@@ -164,10 +165,22 @@ namespace RPG_Project
                         currentMenu = ActiveMenu.General;
                         DrawUi();
                         return;
-                }
-                EnterLocation(theMap.ReturnPlayerTileType());
+                } 
+                
                 EncounterGenerator(theMap.ReturnPlayerTileLevel(), theMap.ReturnPlayerTileType());
+
+                //check if on location tile
+                if (theMap.ReturnPlayerTileType() < 4)
+                {
+                    inLocation = false;
+                }
+                //Update map
                 UpdateMap();
+                //Enter location if not already in location
+                if (!inLocation)
+                {
+                    EnterLocation(theMap.ReturnPlayerTileType());
+                }
                 currentMenu = ActiveMenu.General;
             }
             return;
@@ -280,7 +293,54 @@ namespace RPG_Project
         //Current issue with adding weapons to inventory, so moving on for now.
         void InventoryUiWeapons()
         {
-            printer.PrintArray(player.ReturnWeaponList());
+            int choice;
+            int count = 0;
+            string[] formatedString;
+
+            if (player.ReturnWeaponList().Length % 3 != 0)
+            {
+                formatedString = new string[(player.ReturnWeaponList().Length / 3) + 1];
+            }
+            else
+            {
+                formatedString = new string[player.ReturnWeaponList().Length / 3];
+            }
+            
+            for (int i = 0; i < formatedString.Length; i++)
+            {
+                for(int x = 0; x < 3; x++)
+                {
+                    if(count < player.ReturnWeaponList().Length)
+                    {
+                        formatedString[i] += string.Format("{0}", player.ReturnWeaponList()[count]);
+                        count++;
+                    }
+                }
+            }
+            //Format incomming string for better viewing
+
+
+            printer.PrintArray(formatedString);
+            while (!player.HasDied)
+            {
+                //loop through posible choices
+                choice = ReturnChoice();
+                for(int i =0; i < player.ReturnWeaponList().Length; i++)
+                {
+                    if(choice == i)
+                    {
+                        InventoryStats();
+
+                        break;
+                    }
+                    if(choice == player.ReturnWeaponList().Length + 1)
+                    {
+                        currentMenu = ActiveMenu.Inventory;
+                        DrawUi();
+                        break;
+                    }
+                }
+            }
         }
 
         void InventoryStats()
@@ -421,9 +481,20 @@ namespace RPG_Project
                     //TODO ENTER SHOP INTERFACE
                     break;
                 case 5:
+                    //TODO RESTORE HP
+                    inLocation = true;
+                    printer.PrintSingle("You feel restored after a good sleep!");
+                    player.Health += 1000;
+                    player.Energy += 1000;
+                    Console.ReadLine();
+                    break;
+                case 6:
                     //ENTER BOSS FIGHT!!
                     EnemyGenerator enemyGenerator = new EnemyGenerator(player);
                     enemyGenerator.BossBattle();
+                    break;
+                default:
+
                     break;
             }
             return;

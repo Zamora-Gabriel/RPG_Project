@@ -77,14 +77,22 @@ namespace RPG_Project
             while (true)
             {
 
-                
-
+                Weapon weap1 = new Weapon("gauntlet");
+                Weapon weap2 = new Weapon("sword");
                 Printer printer = new Printer();
 
                 Player thePlayer = new Player(ChooseName(printer));
-                thePlayer.Exp += 200;
                 Console.WriteLine("Got here");
                 OverWorldManager worldManager = new OverWorldManager(thePlayer);
+                thePlayer.AddWeaponToInvent(weap1);
+                thePlayer.AddWeaponToInvent(weap1);
+                thePlayer.AddWeaponToInvent(weap2);
+                thePlayer.AddWeaponToInvent(weap2);
+                thePlayer.AddWeaponToInvent(weap1);
+                thePlayer.AddWeaponToInvent(weap1);
+                thePlayer.AddWeaponToInvent(weap1);
+
+                Console.ReadLine();
                 worldManager.DrawUi();
 
                 Console.Clear();

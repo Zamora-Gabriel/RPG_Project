@@ -101,6 +101,10 @@ namespace RPG_Project
                     Console.ForegroundColor = ConsoleColor.DarkMagenta;
                     Console.Write("0");
                     break;
+                case MapTiles.Cabin:
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("C");
+                    break;
             }
         }
     }

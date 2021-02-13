@@ -15,7 +15,8 @@ namespace RPG_Project
         Shop = 83,
         Dungeon = 68,
         Player = 100,
-        Spawn = 66
+        Spawn = 66,
+        Cabin = 67
     }
 
     enum LevelCurve
@@ -74,6 +75,8 @@ namespace RPG_Project
 
         public void GenerateMap()
         {
+            Console.WriteLine(Convert.ToInt32(Char.ToUpper('C')));
+            Console.ReadLine();
             //Generate special tiles
             playerTile = new MapTile(0, 0, MapTiles.Player, LevelCurve.No_Levels);
             defaultTile = new MapTile(0, 0, MapTiles.Mountian, LevelCurve.No_Levels);
@@ -128,6 +131,9 @@ namespace RPG_Project
                             //Position player on spawn;
                             yPosition = y - MAP_HEIGHT/2;
                             xPosition = x - MAP_WIDTH/2;
+                            break;
+                        case 67:
+                            mapData[y, x] = new MapTile(y, x, MapTiles.Cabin, LevelCurve.No_Levels);
                             break;
                         //Dungeon
                         case 68:
@@ -287,7 +293,7 @@ namespace RPG_Project
 
         public int ReturnPlayerTileType()
         {
-            switch(mapData[playerTile.YCord - 1, playerTile.XCord].mapType)
+            switch(mapData[playerTile.YCord, playerTile.XCord].mapType)
             {
                 case MapTiles.GrassLand:
                     return 1;
@@ -297,8 +303,10 @@ namespace RPG_Project
                     return 3;
                 case MapTiles.Shop:
                     return 4;
-                case MapTiles.Dungeon:
+                case MapTiles.Cabin:
                     return 5;
+                case MapTiles.Dungeon:
+                    return 6;
             }
             return 0;
         }
