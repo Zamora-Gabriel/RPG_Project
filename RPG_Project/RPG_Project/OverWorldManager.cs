@@ -352,10 +352,10 @@ namespace RPG_Project
             bool isEquiped = false;
             Weapon weapon = player.ReturnWeaponInt(item);
 
-            printer.PrintSingle(weapon.Name, true, false);
-            printer.PrintSingle(weapon.AtkBonus.ToString(), false, false);
-            printer.PrintSingle(weapon.DefBonus.ToString(), false, false);
-            printer.PrintSingle(weapon.SpdBonus.ToString(), false, false);
+            printer.PrintSingle(string.Format("{0}",weapon.Name), true, false);
+            printer.PrintSingle(string.Format("Attack:  {0}", weapon.AtkBonus), false, false);
+            printer.PrintSingle(string.Format("Defense: {0}", weapon.DefBonus), false, false);
+            printer.PrintSingle(string.Format("Speed:   {0}",weapon.SpdBonus), false, false);
 
             //Check if weapon is equiped
             if (player.EquipedWeapon == weapon)

@@ -139,6 +139,8 @@ namespace RPG_Project
         /// Each printing a seperate part of the menu
         /// 
         /// They could in possibly be combined, but it's terrible enough to read as is.
+        /// 
+        /// TODO: If there is time split this into a new class I think
         /// </summary>
 
         public void PrintTopScreen(string[][] text)
@@ -184,11 +186,11 @@ namespace RPG_Project
                                 break;
                             case 2:
                                 processedLine += string.Format("{0," + ((winWidth/3) + (text[x][y].Length / 2) + processedLine.Length/6) + "}", text[x][y]);
-                                offset = ((windowWidth / 2) - 1 - (processedLine.Length / 4));
+                                offset = ((windowWidth / 2) - 3 - (processedLine.Length / 4));
                                 break;
                             case 3:
                                 processedLine += string.Format("{0," + ((winWidth / 4) + (text[x][y].Length / 3) + processedLine.Length / 10) + "}", text[x][y]);
-                                offset = ((windowWidth / 2) + 2 - (processedLine.Length / 3));
+                                offset = ((windowWidth / 2)- (processedLine.Length / 3));
                                 break;
                         }
                         y++;
@@ -258,6 +260,7 @@ namespace RPG_Project
             for (int i = 0; i < text.Length; i++)
             {
                 string finalString;
+
                 string processedVar = string.Format(text[i], currentHP, maxHP, Name, currentPP, maxPP);
                 finalString = string.Format("{0," + ((windowSize / 2) + (processedVar.Length / 2)) + "}", processedVar);
                 returnString[i] = finalString;

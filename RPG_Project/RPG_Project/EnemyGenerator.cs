@@ -16,9 +16,9 @@ namespace RPG_Project
 
         //Fat frog art "HP: {0}\\{1}", "        ", "   o~\\  ", " |_-__\\", "        ", "{2}" };
 
-        string[] wolfArt = new string[] { "HP: {0}\\{1}", "    /\\_/\\    ", "   / 0  0\\    ", " |   []  | | ", " \\     / / ", " /    \\/   ", "|_║__║_|  ", "{2}" };
-
-
+        string[] wolfArt = new string[] { "HP: {0}\\{1} ", "   /\\_/\\    ", "  / 0  0\\   ", " |   []  | |", "  \\     / / ", "  /    \\/   ", " |_║__║_|   ", "{2}" };
+        string[] jaguarArt = new string[] { "HP: {0}\\{1}   ", "            ", "    /\\/\\    ", "|  | o o|   ", "  \\ \\ =-=/   ", "  \\/    \\   ", "  |_║__║_|  ", "{2}" };
+        string[] snakeArt = new string[] { "HP: {0}\\{1}   ", "            ", "            ", "      __    ", "     /  o>~ ", "___/ /    ", "/_______\\   ", "{2}" };
 
         public EnemyGenerator(Player player)
         {
@@ -35,23 +35,24 @@ namespace RPG_Project
 
         void GrassLandEnemies()
         {
-            grassLandEnemy[0] = new BasicEnemy("Spearman", 13, 2, 1, 5, 10, 5, wolfArt); //Weak wolf
-            grassLandEnemy[1] = new BasicEnemy("Swordman", 10, 3, 1, 5, 5, 5, wolfArt); //Weal jaguar;
-            grassLandEnemy[2] = new BasicEnemy("Archer", 5, 6, 0, 5, 5, 5, wolfArt); //Weal snake;
+            grassLandEnemy[0] = new BasicEnemy("  Spearman   ", 13, 2, 1, 5, 10, 5, wolfArt); //Weak Spearman
+            grassLandEnemy[1] = new BasicEnemy("  Swordman   ", 10, 3, 1, 5, 5, 5, wolfArt); //Weal Swordman;
+            grassLandEnemy[2] = new BasicEnemy("   Archer    ", 5, 6, 0, 5, 5, 5, wolfArt); //Weal Archer;
         }
 
         void ForestEnemies()
         {
-            forestEnemy[0] = new BasicEnemy(" Wolf ", 10, 1, 0, 10, 10, 5, wolfArt); //Weak wolf
-            forestEnemy[1] = new BasicEnemy("Jaguar", 7, 3, 0, 20, 10, 5, wolfArt); //Weal jaguar;
-            forestEnemy[2] = new BasicEnemy("Snake", 5, 2, 0, 10, 5, 3, wolfArt); //Weal snake;
+            forestEnemy[0] = new BasicEnemy("    Wolf     ", 10, 1, 0, 10, 10, 5, wolfArt); //Weak wolf
+            forestEnemy[1] = new BasicEnemy("   Jaguar    ", 7, 3, 0, 20, 10, 5, jaguarArt); //Weal jaguar;
+            forestEnemy[2] = new BasicEnemy("    Snake    ", 5, 2, 0, 10, 5, 3, snakeArt); //Weal snake;
         }
 
         void WaterEnemies()
         {
-            waterEnemy[0] = new BasicEnemy("Fat Frog",5,1,0,10,2,2, wolfArt); //Weak wolf
-            waterEnemy[1] = new BasicEnemy("Fish",5,4,0,25,5,5,wolfArt); //Weal jaguar;
-            waterEnemy[2] = new BasicEnemy("Lobster",15,2,4,10,10,5,wolfArt); //Weal snake;
+
+            waterEnemy[0] = new BasicEnemy("  Fat Frog   ",5,1,0,10,2,2, wolfArt); //Weak wolf
+            waterEnemy[1] = new BasicEnemy("    Fish     ",5,4,0,25,5,5,wolfArt); //Weal jaguar;
+            waterEnemy[2] = new BasicEnemy("   Lobster   ",15,2,4,10,10,5,wolfArt); //Weal snake;
         }
 
         void Boss()
@@ -131,9 +132,24 @@ namespace RPG_Project
 
         public void BossBattle()
         {
-            Boss();
-            BasicEnemy[] theEnemies = new BasicEnemy[1];
-            theEnemies[0] = boss;
+            //Boss();
+            //BasicEnemy[] theEnemies = new BasicEnemy[1];
+            //theEnemies[0] = boss;
+            //battleManager = new BattleManager(player, theEnemies);
+            //battleManager.BattleLoop();
+        }
+
+
+        public void forceEncounter(int enemies)
+        {
+            BasicEnemy[] theEnemies = new BasicEnemy[enemies];
+            for (int i = 0; i < enemies; i++)
+            {
+                ForestEnemies();
+                int rnd = rand.Next(0, forestEnemy.Length);
+                theEnemies[i] = forestEnemy[rnd];
+            }
+
             battleManager = new BattleManager(player, theEnemies);
             battleManager.BattleLoop();
         }

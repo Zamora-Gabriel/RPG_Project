@@ -397,7 +397,7 @@ namespace RPG_Project
             Console.WriteLine("{0} Stats", Name);
             Console.WriteLine("Level: {0}", Level);
             Console.WriteLine("Exp: {0}", Exp);
-            if(equipedWeapon != "")
+            if(equipedWeapon != null)
             {
                 Console.WriteLine("Equiped Weapon: {0}", equipedWeapon);
             }

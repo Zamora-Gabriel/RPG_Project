@@ -68,6 +68,8 @@ namespace RPG_Project
             //enemies[1] = new BasicEnemy("tmp ", printer);
             //enemies[2] = new BasicEnemy("tmp ", printer);
 
+            EnemyGenerator generator = new EnemyGenerator(player);
+            generator.forceEncounter(1);
 
             //Starts Game
             GameLoop();
