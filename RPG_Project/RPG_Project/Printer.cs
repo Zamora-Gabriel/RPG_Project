@@ -52,7 +52,7 @@ namespace RPG_Project
             if (printTop)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("{0," + ((winWidth) + ((border.Length / 2))) + "}", topBorder);
+                Console.WriteLine("{0," + ((winWidth) + ((border.Length / 2) +1)) + "}", topBorder);
             }
 
             //loop through array prints each line
@@ -77,7 +77,7 @@ namespace RPG_Project
             if (printBottom)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("{0," + ((winWidth) + ((border.Length / 2))) + "}", bottomBorder);
+                Console.WriteLine("{0," + ((winWidth) + ((border.Length / 2)+1)) + "}", bottomBorder);
             }
         }
 

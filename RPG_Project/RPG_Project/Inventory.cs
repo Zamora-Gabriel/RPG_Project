@@ -108,6 +108,20 @@ namespace RPG_Project
             return null;
         }
 
+        //Return list of weapons
+        public string[] ReturnWeaponList()
+        {
+            int counter = 0;
+            int countPerLine = 0;
+            string[] returnList = new string[weaponList.Count/3];
+            foreach (Weapon item in weaponList)
+            {
+                returnList[counter] += string.Format("{0}) {1}    ",countPerLine,item.Name);
+                counter++;
+            }
+            return null;
+        }
+
         //Check weapon by name 
         public Weapon CheckWeaponByName(string name)
         {
@@ -244,21 +258,27 @@ namespace RPG_Project
         public int[,] ReturnPotionCount()
         {
             int[,] potions = new int[2, 3];
+            for (int i = 0; i < potions.GetLength(0); i++)
+            {
+                for(int y = 0; y < potions.GetLength(1); y++)
+                {
+                    potions[i, 0] = 0;
+                }
+            }
             int potionType = 0;
-
             var potiont = (PotionType)0;
+
             foreach (Potion item in potionList)
             {
-                if (item.Type == (int)PotionType.EnergyPotion)
-                {
-                    //if it's a Energy potion, change the default 
-                    potionType = 1;
-                    potiont = (PotionType)1;
-                }
-                else
-                {
-                    potionType = 0;
-                }
+                //if (item.Type == (int)PotionType.EnergyPotion)
+                //{
+                //    //if it's a Energy potion, change the default 
+                //    potiont = (PotionType)1;
+                //}
+                //else
+                //{
+                //    //potionType = 1;
+                //}
                 switch (item.Quality)
                 {
                     case 0:
@@ -273,6 +293,7 @@ namespace RPG_Project
                     default:
                         break;
                 }
+
             }
             return potions;
         }

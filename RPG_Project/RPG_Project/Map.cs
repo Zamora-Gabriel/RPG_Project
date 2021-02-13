@@ -14,7 +14,8 @@ namespace RPG_Project
         Water = 87,
         Shop = 83,
         Dungeon = 68,
-        Player = 100
+        Player = 100,
+        Spawn = 66
     }
     class Map
     {
@@ -64,12 +65,15 @@ namespace RPG_Project
 
         public void GenerateMap()
         {
-
+            Console.WriteLine(characterNmb = Convert.ToInt32(Char.ToUpper('B')));
+            Console.ReadLine();
             //Generate special tiles
             playerTile = new MapTile(0, 0, MapTiles.Player);
             defaultTile = new MapTile(0, 0, MapTiles.Mountian);
-            //TODO Read document and generate the map
+
+            //TODO Change this to a relative path
             reader = File.OpenText("D:/0_School Work/GitHub/Intro_To_Html5/New folder/map/test.txt");
+
             //Finds maximum height and width of map
             Console.WriteLine("Generating map...");
             while (true)
@@ -110,6 +114,14 @@ namespace RPG_Project
                     }
                     switch (characterNmb)
                     {
+                        
+                        case 66:
+                            mapData[y, x] = new MapTile(y, x, MapTiles.Spawn);
+
+                            //Position player on spawn;
+                            yPosition = y - MAP_HEIGHT/2;
+                            xPosition = x - MAP_WIDTH/2;
+                            break;
                         //Dungeon
                         case 68:
                             mapData[y, x] = new MapTile(y, x, MapTiles.Dungeon);
@@ -181,16 +193,36 @@ namespace RPG_Project
             }
         }
 
-        void UpdatePlayerMap()
+        public void UpdatePlayerMap()
         {
+
+            //Various printing variables, used for the centering and border of the map
+
+            int winWidth = (Console.WindowWidth / 2);
+            string border = new String('─', MAP_WIDTH+2);
+            string topBorder = ($"┌{border}┐");
+            string bottomBorder = ($"└{border}┘");
+            string leftBorder = String.Format("{0," + ((winWidth) - (MAP_WIDTH / 2)) + "}", "│ ");
+            string rightBoreder = String.Format("{0}", " │");
+
+            //Clears screen
             Console.Clear();
 
+            //Prints Top Border
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("{0," + ((winWidth+ 1) + ((border.Length / 2))) + "}", topBorder);
+
+            //Starts loop to print the map data
             for (int y = 0; y < MAP_HEIGHT; y++)
             {
+                //Prints left border and indents
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write(leftBorder);
+
+                //Loop for y axis
                 if (y + yPosition >= mapData.GetLength(0) || y + yPosition < 0)
                 {
-                   // MapTile tile = new MapTile(0, 0, MapTiles.Mountian);
-                    //tile.PrintSelf();
+                    //If out of bounds print default tile
                     for(int x = 0; x < MAP_WIDTH; x++)
                     {
                         defaultTile.PrintSelf();
@@ -198,8 +230,10 @@ namespace RPG_Project
                 }
                 else
                 {
+                    //Loop for x axis
                     for (int x = 0; x < MAP_WIDTH; x++)
                     {
+                        //If out of bounds print default tile
                         if (x + xPosition >= width || x + xPosition < 0)
                         {
                             //MapTile tile = new MapTile(0, 0, MapTiles.Mountian);
@@ -207,60 +241,34 @@ namespace RPG_Project
                         }
                         else
                         {
-                            //Find Center of Map
+                            //Find Center of Map and print player there
                             if(y == MAP_HEIGHT/2 && x == MAP_WIDTH / 2)
                             {
-                                //MapTile player = new MapTile(0, 0, MapTiles.Player);
                                 playerTile.YCord = y + yPosition;
                                 playerTile.XCord = x + xPosition;
                                 playerTile.PrintSelf();
                             }
                             else
                             {
+
                                 mapData[y + yPosition, x + xPosition].PrintSelf();
                             }
                         }
 
                     }
                 }
+
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write(rightBoreder);
                 Console.Write("\n");
+
             }
-            MovePlayer();
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("{0," + ((winWidth + 1) + ((border.Length / 2))) + "}", bottomBorder);
         }
 
-        void MovePlayer()
-        {
-
-            //TODO REPROGRAM ALL OF THIS. THIS IS TEMP MOVEMENMT CODE FOR TESTING ONLY
-            int moveDirection;
-            while (true)
-            {
-                try
-                {
-                    moveDirection = int.Parse(Console.ReadLine());
-                }
-                catch
-                {
-                    moveDirection = 0;
-                }
-
-                CheckSurroundings(moveDirection);
-                if (moveDirection == 3)
-                {
-                    xPosition++;
-                    UpdatePlayerMap();
-                    return;
-                }
-                if (moveDirection == 4)
-                {
-                    xPosition--;
-                    UpdatePlayerMap();
-                    return;
-                }
-            }
-        }
-
-        void CheckSurroundings(int direction)
+        public void CheckSurroundings(int direction)
         {
             switch (direction)
             {
@@ -270,11 +278,10 @@ namespace RPG_Project
                     {
                         if (mapData[playerTile.YCord -1, playerTile.XCord].mapType == MapTiles.Mountian)
                         {
-                            UpdatePlayerMap();
                             break;
                         }
                         yPosition--;
-                        UpdatePlayerMap();
+                        //UpdatePlayerMap();
                     }
                     break;
 
@@ -284,11 +291,10 @@ namespace RPG_Project
                     {
                         if (mapData[playerTile.YCord + 1, playerTile.XCord].mapType == MapTiles.Mountian)
                         {
-                            UpdatePlayerMap();
                             break;
                         }
                         yPosition++;
-                        UpdatePlayerMap();
+                        //UpdatePlayerMap();
                     }
                     break;
 
@@ -298,11 +304,10 @@ namespace RPG_Project
                     {
                         if (mapData[playerTile.YCord, playerTile.XCord - 1].mapType == MapTiles.Mountian)
                         {
-                            UpdatePlayerMap();
                             break;
                         }
                         xPosition--;
-                        UpdatePlayerMap();
+                        //UpdatePlayerMap();
                     }
                     break;
                 case 4:
@@ -311,11 +316,10 @@ namespace RPG_Project
                     {
                         if (mapData[playerTile.YCord, playerTile.XCord + 1].mapType == MapTiles.Mountian)
                         {
-                            UpdatePlayerMap();
                             break;
                         }
                         xPosition++;
-                        UpdatePlayerMap();
+                        //UpdatePlayerMap();
                     }
                     break;
             }

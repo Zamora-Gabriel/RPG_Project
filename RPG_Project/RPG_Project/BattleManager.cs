@@ -22,7 +22,8 @@ namespace RPG_Project
     {
 
         string[] bottomButtons = new string[] { "", "[ 1) Attack ]    [ 2) Abilites ]", "[ 3) Items  ]    [ 4) Run      ]" };
-        string[] bottumPotionList = new string[] {"[ 1) Normal-HP Potion: {0}] [ 2) Super-HP Potion: {1} ] [ 2) Mega-HP Potion: {2}]", "[ 1) Normal-PP Potion: {0}] [ 2) Super-PP Potion: {1} ] [ 2) Mega-PP Potion: {2}]","TmpBack" };
+        readonly string[] bottumPotionList = new string[] {"[ 1) Normal-HP Potion: {0}] [ 2) Super-HP Potion: {1} ] [ 2) Mega-HP Potion: {2}]", "[ 1) Normal-PP Potion: {0}] [ 2) Super-PP Potion: {1} ] [ 2) Mega-PP Potion: {2}]","TmpBack" };
+        string[] potionListCopy = new string[3];
         string[] bottomAttacks;
         string[] bottomAbilitiesList = new string[] {"[ 1){0}] [ 2){1} ] [ 3){2}]", "[ 4){0}] [ 5){1} ] [ 6){2}]","TmpBack"};
 
@@ -219,12 +220,21 @@ namespace RPG_Project
                 case 3:
                     //TODO pull list of items in inventory and options to use
                     int[,] potionList = player.ReturnPotions();
-                    for (int i = 0; i < bottumPotionList.Length-1; i++)
+                    int count = 0;
+
+                    //Copy string to standard string
+                    foreach(string text in bottumPotionList)
                     {
-                        bottumPotionList[i] = string.Format(bottumPotionList[i], potionList[i,0], potionList[i, 1], potionList[i, 2]);
+                        potionListCopy[count] = text;
+                        count++;
                     }
-                    bottumPotionList[2] = string.Format("[ 7): Return to menu ]");
-                    printer.PrintBottomScreen(bottumPotionList);
+
+                    for (int i = 0; i < potionListCopy.Length-1; i++)
+                    {
+                        potionListCopy[i] = string.Format(potionListCopy[i], potionList[i,0], potionList[i, 1], potionList[i, 2]);
+                    }
+                    potionListCopy[2] = string.Format("[ 7): Return to menu ]");
+                    printer.PrintBottomScreen(potionListCopy);
                     break;
                 case 4:
                     //TODO Runaway

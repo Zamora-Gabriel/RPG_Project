@@ -32,15 +32,17 @@ namespace RPG_Project
 
             player.PrintInvent();
 
+            
+            
             player.AddPotionToInvent(pot1);
-            player.AddPotionToInvent(pot1);
+            player.AddPotionToInvent(pot2);
             player.AddPotionToInvent(pot2);
             player.AddPotionToInvent(pot2);
             player.AddWeaponToInvent(weap2);
             player.EquipWeapon(0);
             player.EquipWeapon(1);
             player.ChangeWeapons(0, 1);
-
+            player.AddWeaponToInvent(weap2);
 
             player.PrintStats();
 
@@ -68,8 +70,8 @@ namespace RPG_Project
 
             Console.ReadLine();
             Console.Clear();
-            Map newMap = new Map();
-            newMap.GenerateMap();
+            OverWorldManager worldManager = new OverWorldManager(player);
+            worldManager.DrawUi();
             Console.ReadLine();
             BattleManager newManager = new BattleManager(printer, player, enemies);
 

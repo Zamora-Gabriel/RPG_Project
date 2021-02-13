@@ -86,6 +86,10 @@ namespace RPG_Project
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     Console.Write("P");
                     break;
+                case MapTiles.Spawn:
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.Write("0");
+                    break;
             }
         }
     }

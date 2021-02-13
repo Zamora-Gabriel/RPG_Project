@@ -246,6 +246,11 @@ namespace RPG_Project
             Health -= damage;
         }
 
+        public string[] ReturnWeaponList()
+        {
+            return invent.ReturnWeaponList();
+        }
+
         public void EquipWeapon(int weapNum)
         {
             //Case the user already has an equiped weapon
@@ -365,13 +370,6 @@ namespace RPG_Project
             return (invent.ReturnPotionCount());
         }
 
-        /// <summary>
-        /// TODO: Make player correctly use potions
-        /// Not to sure why but it's not currently finding potions the player has when called externally
-        /// Possibly needs to pass more than just the potNum and include a second int or a bool for potion type
-        /// </summary>
-
-        
         public void DrinkPotion(int option)
         {
             //check if user has that potion on inventory
