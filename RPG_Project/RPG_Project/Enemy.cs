@@ -40,6 +40,20 @@ namespace RPG_Project
 
         }
 
+        public Enemy(string name, int maxHealth, int attack, int defense, int speed, int expValue, int moneyValue)
+        {
+
+            this.name = name;
+            this.expValue = expValue;
+            this.moneyValue = moneyValue;
+            this.maxHealth = maxHealth;
+            health = maxHealth;
+            this.speed = speed;
+            this.attack = attack;
+            this.defense = defense;
+
+        }
+
         /*Getters and Setters*/
         //Non combat properties
         public string Name

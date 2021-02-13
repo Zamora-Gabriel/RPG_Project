@@ -64,16 +64,16 @@ namespace RPG_Project
             Printer printer = new Printer();
 
             BasicEnemy[] enemies = new BasicEnemy[3];
-            enemies[0] = new BasicEnemy("tmp ", printer);
-            enemies[1] = new BasicEnemy("tmp ", printer);
-            enemies[2] = new BasicEnemy("tmp ", printer);
+            //enemies[0] = new BasicEnemy("tmp ", printer);
+            //enemies[1] = new BasicEnemy("tmp ", printer);
+            //enemies[2] = new BasicEnemy("tmp ", printer);
 
             Console.ReadLine();
             Console.Clear();
             OverWorldManager worldManager = new OverWorldManager(player);
             worldManager.DrawUi();
             Console.ReadLine();
-            BattleManager newManager = new BattleManager(printer, player, enemies);
+            BattleManager newManager = new BattleManager(player, enemies);
 
             newManager.BattleLoop();
         }

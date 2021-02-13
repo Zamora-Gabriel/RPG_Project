@@ -174,7 +174,7 @@ namespace RPG_Project
         public int Money
         {
             get { return money; }
-            private set
+            set
             {
                 money = value;
             }

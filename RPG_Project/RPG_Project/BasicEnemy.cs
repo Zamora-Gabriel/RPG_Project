@@ -23,13 +23,13 @@ namespace RPG_Project
         AiPersonality aiType = AiPersonality.Neutral;
 
         //TODO move printer to the base enemy class
-        Printer printer;
+        Printer printer = new Printer();
 
         Random random = new Random();
         
 
         //Constructor 
-        public BasicEnemy(string name, Printer printer) : base(name)
+        public BasicEnemy(string name, int maxHealth, int attack, int defense, int speed, int expValue, int moneyValue) : base(name, maxHealth, attack, defense, speed, expValue, moneyValue)
         {
             
             this.printer = printer;

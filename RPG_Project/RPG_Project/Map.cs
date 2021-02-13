@@ -20,7 +20,7 @@ namespace RPG_Project
 
     enum LevelCurve
     {
-        No_Levels,
+        No_Levels = 0,
         Low_Level,
         Mid_Level,
         High_Level,
@@ -135,11 +135,11 @@ namespace RPG_Project
                             break;
                         //Forest
                         case 70:
-                            mapData[y, x] = new MapTile(y, x, MapTiles.Forest, LevelCurve.No_Levels);
+                            mapData[y, x] = new MapTile(y, x, MapTiles.Forest, ReturnDangerLevel(y,x));
                             break;
                         //GrassLand
                         case 71:
-                            mapData[y, x] = new MapTile(y, x, MapTiles.GrassLand, LevelCurve.No_Levels);
+                            mapData[y, x] = new MapTile(y, x, MapTiles.GrassLand, ReturnDangerLevel(y,x));
                             break;
                         //Mountain
                         case 77:
@@ -155,7 +155,7 @@ namespace RPG_Project
                             break;
                         //Water
                         case 87:
-                            mapData[y, x] = new MapTile(y, x, MapTiles.Water, LevelCurve.No_Levels);
+                            mapData[y, x] = new MapTile(y, x, MapTiles.Water, ReturnDangerLevel(y,x));
                             break;
                             //Catch for no char default to mountain
                         //case 65535:
@@ -164,28 +164,32 @@ namespace RPG_Project
                     }
                 }
             }
-
-            //reader = new StreamReader("~/map/test.txt");
-
-            //do
-            //{
-            //    string character = (string)reader.ReadLine();
-            //    Console.Write(character);
-
-            //    
-
-            //} while (!reader.EndOfStream);
-
-
-            //FInd maximum width
-
-            //Read character
-            //Create object after that character
-            //Set object to map position
+            //Closes access to file
+            reader.Close();
             GenerateVisualMap();
             //UpdatePlayerMap();
         }
 
+        LevelCurve ReturnDangerLevel(int y, int x)
+        {
+            LevelCurve returningCurve = LevelCurve.No_Levels;
+            if(y <= 24 && x <= 39)
+            {
+                returningCurve = LevelCurve.Max_Level;
+            }
+            else if(y <= 24 && x > 39)
+            {
+                returningCurve = LevelCurve.High_Level;
+            }else if(y > 24 && x < 33)
+            {
+                returningCurve = LevelCurve.Mid_Level;
+            }
+            else
+            {
+                returningCurve = LevelCurve.Low_Level;
+            }
+            return returningCurve;
+        }
         void GenerateVisualMap()
         {
             //Go through map, printing each item.
@@ -276,6 +280,26 @@ namespace RPG_Project
             Console.WriteLine("{0," + ((winWidth + 1) + ((border.Length / 2))) + "}", bottomBorder);
         }
 
+        //Returns level of tile player is one
+        public int ReturnPlayerTileLevel()
+        {
+            return (int)mapData[playerTile.YCord, playerTile.XCord].levelRange;
+        }
+
+        public int ReturnPlayerTileType()
+        {
+            switch(mapData[playerTile.YCord - 1, playerTile.XCord].mapType)
+            {
+                case MapTiles.GrassLand:
+                    return 1;
+                case MapTiles.Forest:
+                    return 2;
+                case MapTiles.Water:
+                    return 3;
+            }
+            return 0;
+        }
+
         public void CheckSurroundings(int direction)
         {
             switch (direction)
@@ -283,15 +307,15 @@ namespace RPG_Project
                 case 1:
                     //While moving up
                     if (playerTile.YCord != 0)
-                    {
+                    {   
+
                         if (mapData[playerTile.YCord -1, playerTile.XCord].mapType == MapTiles.Mountian)
                         {
-                            break;
+                            return;
                         }
                         yPosition--;
-                        //UpdatePlayerMap();
                     }
-                    break;
+                    return;
 
                 case 2:
                     //While moving down
@@ -299,12 +323,11 @@ namespace RPG_Project
                     {
                         if (mapData[playerTile.YCord + 1, playerTile.XCord].mapType == MapTiles.Mountian)
                         {
-                            break;
+                            return;
                         }
                         yPosition++;
-                        //UpdatePlayerMap();
                     }
-                    break;
+                    return;
 
                 case 3:
                     //While moving left
@@ -312,24 +335,22 @@ namespace RPG_Project
                     {
                         if (mapData[playerTile.YCord, playerTile.XCord - 1].mapType == MapTiles.Mountian)
                         {
-                            break;
+                            return;
                         }
                         xPosition--;
-                        //UpdatePlayerMap();
                     }
-                    break;
+                    return;
                 case 4:
                     //While moving right
                     if (playerTile.XCord != mapData.GetLength(1))
                     {
                         if (mapData[playerTile.YCord, playerTile.XCord + 1].mapType == MapTiles.Mountian)
                         {
-                            break;
+                            return;
                         }
                         xPosition++;
-                        //UpdatePlayerMap();
                     }
-                    break;
+                    return;
             }
         }
     }

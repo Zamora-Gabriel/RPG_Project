@@ -18,11 +18,19 @@ namespace RPG_Project
     }
     class OverWorldManager
     {
+        const int ENCOUNTER_CHANCE = 25;
+        const int ENCOUNTER_CHANCE_FUll = 180;
+
         Printer printer = new Printer();
+
 
         Map theMap = new Map();
 
         Player player;
+
+        Random rand = new Random();
+
+       
 
         ActiveMenu currentMenu = ActiveMenu.General;
 
@@ -137,14 +145,8 @@ namespace RPG_Project
                 switch (choice)
                 {
                     case 1:
-                        theMap.CheckSurroundings(choice);
-                        break;
                     case 2:
-                        theMap.CheckSurroundings(choice);
-                        break;
                     case 3:
-                        theMap.CheckSurroundings(choice);
-                        break;
                     case 4:
                         theMap.CheckSurroundings(choice);
                         break;
@@ -153,8 +155,8 @@ namespace RPG_Project
                         currentMenu = ActiveMenu.General;
                         DrawUi();
                         return;
-
                 }
+                EncounterGenerator(theMap.ReturnPlayerTileLevel(), theMap.ReturnPlayerTileType());
                 UpdateMap();
             }
         }
@@ -318,13 +320,70 @@ namespace RPG_Project
 
 
         //TODO EnterCombat
-        void EncounterGenerator()
+        void EncounterGenerator(int danger, int tileType)
         {
+            Console.WriteLine(danger);
+            //Check danger level if none return
+            if (danger == 0)
+            {
+                return;
+            }
 
+            //Check if encounter should happen based on percent
+            int randResult = rand.Next(0, ENCOUNTER_CHANCE_FUll);
+            if(randResult > ENCOUNTER_CHANCE)
+            {
+                return;
+            }
+
+            //Make sure tile player is one can have encounters;
+            if (tileType == 0)
+            {
+                return;
+            }
+
+            //Generate encounter based on difficulty and terrain type
+            switch (tileType)
+            {
+                case 1:
+                    GrassLandEncounterGen(danger);
+                    break;
+                case 2:
+                    ForestEncounterGen(danger);
+                    break;
+                case 3:
+                    WaterEncounterGen(danger);
+                    break;
+            }
+
+            //Start combat
         }
 
         //TODO Enter dungeon
+        void GrassLandEncounterGen(int danger)
+        {
+            EnemyList enemylist = new EnemyList(player);
+            switch (danger)
+            {
+                case 1:
+                    enemylist.EasyForestEncounter();
+                    break;
+            }
+        }
+        void ForestEncounterGen(int danger)
+        {
+            EnemyList enemylist = new EnemyList(player);
+            switch (danger)
+            {
+                case 1:
+                    enemylist.EasyForestEncounter();
+                    break;
+            }
+        }
+        void WaterEncounterGen(int danger)
+        {
 
+        }
 
     }
 }

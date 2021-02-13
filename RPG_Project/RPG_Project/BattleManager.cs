@@ -31,10 +31,10 @@ namespace RPG_Project
 
         Player player;
         BasicEnemy[] enemy;
-        Printer printer;
+        Printer printer = new Printer();
 
         int xpFromBattle;
-        int goldFromBattle;
+        int moneyFromBattle;
 
         int deadEnemies;
 
@@ -44,14 +44,14 @@ namespace RPG_Project
 
         int[] CombatentsSpeed = new int[4];
 
-        public BattleManager(Printer printer, Player player, BasicEnemy[] newenemy)
+        public BattleManager(Player player, BasicEnemy[] newenemy)
         {
-            this.printer = printer;
             this.player = player;
 
             enemy = new BasicEnemy[newenemy.Length];
             for (int i = 0; i < newenemy.Length; i++)
             {
+                Console.WriteLine("Enemy {0} set", newenemy[i].Name);
                 this.enemy[i] = newenemy[i];
             }
         }
@@ -59,7 +59,7 @@ namespace RPG_Project
 
         public void BattleLoop()
         {
-            while (current != BattleState.End)
+            while(true)
             {
                 switch (current)
                 {
@@ -95,10 +95,17 @@ namespace RPG_Project
                         SwitchState();
                         break;
                     case BattleState.End:
-                        break;
+                        player.Exp += xpFromBattle;
+                        player.Money += moneyFromBattle;
+                        printer.PrintSingle("You win!", true, false);
+                        string rewards = string.Format("You gained {0} money!", moneyFromBattle);
+                        printer.PrintSingle(rewards, false, false);
+                        rewards = string.Format("You gained {0} experience!", moneyFromBattle);
+                        printer.PrintSingle(rewards, false, true);
+                        Console.ReadLine();
+                        return;
                 }
             }
-
         }
 
 
@@ -106,15 +113,18 @@ namespace RPG_Project
         {
             //If all enemies or player is dead end combat
             deadEnemies = 0;
-            foreach(Enemy enmy in enemy)
+            foreach (Enemy allEnemies in enemy)
             {
-                if (enmy.HasDied)
+                if (allEnemies.HasDied)
+                {
                     deadEnemies++;
-                if(deadEnemies == enemy.Length)
+                }
+                    
+                if (deadEnemies == enemy.Length)
                 {
                     current = BattleState.End;
                     return;
-                }    
+                }
             }
             //Determine next move by speed. 
             //Currently the player or enemy can move multiple times in a row if they have high enough speed.
@@ -149,11 +159,7 @@ namespace RPG_Project
                     {
                         CombatentsSpeed[i + 1] += enemy[0].Speed;
                     }
-                    
                 }
-                
-
-
             }
         }
 
@@ -246,7 +252,8 @@ namespace RPG_Project
         //Depending on the number of enemies on screen selections have different effects
         void ChooseAttack()
         {
-            while (true)
+            bool choosing = true;
+            while (choosing)
             {
                 int playerChoice = ReturnChoice();
                 switch (playerChoice)
@@ -256,55 +263,75 @@ namespace RPG_Project
                         if (enemy[0].HasDied)
                         {
                             PlayerChoice(1);
-                            return;
                         }
-                        //Attack enemy
-                        enemy[0].TakeDamage(player.AtkDamage(enemy[0]));
-                        //if the enemy dies increase battle rewards
-                        if (enemy[0].HasDied)
+                        else
                         {
-                            IncreaseBattleRewards(0);
+                            //Attack enemy
+                            enemy[0].TakeDamage(player.AtkDamage(enemy[0]));
+                            //if the enemy dies increase battle rewards
+                            if (enemy[0].HasDied)
+                            {
+                                IncreaseBattleRewards(0);
+                            }
                         }
-                        return;
+                        choosing = false;
+                        break;
 
                     case 2:
                         if (enemy.Length <= 1)
                         {
                             UpdateBoard();
                             PlayerChoice();
-                            return;
+                            break;
                         }
 
-                        enemy[1].TakeDamage(player.AtkDamage(enemy[1]));
                         if (enemy[1].HasDied)
                         {
-                            IncreaseBattleRewards(1);
+                            PlayerChoice(1);
                         }
-
-                        return;
-
+                        else
+                        {
+                            //Attack enemy
+                            enemy[1].TakeDamage(player.AtkDamage(enemy[1]));
+                            //if the enemy dies increase battle rewards
+                            if (enemy[1].HasDied)
+                            {
+                                IncreaseBattleRewards(1);
+                            }
+                        }
+                        choosing = false;
+                        break;
                     case 3:
                         if (enemy.Length <= 2)
                         {
                             UpdateBoard();
                             PlayerChoice();
-                            return;
+                            break;
                         }
 
-                        enemy[2].TakeDamage(player.AtkDamage(enemy[2]));
                         if (enemy[2].HasDied)
                         {
-                            IncreaseBattleRewards(2);
+                            PlayerChoice(1);
                         }
-
-                        return;
+                        else
+                        {
+                            //Attack enemy
+                            enemy[2].TakeDamage(player.AtkDamage(enemy[2]));
+                            //if the enemy dies increase battle rewards
+                            if (enemy[2].HasDied)
+                            {
+                                IncreaseBattleRewards(2);
+                            }
+                        }
+                        choosing = false;
+                        break;
 
                     case 4:
                         if(enemy.Length <= 3)
                         {
                             UpdateBoard();
                             PlayerChoice();
-                            return;
+                            break;
                         }
                         break;
 
@@ -651,7 +678,7 @@ namespace RPG_Project
         void IncreaseBattleRewards(int enemyPos)
         {
             xpFromBattle += enemy[enemyPos].ExpValue;
-            goldFromBattle += enemy[enemyPos].MoneyValue;
+            moneyFromBattle += enemy[enemyPos].MoneyValue;
         }
     }
-    }
+}

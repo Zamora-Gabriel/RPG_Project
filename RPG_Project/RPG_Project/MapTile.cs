@@ -52,6 +52,15 @@ namespace RPG_Project
             }
         }
 
+        public LevelCurve LevelRange
+        {
+            get { return levelRange; }
+            private set
+            {
+                levelRange = value;
+            }
+        }
+
         public void PrintSelf()
         {
             switch (mapType)
