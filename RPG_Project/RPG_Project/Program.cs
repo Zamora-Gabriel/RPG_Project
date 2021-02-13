@@ -41,6 +41,7 @@ namespace RPG_Project
             player.EquipWeapon(1);
             player.ChangeWeapons(0, 1);
 
+
             player.PrintStats();
 
             player.PrintInvent();
@@ -52,6 +53,8 @@ namespace RPG_Project
             Console.WriteLine("Current Health {0}:", player.Health);
 
             player.DrinkPotion(0);
+
+            player.PrintInvent();
 
             player.RcvDamage(6);
             Console.WriteLine("Current Health {0}:", player.Health);

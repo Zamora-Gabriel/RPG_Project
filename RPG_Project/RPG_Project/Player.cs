@@ -8,8 +8,18 @@ using System.Threading.Tasks;
 namespace RPG_Project
 {
 
-    //TODO: Uncomment when weapons are available
-    //TODO: Think of inventory Implementation
+    enum Abilities
+    {
+        /// <summary>
+        /// Temporary skills, list can be reduced or added
+        /// </summary>
+        Heal = 1, //--- heals 5 hp multiplied by x which increases each 5 levels starting at 1
+        Shatter, //--- Reduces 1/3 of enemy's defense for that attack only  
+        AvengerSoul, //--- Adds half of player's current accrued damage to the attack
+        Devour, //--- Takes 50% damage dealt to opponent as healing
+        WindGod //--- Five attacks at 50% of damage
+    }
+
     //Maybe: Energy/Skills
     class Player
     {
@@ -361,12 +371,13 @@ namespace RPG_Project
         /// Possibly needs to pass more than just the potNum and include a second int or a bool for potion type
         /// </summary>
 
-        public void DrinkPotion(int potNum)
+        
+        public void DrinkPotion(int option)
         {
             //check if user has that potion on inventory
             try
             {
-                Potion pot = invent.CheckPotion(potNum);
+                Potion pot = invent.CheckPotion(option);
                 if (pot == null)
                 {
                     //Throw exception when no matching potion is found
@@ -398,5 +409,105 @@ namespace RPG_Project
             }
         }
 
+        /***Abilities***/
+
+        public string[,] ReturnUnlockedAbilities()
+        {
+            int row = 3;
+            int column = 2;
+            string[,] abilityList = new string[column, row];
+            int multiplier = 1;
+            var abilityName = (Abilities)1;
+
+            for(int i = 0; i <= column-1; i++)
+            {
+                for (int j = 0; j <= row-1; j++)
+                {
+                    //check level for locked or unlocked abilities
+                    if (Level >= (1 * (multiplier)))
+                    {
+                        abilityList[i, j] = abilityName.ToString();
+                    }
+                    else
+                    {
+                        abilityList[i, j] = "Locked";
+                    }
+                    multiplier++;
+                }
+            }
+
+            return abilityList;
+        }
+
+        public int UseAbility(int option, Enemy enemy)
+        {
+            int outgoingDmg = Attack;
+
+            switch (option)
+            {
+                /*
+                 * Heal = 0, //--- heals 5 hp multiplied by x which increases each 5 levels starting at 1
+                 * Shatter, //--- Reduces 1/3 of enemy's defense for that attack only  
+                 * AvengerSoul, //--- Adds half of player's current accrued damage to the attack
+                 * Devour, //--- Takes 50% damage dealt to opponent as healing
+                 * WindGod //--- Five attacks at 50% of damage Translation = ((outgoingDmg/2)*5)
+                 */
+
+                case 1:
+                    //Heal
+                    int multiplier = Level/5;
+                    if (multiplier <= 0)
+                    {
+                        multiplier = 1;
+                    }
+                    Health += 5 * multiplier;
+                    outgoingDmg = 0;
+                    break;
+                case 2:
+                    //Shatter
+                    outgoingDmg -= enemy.Defense;
+                    outgoingDmg -= (enemy.Defense*2) / 3;
+                    if (outgoingDmg < 0)
+                    {
+                        outgoingDmg = 0;
+                        break;
+                    }
+                    break;
+                case 3:
+                    //AvengerSoul
+                    int accruedDmg = maxHealth - Health;
+                    outgoingDmg -= enemy.Defense - accruedDmg;
+                    if (outgoingDmg < 0)
+                    {
+                        outgoingDmg = 0;
+                        break;
+                    }
+                    break;
+                case 4:
+                    //Devour
+                    outgoingDmg -= enemy.Defense;
+                    if (outgoingDmg < 0)
+                    {
+                        outgoingDmg = 0;
+                        break;
+                    }
+                    Health += outgoingDmg / 2;
+                    break;
+                case 5:
+                    //WindGod
+                    outgoingDmg -= enemy.Defense;
+                    if (outgoingDmg < 0)
+                    {
+                        outgoingDmg = 0;
+                        break;
+                    }
+                    outgoingDmg += (outgoingDmg/ 2) * 5;
+                    break;
+                default:
+                    Console.WriteLine("Error: Not a valid option");
+                    break;
+            }
+            return outgoingDmg;
+        }
     }
 }

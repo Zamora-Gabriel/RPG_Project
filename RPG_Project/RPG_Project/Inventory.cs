@@ -126,13 +126,13 @@ namespace RPG_Project
 
         public void PrintWeapons()
         {
+            Console.WriteLine("---------------Weapon List--------------- \n");
             if (weaponList.Count == 0)
             {
                 Console.WriteLine("Wait... You don't have any weapons \n");
                 return;
             }
 
-            Console.WriteLine("---------------Weapon List--------------- \n");
             int count = 1;
             foreach (Weapon item in weaponList)
             {
@@ -174,12 +174,67 @@ namespace RPG_Project
 
         public Potion CheckPotion(int pot)
         {
-            int count = 0;
+            int potionType = 0;
+
+            var potiont = (PotionType)0;
             foreach (Potion item in potionList)
             {
-                if (count == pot)
+                if (item.Type == (int)PotionType.EnergyPotion)
                 {
-                    return item;
+                    //if it's a Energy potion, change the default 
+                    potionType = 1;
+                    potiont = (PotionType)1;
+                }
+                else
+                {
+                    potionType = 0;
+                }
+                switch (pot)
+                {
+                    case 0:
+                        //Normal potion
+                        if(item.Quality == 0)
+                        {
+                            return item;
+                        }
+                        break;
+                    case 1:
+                        //Super potion
+                        if (item.Quality == 1)
+                        {
+                            return item;
+                        }
+                        break;
+                    case 2:
+                        //Mega Potion
+                        if (item.Quality == 2)
+                        {
+                            return item;
+                        }
+                        break;
+                    case 3:
+                        //Normal potion
+                        if (item.Quality == 0)
+                        {
+                            return item;
+                        }
+                        break;
+                    case 4:
+                        //Super potion
+                        if (item.Quality == 1)
+                        {
+                            return item;
+                        }
+                        break;
+                    case 5:
+                        //Mega Potion
+                        if (item.Quality == 2)
+                        {
+                            return item;
+                        }
+                        break;
+                    default:
+                        return null;
                 }
             }
             return null;
@@ -224,13 +279,13 @@ namespace RPG_Project
 
         public void PrintPotions()
         {
+            Console.WriteLine("---------------Potion List--------------- \n");
             if (potionList.Count == 0)
             {
                 Console.WriteLine("Wait... You don't have any potions \n");
                 return;
             }
 
-            Console.WriteLine("---------------Potion List--------------- \n");
             int count = 0;
             string potionName = "";
             var potiont = (PotionType)0;
