@@ -39,15 +39,13 @@ namespace RPG_Project
         //Stats
         int maxHealth;
         int health;
+
+        int maxEnergy;
         int energy;
+
         int attack;
         int defense;
         int speed;
-
-        //Limits
-
-        int energyLimit;
-
 
         /***Properties***/
 
@@ -90,6 +88,14 @@ namespace RPG_Project
             }
         }
 
+        public int MaxEnergy
+        {
+            get { return maxEnergy; }
+            private set
+            {
+                maxEnergy = value;
+            }
+        }
         public int Energy
         {
             get { return energy; }
@@ -98,9 +104,9 @@ namespace RPG_Project
                 energy = value;
 
                 //Check if energy surpasses limits
-                if (energy > energyLimit)
+                if (energy > maxEnergy)
                 {
-                    energy = energyLimit;
+                    energy = maxEnergy;
                 }
             }
         }
@@ -191,7 +197,7 @@ namespace RPG_Project
             Name = name1;
 
             maxHealth = 15;
-            energyLimit = 15;
+            maxEnergy = 15;
 
             Health = 15;
             Energy = 15;
@@ -218,9 +224,9 @@ namespace RPG_Project
             Level++;
 
             maxHealth += 2;
-            energyLimit += 2;
+            maxEnergy += 2;
             Health = maxHealth;
-            Energy = energyLimit;
+            Energy = maxEnergy;
             Attack++;
             Defense++;
             Speed++;
@@ -345,6 +351,22 @@ namespace RPG_Project
             {
                 Console.WriteLine("Succesfully added potion!");
             }
+        }
+        public string[] ReturnStats()
+        {
+            string[] returnList = new string[11];
+            returnList[0] = Name;
+            returnList[1] = Health.ToString();
+            returnList[2] = MaxHealth.ToString();
+            returnList[3] = Energy.ToString();
+            returnList[4] = MaxEnergy.ToString();
+            returnList[5] = Level.ToString();
+            returnList[6] = Exp.ToString();
+            returnList[7] = Attack.ToString();
+            returnList[8] = Defense.ToString();
+            returnList[9] = Speed.ToString();
+            returnList[10] = Money.ToString();
+            return returnList;
         }
 
         public void PrintStats()

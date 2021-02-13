@@ -17,6 +17,15 @@ namespace RPG_Project
         Player = 100,
         Spawn = 66
     }
+
+    enum LevelCurve
+    {
+        No_Levels,
+        Low_Level,
+        Mid_Level,
+        High_Level,
+        Max_Level
+    }
     class Map
     {
         const int MAP_HEIGHT = 20;
@@ -65,11 +74,9 @@ namespace RPG_Project
 
         public void GenerateMap()
         {
-            Console.WriteLine(characterNmb = Convert.ToInt32(Char.ToUpper('B')));
-            Console.ReadLine();
             //Generate special tiles
-            playerTile = new MapTile(0, 0, MapTiles.Player);
-            defaultTile = new MapTile(0, 0, MapTiles.Mountian);
+            playerTile = new MapTile(0, 0, MapTiles.Player, LevelCurve.No_Levels);
+            defaultTile = new MapTile(0, 0, MapTiles.Mountian, LevelCurve.No_Levels);
 
             //TODO Change this to a relative path
             reader = File.OpenText("D:/0_School Work/GitHub/Intro_To_Html5/New folder/map/test.txt");
@@ -116,7 +123,7 @@ namespace RPG_Project
                     {
                         
                         case 66:
-                            mapData[y, x] = new MapTile(y, x, MapTiles.Spawn);
+                            mapData[y, x] = new MapTile(y, x, MapTiles.Spawn, LevelCurve.No_Levels);
 
                             //Position player on spawn;
                             yPosition = y - MAP_HEIGHT/2;
@@ -124,38 +131,37 @@ namespace RPG_Project
                             break;
                         //Dungeon
                         case 68:
-                            mapData[y, x] = new MapTile(y, x, MapTiles.Dungeon);
+                            mapData[y, x] = new MapTile(y, x, MapTiles.Dungeon, LevelCurve.No_Levels);
                             break;
                         //Forest
                         case 70:
-                            mapData[y, x] = new MapTile(y, x, MapTiles.Forest);
+                            mapData[y, x] = new MapTile(y, x, MapTiles.Forest, LevelCurve.No_Levels);
                             break;
                         //GrassLand
                         case 71:
-                            mapData[y, x] = new MapTile(y, x, MapTiles.GrassLand);
+                            mapData[y, x] = new MapTile(y, x, MapTiles.GrassLand, LevelCurve.No_Levels);
                             break;
                         //Mountain
                         case 77:
-                            mapData[y, x] = new MapTile(y, x, MapTiles.Mountian);
+                            mapData[y, x] = new MapTile(y, x, MapTiles.Mountian, LevelCurve.No_Levels);
                             break;
                         //Road
                         case 82:
-                            mapData[y, x] = new MapTile(y, x, MapTiles.Road);
+                            mapData[y, x] = new MapTile(y, x, MapTiles.Road, LevelCurve.No_Levels);
                             break;
                         //Shop
                         case 83:
-                            mapData[y, x] = new MapTile(y, x, MapTiles.Shop);
+                            mapData[y, x] = new MapTile(y, x, MapTiles.Shop, LevelCurve.No_Levels);
                             break;
                         //Water
                         case 87:
-                            mapData[y, x] = new MapTile(y, x, MapTiles.Water);
+                            mapData[y, x] = new MapTile(y, x, MapTiles.Water, LevelCurve.No_Levels);
                             break;
                             //Catch for no char default to mountain
                         //case 65535:
                         //    mapData[x, y] = new MapTile(y, x, MapTiles.Mountian);
                         //    break;
                     }
-                    //GenerateVisualMap();
                 }
             }
 
@@ -176,8 +182,8 @@ namespace RPG_Project
             //Read character
             //Create object after that character
             //Set object to map position
-            //GenerateVisualMap();
-            UpdatePlayerMap();
+            GenerateVisualMap();
+            //UpdatePlayerMap();
         }
 
         void GenerateVisualMap()
@@ -190,7 +196,9 @@ namespace RPG_Project
                     mapData[y, x].PrintSelf();
                 }
                 Console.Write("\n");
+
             }
+            Console.ReadLine();
         }
 
         public void UpdatePlayerMap()

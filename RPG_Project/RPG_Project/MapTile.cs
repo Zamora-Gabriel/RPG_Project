@@ -10,16 +10,18 @@ namespace RPG_Project
     {
         int xCord;
         int yCord;
-        string tile;
+        
 
         public MapTiles mapType;
+        public LevelCurve levelRange;
 
-        public MapTile(int yCord, int xCord, MapTiles mapType)
+        public MapTile(int yCord, int xCord, MapTiles mapType, LevelCurve levelRange)
         {
             this.yCord = yCord;
             this.xCord = xCord;
 
             this.mapType = mapType;
+            this.levelRange = levelRange;
 
             //Console.WriteLine("{0},{1}", yCord, xCord);
         }
@@ -71,7 +73,7 @@ namespace RPG_Project
                     Console.Write("W");
                     break;
                 case MapTiles.Road:
-                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write("R");
                     break;
                 case MapTiles.Dungeon:

@@ -34,7 +34,7 @@ namespace RPG_Project
         string[] generalUI = new string[] { "Controls", "", "1) Movement      2) Inventory", "3) Stats         4) Abilities" };
         string[] inventoryUiBase = new string[] { "Inventory", "", "1) Weapons      2) Potions", "3) Back" };
         string[] inventroyUiPotions = new string[] {"[ 1) Normal-HP Potion: {0}] [ 2) Super-HP Potion: {1} ] [ 2) Mega-HP Potion: {2}]", "[ 1) Normal-PP Potion: {0}] [ 2) Super-PP Potion: {1} ] [ 2) Mega-PP Potion: {2}]", "TmpBack"};
-
+        string[] inventoryStats = new string[] {"Player: {0}","","Health: {0}/{1}      Energy: {2}/{3}" , "Level: {0}          Exp: {1}       ", "Attack: {0}         Defense: {1}   ", "Speed {0}           Money: {1}     ","","1) Back"};
         //Constructor 
         public OverWorldManager(Player player)
         {
@@ -90,6 +90,9 @@ namespace RPG_Project
                     break;
                 case ActiveMenu.Inventory_Weapons:
                     InventoryUiWeapons();
+                    break;
+                case ActiveMenu.Stats:
+                    InventoryStats();
                     break;
             }
             
@@ -174,7 +177,6 @@ namespace RPG_Project
                         DrawUi();
                         break;
                     case 3:
-                        Console.WriteLine("Returning");
                         currentMenu = ActiveMenu.General;
                         DrawUi();
                         return;
@@ -258,11 +260,45 @@ namespace RPG_Project
             }
         }
 
+        //TODO MAKE THIS WORK
+        //Current issue with adding weapons to inventory, so moving on for now.
         void InventoryUiWeapons()
         {
             printer.PrintArray(player.ReturnWeaponList());
         }
 
+        void InventoryStats()
+        {
+            string[] copyList = new string[inventoryStats.Length];
+            for (int i = 0; i < inventoryStats.Length; i++)
+            {
+                copyList[i] = inventoryStats[i];
+            }
+            //Print stats
+            string[] playerStats = new string[11];
+            playerStats = player.ReturnStats();
+
+            copyList[0] = string.Format(copyList[0], playerStats[0]);
+            copyList[2] = string.Format(copyList[2], playerStats[1], playerStats[2], playerStats[3], playerStats[4]);
+            copyList[3] = string.Format(copyList[3], playerStats[5], playerStats[6]);
+            copyList[4] = string.Format(copyList[4], playerStats[7], playerStats[8]);
+            copyList[5] = string.Format(copyList[5], playerStats[9], playerStats[10]);
+
+            printer.PrintArray(copyList);
+            int choice;
+            while (true)
+            {
+                choice = ReturnChoice();
+                switch (choice)
+                {
+                    case 1:
+                        currentMenu = ActiveMenu.General;
+                        DrawUi();
+                        break;
+                }
+                UpdateMap();
+            }
+        }
         int ReturnChoice()
         {
             while (true)
@@ -282,7 +318,10 @@ namespace RPG_Project
 
 
         //TODO EnterCombat
+        void EncounterGenerator()
+        {
 
+        }
 
         //TODO Enter dungeon
 
