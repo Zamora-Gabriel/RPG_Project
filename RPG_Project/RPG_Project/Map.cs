@@ -18,8 +18,8 @@ namespace RPG_Project
     }
     class Map
     {
-        const int MAP_HEIGHT = 63;
-        const int MAP_WIDTH = 108;
+        const int MAP_HEIGHT = 20;
+        const int MAP_WIDTH = 40;
 
         int height;
         int width;
@@ -164,8 +164,8 @@ namespace RPG_Project
             //Read character
             //Create object after that character
             //Set object to map position
-            GenerateVisualMap();
-            //UpdatePlayerMap();
+            //GenerateVisualMap();
+            UpdatePlayerMap();
         }
 
         void GenerateVisualMap()
