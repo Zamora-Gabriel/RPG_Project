@@ -154,12 +154,16 @@ namespace RPG_Project
             {
                 exp = value;
 
-                if (exp >= 100)
+                do
                 {
-                    //save residual experience and level up
-                    exp = exp - 100;
-                    LevelUp();
-                }
+                    if (exp >= 100)
+                    {
+                        //save residual experience and level up
+                        exp = exp - 100;
+                        LevelUp();
+                    }
+                } while (exp >= 100);
+                
             }
         }
 
@@ -385,6 +389,14 @@ namespace RPG_Project
             Console.WriteLine("{0} Stats", Name);
             Console.WriteLine("Level: {0}", Level);
             Console.WriteLine("Exp: {0}", Exp);
+            if(equipedWeapon != "")
+            {
+                Console.WriteLine("Equiped Weapon: {0}", equipedWeapon);
+            }
+            else
+            {
+                Console.WriteLine("No weapon equiped");
+            }
             Console.WriteLine("Attack: {0}", Attack);
             Console.WriteLine("Defense: {0}", Defense);
             Console.WriteLine("Speed: {0}", Speed);

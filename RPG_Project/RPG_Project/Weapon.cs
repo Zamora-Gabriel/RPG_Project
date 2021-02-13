@@ -18,13 +18,13 @@ namespace RPG_Project
 
         /***Properties***/
 
-        public string Name { get; private set; }
+        public string Name { get; protected set; }
 
         public int AtkBonus
         {
             get { return atkbonus; }
 
-            private set
+            protected set
             {
                 atkbonus = value;
             }
@@ -34,7 +34,7 @@ namespace RPG_Project
         {
             get { return spdbonus; }
 
-            private set
+            protected set
             {
                 defbonus = value;
             }
@@ -44,13 +44,22 @@ namespace RPG_Project
         {
             get { return spdbonus; }
 
-            private set
+            protected set
             {
                 spdbonus = value;
             }
         }
 
         /***Constructor***/
+
+        public Weapon()
+        {
+            Name = "None";
+            AtkBonus = 1;
+            DefBonus = 1;
+            SpdBonus = 1;
+            cost = 1;
+        }
 
         public Weapon(string weapName)
         {
@@ -61,5 +70,11 @@ namespace RPG_Project
             cost = 1;
         }
 
+        /***Methods***/
+
+        public void CheckName()
+        {
+
+        }
     }
 }

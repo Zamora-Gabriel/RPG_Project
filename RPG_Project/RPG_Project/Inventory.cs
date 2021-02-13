@@ -66,6 +66,7 @@ namespace RPG_Project
 
         private bool CheckCapacity()
         {
+            //TODO: change number until desired inventory capacity
             if (capacity >= 5)
             {
                 Console.WriteLine("Sorry, you can't carry more objects...");
@@ -188,12 +189,12 @@ namespace RPG_Project
 
         public Potion CheckPotion(int pot)
         {
-            int potionType = 0;
+            /*int potionType = 0;
 
-            var potiont = (PotionType)0;
+            var potiont = (PotionType)0;*/
             foreach (Potion item in potionList)
             {
-                if (item.Type == (int)PotionType.EnergyPotion)
+                /*if (item.Type == (int)PotionType.EnergyPotion)
                 {
                     //if it's a Energy potion, change the default 
                     potionType = 1;
@@ -202,7 +203,7 @@ namespace RPG_Project
                 else
                 {
                     potionType = 0;
-                }
+                }*/
                 switch (pot)
                 {
                     case 0:
