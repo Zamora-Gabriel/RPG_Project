@@ -23,6 +23,7 @@ namespace RPG_Project
 
         string[] bottomButtons = new string[] { "", "[ 1) Attack ]    [ 2) Abilites ]", "[ 3) Items  ]    [ 4) Run      ]" };
         readonly string[] bottumPotionList = new string[] {"[ 1) Normal-HP Potion: {0}] [ 2) Super-HP Potion: {1} ] [ 2) Mega-HP Potion: {2}]", "[ 1) Normal-PP Potion: {0}] [ 2) Super-PP Potion: {1} ] [ 2) Mega-PP Potion: {2}]","TmpBack" };
+        string[] bottomFleeButtons = new string[] { "Are you sure you want to retreat?", "[1) Yes       2) No]" };
         string[] potionListCopy = new string[3];
         string[] bottomAttacks;
         string[] bottomAbilitiesList = new string[] {"[ 1){0}] [ 2){1} ] [ 3){2}]", "[ 4){0}] [ 5){1} ] [ 6){2}]","TmpBack"};
@@ -40,7 +41,7 @@ namespace RPG_Project
 
         BattleState current = BattleState.DeterminingState;
 
-        bool inCombat = true;
+        bool fleeing = false;
 
         int[] CombatentsSpeed = new int[4];
 
@@ -95,6 +96,18 @@ namespace RPG_Project
                         SwitchState();
                         break;
                     case BattleState.End:
+                        if (fleeing)
+                        {
+                            printer.PrintSingle("You ran away!", true, true);
+                            Console.ReadLine();
+                            return;
+                        }
+                        if (player.HasDied)
+                        {
+                            printer.PrintSingle("Oh no... you died", true, true);
+                            Console.ReadLine();
+                            return;
+                        }
                         player.Exp += xpFromBattle;
                         player.Money += moneyFromBattle;
                         printer.PrintSingle("You win!", true, false);
@@ -126,6 +139,22 @@ namespace RPG_Project
                     return;
                 }
             }
+
+            //End battle if fleeing
+            if (fleeing)
+            {
+                current = BattleState.End;
+                return;
+            }
+
+            //Check if player has died
+            if(player.Health <= 0)
+            {
+                player.HasDied = true;
+                current = BattleState.End;
+                return;
+            }
+
             //Determine next move by speed. 
             //Currently the player or enemy can move multiple times in a row if they have high enough speed.
             while (true)
@@ -243,7 +272,7 @@ namespace RPG_Project
                     printer.PrintBottomScreen(potionListCopy);
                     break;
                 case 4:
-                    //TODO Runaway
+                    printer.PrintBottomScreen(bottomFleeButtons);
                     break;
             }
         }
@@ -579,6 +608,27 @@ namespace RPG_Project
             }
         }
 
+        void Flee()
+        {
+            while (true)
+            {
+                int playerChoice = ReturnChoice();
+                switch (playerChoice)
+                {
+                    //Attack
+                    case 1:
+                        fleeing = true;
+                        return;
+                    //Abilitiy
+                    case 2:
+                        //TODO ADD ABILITIES
+                        UpdateBoard();
+                        PlayerChoice();
+                        return;
+                }
+            }
+        }
+
         void PlayerChoice()
         {
             while (true)
@@ -608,7 +658,8 @@ namespace RPG_Project
                         return;
                     //Run
                     case 4:
-                        //TODO RUNNING FROM FIGHTS
+                        UpdateBoard(playerChoice);
+                        Flee();
                         return;
                     //Catch for invalid input
                     default:

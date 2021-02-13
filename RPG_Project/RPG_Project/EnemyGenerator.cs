@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPG_Project
 {
-    class EnemyList
+    class EnemyGenerator
     {
         Printer printer = new Printer();
         BattleManager battleManager;
@@ -14,7 +14,7 @@ namespace RPG_Project
 
         Player player;
 
-        public EnemyList(Player player)
+        public EnemyGenerator(Player player)
         {
             this.player = player;
         }

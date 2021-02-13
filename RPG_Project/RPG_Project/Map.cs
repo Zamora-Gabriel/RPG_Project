@@ -166,7 +166,7 @@ namespace RPG_Project
             }
             //Closes access to file
             reader.Close();
-            GenerateVisualMap();
+            //GenerateVisualMap();
             //UpdatePlayerMap();
         }
 
@@ -202,7 +202,6 @@ namespace RPG_Project
                 Console.Write("\n");
 
             }
-            Console.ReadLine();
         }
 
         public void UpdatePlayerMap()

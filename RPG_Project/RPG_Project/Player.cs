@@ -47,6 +47,7 @@ namespace RPG_Project
         int defense;
         int speed;
 
+        bool hasDied;
         /***Properties***/
 
         public string Name
@@ -189,6 +190,15 @@ namespace RPG_Project
             }
         }
 
+        public bool HasDied
+        {
+            get{ return hasDied; }
+            set
+            {
+                hasDied = value;
+            }
+        }
+
         /***Constructors***/
 
         public Player(string name1)
@@ -203,7 +213,7 @@ namespace RPG_Project
             Energy = 15;
             Attack = 5;
             Speed = 5;
-            Defense = 5;
+            Defense = 1;
             Exp = 0;
             Level = 0;
             EquipedWeapon = "";
