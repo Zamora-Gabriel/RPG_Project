@@ -245,7 +245,7 @@ namespace RPG_Project
                     bottomAttacks[0] = "";
                     for(int i = 0; i < enemy.Length; i++)
                     {
-                        bottomAttacks[1] += string.Format(" [ {0}): Attack {1} ] ", i+1, enemy[i].Name);
+                        bottomAttacks[1] += string.Format(" [ {0}): Attack {1} ] ", i+1, printer.RemoveWhitespace(enemy[i].Name));
                     }
                     bottomAttacks[2] = string.Format("[ {0}): Return to menu ]", enemy.Length+1);
                     printer.PrintBottomScreen(bottomAttacks);
@@ -391,7 +391,7 @@ namespace RPG_Project
                 {
                     //Self Heal
                     case 1:
-                        if (abilities[0, 0] != "Locked" || player.Energy > 3)
+                        if (abilities[0, 0] != "Locked" && player.Energy > 3)
                         {
                             printer.PrintSingle("Using " + (Abilities)1 + " ability");
                             player.UseAbility(1, enemy[0]);
@@ -402,7 +402,7 @@ namespace RPG_Project
                         return;
                     //Shatter
                     case 2:
-                        if (abilities[0, 1] != "Locked" || player.Energy > 4)
+                        if (abilities[0, 1] != "Locked" && player.Energy > 4)
                         {
                             printer.PrintSingle("Using " + (Abilities)2 + " ability");
                             PlayerChoice(4);
@@ -483,6 +483,7 @@ namespace RPG_Project
                         }
                         //Attack enemy
                         enemy[0].TakeDamage(player.UseAbility(abilityChosen,enemy[0]));
+                        player.Energy -= abilityCost;
                         //if the enemy dies increase battle rewards
                         if (enemy[0].HasDied)
                         {
@@ -523,6 +524,7 @@ namespace RPG_Project
                             return;
                         }
                         enemy[2].TakeDamage(player.UseAbility(abilityChosen, enemy[2]));
+                        player.Energy -= abilityCost;
                         if (enemy[2].HasDied)
                         {
                             IncreaseBattleRewards(2);
@@ -755,5 +757,7 @@ namespace RPG_Project
             xpFromBattle += enemy[enemyPos].ExpValue;
             moneyFromBattle += enemy[enemyPos].MoneyValue;
         }
+
+
     }
 }

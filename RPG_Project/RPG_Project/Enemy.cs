@@ -184,7 +184,7 @@ namespace RPG_Project
             //Give exp
             //Give gold
             //Remove self <- possibly done in the game object
-            Name = "    Dead";
+            Name = "    Dead     ";
         }
 
 

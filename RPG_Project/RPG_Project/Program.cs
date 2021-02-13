@@ -67,9 +67,9 @@ namespace RPG_Project
             //enemies[0] = new BasicEnemy("tmp ", printer);
             //enemies[1] = new BasicEnemy("tmp ", printer);
             //enemies[2] = new BasicEnemy("tmp ", printer);
-
-            EnemyGenerator generator = new EnemyGenerator(player);
-            generator.forceEncounter(1);
+            //player.Health += 100;
+            //EnemyGenerator generator = new EnemyGenerator(player);
+            //generator.forceEncounter(3);
 
             //Starts Game
             GameLoop();
@@ -78,16 +78,14 @@ namespace RPG_Project
         {
             while (true)
             {
-
+                Console.Clear();
                 Weapon weap1 = new Weapon("Sword");
-                Weapon weap2 = new Weapon("Hammer");
                 Printer printer = new Printer();
-
+                Console.Clear();
                 Player thePlayer = new Player(ChooseName(printer));
-                Console.WriteLine("Got here");
+
                 OverWorldManager worldManager = new OverWorldManager(thePlayer);
                 thePlayer.AddWeaponToInvent(weap1);
-                thePlayer.AddWeaponToInvent(weap2);
                 Console.ReadLine();
                 worldManager.DrawUi();
 

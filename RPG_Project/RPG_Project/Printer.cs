@@ -267,5 +267,12 @@ namespace RPG_Project
             }
             return returnString;
         }
+
+        public string RemoveWhitespace(string input)
+        {
+            return new string(input.ToCharArray()
+                .Where(c => !Char.IsWhiteSpace(c))
+                .ToArray());
+        }
     }
 }

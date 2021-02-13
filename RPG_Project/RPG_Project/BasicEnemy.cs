@@ -59,10 +59,10 @@ namespace RPG_Project
                 case AiPersonality.Neutral:
                     if (choice <= 50)
                     {
-                        printer.PrintSingle("{0}, attacked you for {1} damage!!", true, true, Name, AttackPlayer(player));
+                        printer.PrintSingle("{0}, attacked you for {1} damage!!", true, true, printer.RemoveWhitespace(Name), AttackPlayer(player));
                         return AttackPlayer(player);
                     }
-                    printer.PrintSingle("{0}, is trying to block your next attack!", true, true, Name);
+                    printer.PrintSingle("{0}, is trying to block your next attack!", true, true, printer.RemoveWhitespace(Name));
                     Block();
                     return 0;
 
@@ -81,6 +81,5 @@ namespace RPG_Project
         {
             return random.Next(100);
         }
-
     }
 }
