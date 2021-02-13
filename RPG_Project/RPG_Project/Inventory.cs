@@ -207,12 +207,12 @@ namespace RPG_Project
 
         public Potion CheckPotion(int pot)
         {
-            int potionType = 0;
+            /*int potionType = 0;
 
-            var potiont = (PotionType)0;
+            var potiont = (PotionType)0;*/
             foreach (Potion item in potionList)
             {
-                if (item.Type == (int)PotionType.EnergyPotion)
+                /*if (item.Type == (int)PotionType.EnergyPotion)
                 {
                     //if it's a Energy potion, change the default 
                     potionType = 1;
@@ -221,7 +221,7 @@ namespace RPG_Project
                 else
                 {
                     potionType = 0;
-                }
+                }*/
                 switch (pot)
                 {
                     case 0:
