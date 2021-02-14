@@ -154,9 +154,9 @@ namespace RPG_Project
             int outgoingDmg = attack;
             //reduce by armour;
             outgoingDmg -= player.Defense;
-            if(outgoingDmg < 0)
+            if(outgoingDmg <= 0)
             {
-                outgoingDmg = 0;
+                outgoingDmg = 1;
             }
 
             return outgoingDmg;
