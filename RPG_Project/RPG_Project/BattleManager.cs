@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Media;
 namespace RPG_Project
 {
 
@@ -30,25 +30,26 @@ namespace RPG_Project
 
         static int SPEED_TO_MOVE = 50;
 
+
         Player player;
         BasicEnemy[] enemy;
         Printer printer = new Printer();
 
         int xpFromBattle;
         int moneyFromBattle;
-
         int deadEnemies;
 
         BattleState current = BattleState.DeterminingState;
 
         bool fleeing = false;
+        bool bossBattle = false;
 
         int[] CombatentsSpeed = new int[4];
 
-        public BattleManager(Player player, BasicEnemy[] newenemy)
+        public BattleManager(Player player, BasicEnemy[] newenemy, bool bossBattle)
         {
             this.player = player;
-
+            this.bossBattle = bossBattle;
             enemy = new BasicEnemy[newenemy.Length];
             for (int i = 0; i < newenemy.Length; i++)
             {
@@ -60,7 +61,8 @@ namespace RPG_Project
 
         public void BattleLoop()
         {
-            while(true)
+            PlayMusic(true);
+            while (true)
             {
                 switch (current)
                 {
@@ -125,11 +127,38 @@ namespace RPG_Project
                         rewards = string.Format("You gained {0} experience!", moneyFromBattle);
                         printer.PrintSingle(rewards, false, true);
                         Console.ReadLine();
+                        PlayMusic(false);
                         return;
                 }
             }
         }
 
+        void PlayMusic(bool play)
+        {
+
+            var soundPlayer = new SoundPlayer
+            {
+                SoundLocation = @"D:\0_School Work\GitHub\Intro_To_Html5\New folder\audio\combatMusic.wav"
+            };
+            var soundPlayer2 = new SoundPlayer
+            {
+                SoundLocation = @"D:\0_School Work\GitHub\Intro_To_Html5\New folder\audio\bossBattle.wav"
+            };
+
+
+            if (play)
+            {
+                if (bossBattle)
+                {
+                    soundPlayer2.PlayLooping();
+                    return;
+                }
+                soundPlayer.PlayLooping();
+                return;
+            }
+            soundPlayer.Stop();
+
+        }
 
         void SwitchState()
         {
