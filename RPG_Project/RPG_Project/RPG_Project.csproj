@@ -46,7 +46,11 @@
     <Compile Include="BasicEnemy.cs" />
     <Compile Include="BattleManager.cs" />
     <Compile Include="Enemy.cs" />
+    <Compile Include="EnemyGenerator.cs" />
     <Compile Include="Inventory.cs" />
+    <Compile Include="Map.cs" />
+    <Compile Include="MapTile.cs" />
+    <Compile Include="OverWorldManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Potion.cs" />
     <Compile Include="Printer.cs" />

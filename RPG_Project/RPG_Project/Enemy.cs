@@ -40,6 +40,20 @@ namespace RPG_Project
 
         }
 
+        public Enemy(string name, int maxHealth, int attack, int defense, int speed, int expValue, int moneyValue)
+        {
+
+            this.name = name;
+            this.expValue = expValue;
+            this.moneyValue = moneyValue;
+            this.maxHealth = maxHealth;
+            health = maxHealth;
+            this.speed = speed;
+            this.attack = attack;
+            this.defense = defense;
+
+        }
+
         /*Getters and Setters*/
         //Non combat properties
         public string Name
@@ -135,7 +149,8 @@ namespace RPG_Project
 
         protected int AttackPlayer(Player player)
         {
-        
+            //Reset defense
+            Defense = Defense / 2;
             int outgoingDmg = attack;
             //reduce by armour;
             outgoingDmg -= player.Defense;
@@ -149,8 +164,9 @@ namespace RPG_Project
 
         protected void Block()
         {
+            //Doubles defense
             //TODO decide how this will work,
-            //will it just increase defense stat for the turn or two?
+            Defense += Defense;
         }
 
         public void TakeDamage(int damage)
@@ -168,7 +184,7 @@ namespace RPG_Project
             //Give exp
             //Give gold
             //Remove self <- possibly done in the game object
-            Name = "Dead";
+            Name = "    Dead     ";
         }
 
 

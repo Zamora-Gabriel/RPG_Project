@@ -8,36 +8,48 @@ using System.Threading.Tasks;
 namespace RPG_Project
 {
 
-    //TODO: Uncomment when weapons are available
-    //TODO: Think of inventory Implementation
+    enum Abilities
+    {
+        /// <summary>
+        /// Temporary skills, list can be reduced or added
+        /// </summary>
+        Heal = 1, //--- heals 5 hp multiplied by x which increases each 5 levels starting at 1
+        Shatter, //--- Reduces 1/3 of enemy's defense for that attack only  
+        AvengerSoul, //--- Adds half of player's current accrued damage to the attack
+        Devour, //--- Takes 50% damage dealt to opponent as healing
+        WindGod //--- Five attacks at 50% of damage
+    }
+
     //Maybe: Energy/Skills
     class Player
     {
         /***Variables***/
 
         //TMP REMOVE ONCE PLAYER ART IS FINALIZED
-        public string[] art = new string[] { "", "HP: {0}/{1}", "PP:     ", "o", "/|\\", "|", "/ \\", "{2}" };
+        public string[] art = new string[] { "", "HP: {0}/{1}", "PP: {3}/{4} ", "o", "/|\\", "|", "/ \\", "{2}" };
 
         string name;
         int exp;
         int level;
         int money;
-        string equipedWeapon;
+        //Testing
+        //string equipedWeapon;
+        Weapon equipedWeapon;
         Inventory invent;
 
+        Printer printer;
         //Stats
         int maxHealth;
         int health;
+
+        int maxEnergy;
         int energy;
+
         int attack;
         int defense;
         int speed;
 
-        //Limits
-        int healthLimit;
-        int energyLimit;
-
-
+        bool hasDied;
         /***Properties***/
 
         public string Name
@@ -66,19 +78,27 @@ namespace RPG_Project
                 health = value;
 
                 //Check if energy surpasses limits
-                if (health > healthLimit)
+                if (health > maxHealth)
                 {
-                    health = healthLimit;
+                    health = maxHealth;
                 }
 
                 //Check if player dies
-                if (health <= 0)
-                {
-                    PlayerDies();
-                }
+                //if (health <= 0)
+                //{
+                //    PlayerDies();
+                //}
             }
         }
 
+        public int MaxEnergy
+        {
+            get { return maxEnergy; }
+            private set
+            {
+                maxEnergy = value;
+            }
+        }
         public int Energy
         {
             get { return energy; }
@@ -87,9 +107,9 @@ namespace RPG_Project
                 energy = value;
 
                 //Check if energy surpasses limits
-                if (energy > energyLimit)
+                if (energy > maxEnergy)
                 {
-                    energy = energyLimit;
+                    energy = maxEnergy;
                 }
             }
         }
@@ -136,12 +156,16 @@ namespace RPG_Project
             {
                 exp = value;
 
-                if (exp >= 100)
+                do
                 {
-                    //save residual experience and level up
-                    exp = exp - 100;
-                    LevelUp();
-                }
+                    if (exp >= 100)
+                    {
+                        //save residual experience and level up
+                        exp = exp - 100;
+                        LevelUp();
+                    }
+                } while (exp >= 100);
+                
             }
         }
 
@@ -157,18 +181,27 @@ namespace RPG_Project
         public int Money
         {
             get { return money; }
-            private set
+            set
             {
                 money = value;
             }
         }
 
-        public string EquipedWeapon
+        public Weapon EquipedWeapon
         {
             get { return equipedWeapon; }
             private set
             {
                 equipedWeapon = value;
+            }
+        }
+
+        public bool HasDied
+        {
+            get{ return hasDied; }
+            set
+            {
+                hasDied = value;
             }
         }
 
@@ -179,35 +212,40 @@ namespace RPG_Project
             //Provisional values
             Name = name1;
 
-            healthLimit = 15;
-            energyLimit = 15;
+            maxHealth = 15;
+            maxEnergy = 15;
 
-            Health = 15;
-            Energy = 15;
+            Health = maxHealth;
+            Energy = maxEnergy;
             Attack = 5;
             Speed = 5;
-            Defense = 5;
+            Defense = 1;
             Exp = 0;
             Level = 0;
-            EquipedWeapon = "";
+
+
+            EquipedWeapon = null;
             invent = new Inventory();
+
+            printer = new Printer();
         }
 
         /***Methods***/
 
-        private void PlayerDies()
-        {
-            Console.WriteLine("{0} has been defeated", Name);
-        }
+        //Depreicated
+        //private void PlayerDies()
+        //{
+        //    Console.WriteLine("{0} has been defeated", Name);
+        //}
 
         private void LevelUp()
         {
             Level++;
 
-            healthLimit += 2;
-            energyLimit += 2;
-            Health = healthLimit;
-            Energy = energyLimit;
+            maxHealth += 2;
+            maxEnergy += 2;
+            Health = maxHealth;
+            Energy = maxEnergy;
             Attack++;
             Defense++;
             Speed++;
@@ -233,10 +271,19 @@ namespace RPG_Project
             Health -= damage;
         }
 
+        public string[] ReturnWeaponList()
+        {
+            return invent.ReturnWeaponList();
+        }
+
+        public Weapon ReturnWeaponInt(int number)
+        {
+            return invent.CheckWeapon(number);
+        }
         public void EquipWeapon(int weapNum)
         {
             //Case the user already has an equiped weapon
-            if (EquipedWeapon != "")
+            if (EquipedWeapon != null)
             {
                 Console.WriteLine("Wait, you already have a weapon equiped!");
                 return;
@@ -254,7 +301,7 @@ namespace RPG_Project
                 Attack += weap.AtkBonus;
                 Defense += weap.DefBonus;
                 Speed += weap.SpdBonus;
-                EquipedWeapon = weap.Name;
+                EquipedWeapon = weap;
                 Console.WriteLine("Succesfully equiped weapon: {0}", EquipedWeapon);
                 return;
             }
@@ -266,9 +313,9 @@ namespace RPG_Project
         }
 
         //TODO: Make it public if user can fight barehanded
-        private bool UnequipWeapon(int weapNum)
+        public bool UnequipWeapon(Weapon weapon)
         {
-            if (EquipedWeapon == "")
+            if (EquipedWeapon == null)
             {
                 Console.WriteLine("Wait... You don't have an equiped weapon!");
                 return false;
@@ -276,7 +323,7 @@ namespace RPG_Project
 
             try
             {
-                Weapon weap = invent.CheckWeaponByName(EquipedWeapon);
+                Weapon weap = invent.CheckWeaponByType(weapon);
 
                 if (weap == null)
                 {
@@ -290,7 +337,7 @@ namespace RPG_Project
                 Speed -= weap.SpdBonus;
 
                 //Restart equiped weapon's id to discriminate
-                EquipedWeapon = "";
+                EquipedWeapon = null; ;
                 Console.WriteLine("Succesfully unequiped weapon: {0}", weap.Name);
             }
             catch
@@ -301,7 +348,7 @@ namespace RPG_Project
             return true;
         }
 
-        public void ChangeWeapons(int weap1, int weap2)
+        public void ChangeWeapons(Weapon weap1, int weap2)
         {
             //Unequipment succeed
             if (UnequipWeapon(weap1))
@@ -328,12 +375,36 @@ namespace RPG_Project
                 Console.WriteLine("Succesfully added potion!");
             }
         }
+        public string[] ReturnStats()
+        {
+            string[] returnList = new string[11];
+            returnList[0] = Name;
+            returnList[1] = Health.ToString();
+            returnList[2] = MaxHealth.ToString();
+            returnList[3] = Energy.ToString();
+            returnList[4] = MaxEnergy.ToString();
+            returnList[5] = Level.ToString();
+            returnList[6] = Exp.ToString();
+            returnList[7] = Attack.ToString();
+            returnList[8] = Defense.ToString();
+            returnList[9] = Speed.ToString();
+            returnList[10] = Money.ToString();
+            return returnList;
+        }
 
         public void PrintStats()
         {
             Console.WriteLine("{0} Stats", Name);
             Console.WriteLine("Level: {0}", Level);
             Console.WriteLine("Exp: {0}", Exp);
+            if(equipedWeapon != null)
+            {
+                Console.WriteLine("Equiped Weapon: {0}", equipedWeapon);
+            }
+            else
+            {
+                Console.WriteLine("No weapon equiped");
+            }
             Console.WriteLine("Attack: {0}", Attack);
             Console.WriteLine("Defense: {0}", Defense);
             Console.WriteLine("Speed: {0}", Speed);
@@ -346,12 +417,18 @@ namespace RPG_Project
             invent.PrintPotions();
         }
 
-        public void DrinkPotion(int potNum)
+        //Checks inventory for potion count
+        public int[,] ReturnPotions()
+        {
+            return (invent.ReturnPotionCount());
+        }
+
+        public void DrinkPotion(int option)
         {
             //check if user has that potion on inventory
             try
             {
-                Potion pot = invent.CheckPotion(potNum);
+                Potion pot = invent.CheckPotion(option);
                 if (pot == null)
                 {
                     //Throw exception when no matching potion is found
@@ -369,9 +446,11 @@ namespace RPG_Project
                     {
                         Energy = pot.amount;
                     }
-                    Console.WriteLine("Succesfully used potion");
+                    printer.PrintSingle("Succesfully used potion");
+                    Console.ReadLine();
                     return;
                 }
+                Console.ReadLine();
 
             }
             catch
@@ -381,5 +460,106 @@ namespace RPG_Project
             }
         }
 
+        /***Abilities***/
+
+        public string[,] ReturnUnlockedAbilities()
+        {
+            int row = 3;
+            int column = 2;
+            string[,] abilityList = new string[column, row];
+            int multiplier = 1;
+            var abilityName = (Abilities)1;
+
+            for(int i = 0; i <= column-1; i++)
+            {
+                for (int j = 0; j <= row-1; j++)
+                {
+                    abilityName = (Abilities)multiplier;
+                    //check level for locked or unlocked abilities
+                    if (Level >= (1 * (multiplier)))
+                    {
+                        abilityList[i, j] = abilityName.ToString();
+                    }
+                    else
+                    {
+                        abilityList[i, j] = "Locked";
+                    }
+                    multiplier++;
+                }
+            }
+
+            return abilityList;
+        }
+
+        public int UseAbility(int option, Enemy enemy)
+        {
+            int outgoingDmg = Attack;
+
+            switch (option)
+            {
+                /*
+                 * Heal = 0, //--- heals 5 hp multiplied by x which increases each 5 levels starting at 1
+                 * Shatter, //--- Reduces 1/3 of enemy's defense for that attack only  
+                 * AvengerSoul, //--- Adds half of player's current accrued damage to the attack
+                 * Devour, //--- Takes 50% damage dealt to opponent as healing
+                 * WindGod //--- Five attacks at 50% of damage Translation = ((outgoingDmg/2)*5)
+                 */
+
+                case 1:
+                    //Heal
+                    int multiplier = Level/5;
+                    if (multiplier <= 0)
+                    {
+                        multiplier = 1;
+                    }
+                    Health += 5 * multiplier;
+                    outgoingDmg = 0;
+                    break;
+                case 2:
+                    //Shatter
+                    outgoingDmg -= enemy.Defense;
+                    outgoingDmg -= (enemy.Defense*2) / 3;
+                    if (outgoingDmg < 0)
+                    {
+                        outgoingDmg = 0;
+                        break;
+                    }
+                    break;
+                case 3:
+                    //AvengerSoul
+                    int accruedDmg = maxHealth - Health;
+                    outgoingDmg -= enemy.Defense - accruedDmg;
+                    if (outgoingDmg < 0)
+                    {
+                        outgoingDmg = 0;
+                        break;
+                    }
+                    break;
+                case 4:
+                    //Devour
+                    outgoingDmg -= enemy.Defense;
+                    if (outgoingDmg < 0)
+                    {
+                        outgoingDmg = 0;
+                        break;
+                    }
+                    Health += outgoingDmg / 2;
+                    break;
+                case 5:
+                    //WindGod
+                    outgoingDmg -= enemy.Defense;
+                    if (outgoingDmg < 0)
+                    {
+                        outgoingDmg = 0;
+                        break;
+                    }
+                    outgoingDmg += (outgoingDmg/ 2) * 5;
+                    break;
+                default:
+                    Console.WriteLine("Error: Not a valid option");
+                    break;
+            }
+            return outgoingDmg;
+        }
     }
 }

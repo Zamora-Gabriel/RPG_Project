@@ -17,22 +17,22 @@ namespace RPG_Project
     class BasicEnemy : Enemy
     {
 
-        string[] enemyArt = new string[] { "HP: {0}\\{1}", "        ", "   o~\\  ", " |_-__\\", "        ", "{2}" };
+        string[] enemyArt = new string[] { };
 
 
         AiPersonality aiType = AiPersonality.Neutral;
 
         //TODO move printer to the base enemy class
-        Printer printer;
+        Printer printer = new Printer();
 
         Random random = new Random();
         
 
         //Constructor 
-        public BasicEnemy(string name, Printer printer) : base(name)
+        public BasicEnemy(string name, int maxHealth, int attack, int defense, int speed, int expValue, int moneyValue, string[] enemyArt) : base(name, maxHealth, attack, defense, speed, expValue, moneyValue)
         {
-            
-            this.printer = printer;
+            this.enemyArt = enemyArt;    
+
         }
 
         /*Getters and Setters*/
@@ -57,16 +57,14 @@ namespace RPG_Project
             switch (aiType)
             {
                 case AiPersonality.Neutral:
-                    Console.WriteLine(choice);
                     if (choice <= 50)
                     {
-                        printer.PrintSingle("{0}, attacked you for {1} damage!!", true, true, Name, AttackPlayer(player));
+                        printer.PrintSingle("{0}, attacked you for {1} damage!!", true, true, printer.RemoveWhitespace(Name), AttackPlayer(player));
                         return AttackPlayer(player);
                     }
-                    printer.PrintSingle("{0}, is trying to block your next attack!", true, true, Name);
+                    printer.PrintSingle("{0}, is trying to block your next attack!", true, true, printer.RemoveWhitespace(Name));
                     Block();
                     return 0;
-                    break;
 
                 //TODO impliment other AI types
                 //case AiPersonality.Defensive:
@@ -83,6 +81,5 @@ namespace RPG_Project
         {
             return random.Next(100);
         }
-
     }
 }
