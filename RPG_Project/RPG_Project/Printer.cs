@@ -33,19 +33,28 @@ namespace RPG_Project
         /// <param name="printTop"></param>     //Bool value for if you want the top border to print. Default to true    - Optional
         /// <param name="printBottom"></param>  //Bool value for if you want the bottom border to print. Default to true - Optional
         /// <param name="colour"></param>       //Colour of font, defaults to dark-yellow -Optional
-        public void PrintArray(string[] text, bool printTop = true, bool printBottom = true, int colour = 0)
+        public void PrintArray(string[] text, bool printTop = true, bool printBottom = true, bool extraWide =false)
         {
             //Colour selection
             ConsoleColor[] colourChoices = { ConsoleColor.DarkYellow, ConsoleColor.DarkCyan, ConsoleColor.Green, ConsoleColor.Yellow, ConsoleColor.Red, ConsoleColor.DarkRed, ConsoleColor.Cyan };
+            int windowSize;
+            if (extraWide)
+            {
+                windowSize = 120;
+            }
+            else
+            {
+                windowSize = WINDOW_SIZE;
+            }
 
             //strings for box sides
-            string border = new String('─', WINDOW_SIZE - 2);
+            string border = new String('─', windowSize - 2);
             string borderSide = ("│");
             string topBorder = ($"┌{border}┐");
             string bottomBorder = ($"└{border}┘");
 
             //calculates middle of box and full console
-            int windowWidth = WINDOW_SIZE - (2 * borderSide.Length);
+            int windowWidth = windowSize - (2 * borderSide.Length);
             int winWidth = (Console.WindowWidth / 2);
 
             //print top row
@@ -65,7 +74,6 @@ namespace RPG_Project
                 string leftBorder = String.Format("{0," + ((winWidth) - (windowWidth / 2)) + "}", borderSide);
                 Console.Write(leftBorder);
                 //changes colour for text and prints body
-                Console.ForegroundColor = colourChoices[colour];
                 Console.Write("{0," + ((winWidth) + (processedVar.Length / 2) - leftBorder.Length) + "}", processedVar);
                 //changes colour back for border and prints right edge
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -92,9 +100,9 @@ namespace RPG_Project
         /// <param name="colour"></param>       //Int for colour of font, defaults to dark-yellow -Optional
         /// <param name="name"></param>         //String for formated strings   -Optional
         /// <param name="age"></param>          //Int for formated strings      -Optional
-        public void PrintSingle(string text, bool printTop = true, bool printBottom = true, string name = "", int damage = 0)
+        public void PrintSingle(string text, bool printTop = true, bool printBottom = true, string name = "", int damage = 0, ConsoleColor color = ConsoleColor.DarkYellow)
         {
-            ConsoleColor[] colourChoices = { ConsoleColor.DarkYellow, ConsoleColor.DarkCyan, ConsoleColor.Green, ConsoleColor.Yellow, ConsoleColor.Red, ConsoleColor.DarkRed, ConsoleColor.Cyan };
+            ConsoleColor colourChoices = color;
             //strings for box sides
             string border = new String('─', WINDOW_SIZE - 2);
             string borderSide = ("│");
@@ -109,17 +117,18 @@ namespace RPG_Project
             if (printTop)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("{0," + ((winWidth) + ((border.Length / 2))) + "}", topBorder);
+                Console.WriteLine("{0," + ((winWidth) + ((border.Length / 2))+1) + "}", topBorder);
             }
             
             string processedVar = String.Format(text, name, damage);
 
             //changes colour for border and prints left edge
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            string leftBorder = String.Format("{0," + ((winWidth) - (windowWidth / 2) -1) + "}", borderSide);
+            string leftBorder = String.Format("{0," + ((winWidth) - (windowWidth / 2)) + "}", borderSide);
             Console.Write(leftBorder);
             //changes colour for text and prints body
-            Console.Write("{0," + ((winWidth) + (processedVar.Length / 2) - leftBorder.Length) + "}", processedVar);
+            Console.ForegroundColor = color;
+            Console.Write("{0," + ((winWidth) + (processedVar.Length / 2) - leftBorder.Length + 1) + "}", processedVar);
             //changes colour back for border and prints right edge
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             int offset = ((windowWidth / 2) - (processedVar.Length / 2));
@@ -128,10 +137,9 @@ namespace RPG_Project
             if (printBottom)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("{0," + ((winWidth) + ((border.Length / 2))) + "}", bottomBorder);
+                Console.WriteLine("{0," + ((winWidth) + ((border.Length / 2))+1) + "}", bottomBorder);
             }
         }
-
 
 
         /// <summary>
@@ -160,7 +168,7 @@ namespace RPG_Project
 
             //print top row
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("{0," + ((winWidth) + ((border.Length / 2))) + "}", topBorder);
+                Console.WriteLine("{0," + ((winWidth) + ((border.Length / 2)+1)) + "}", topBorder);
 
             int currentLine = 1;
             bool printing = true;
@@ -171,7 +179,7 @@ namespace RPG_Project
             //loop through array prints each line
             while (printing)
             {
-                processedLine = string.Format("{0," + ((winWidth) - (windowWidth / 2) - 1) + "}", borderSide);
+                processedLine = string.Format("{0," + ((winWidth) - (windowWidth / 2)) + "}", borderSide);
                 for (int x = 0; x < text.Length; x++)
                 {
 
@@ -181,16 +189,16 @@ namespace RPG_Project
                         switch (text.Length)
                         {
                             case 1:
-                                processedLine += string.Format("{0," + ((winWidth) + (text[x][y].Length / 2) - processedLine.Length) + "}", text[x][y]);
+                                processedLine += string.Format("{0," + ((windowWidth) + (text[x][y].Length / 2) - processedLine.Length) + "}", text[x][y]);
                                 offset = ((windowWidth / 2) - (text[x][y].Length / 2));
                                 break;
                             case 2:
-                                processedLine += string.Format("{0," + ((winWidth/3) + (text[x][y].Length / 2) + processedLine.Length/6) + "}", text[x][y]);
-                                offset = ((windowWidth / 2) - 3 - (processedLine.Length / 4));
+                                processedLine += string.Format("{0," + ((windowWidth / 4) + (text[x][y].Length/2) + processedLine.Length/6) + "}", text[x][y]);
+                                offset = (12);
                                 break;
                             case 3:
-                                processedLine += string.Format("{0," + ((winWidth / 4) + (text[x][y].Length / 3) + processedLine.Length / 10) + "}", text[x][y]);
-                                offset = ((windowWidth / 2)- (processedLine.Length / 3));
+                                processedLine += string.Format("{0," + ((windowWidth/ 6) + (text[x][y].Length/2) + processedLine.Length / 10) + "}", text[x][y]);
+                                offset = (6);
                                 break;
                         }
                         y++;
@@ -204,7 +212,7 @@ namespace RPG_Project
                     printing = false;
                 }
             }
-            Console.WriteLine("{0," + ((winWidth) + ((border.Length / 2))) + "}", bottomBorder);
+            Console.WriteLine("{0," + ((winWidth) + ((border.Length / 2)+1)) + "}", bottomBorder);
         }
 
         public void PrintMiddleScreen(string[] text)
@@ -220,10 +228,10 @@ namespace RPG_Project
             //loop through array prints each line
             for (int i = 0; i < text.Length; i++)
             {
-                string leftBorder = String.Format("{0," + ((winWidth) - (windowWidth / 2) -1) + "}", borderSide);
+                string leftBorder = String.Format("{0," + ((winWidth) - (windowWidth / 2)) + "}", borderSide);
                 Console.Write(leftBorder);
                 Console.Write("{0," + ((winWidth) + (text[i].Length / 2) - leftBorder.Length) + "}", text[i]);
-                int offset = ((windowWidth / 2) - (text[i].Length / 2));
+                int offset = ((windowWidth / 2) - (text[i].Length / 2)+1);
                 Console.WriteLine("{0," + (offset) + "}", borderSide);
             }
         }
@@ -241,13 +249,13 @@ namespace RPG_Project
             //loop through array prints each line
             for (int i = 0; i < text.Length; i++)
             {
-                string leftBorder = String.Format("{0," + ((winWidth) - (windowWidth / 2) - 1) + "}", borderSide);
+                string leftBorder = String.Format("{0," + ((winWidth) - (windowWidth / 2)) + "}", borderSide);
                 Console.Write(leftBorder);
                 Console.Write("{0," + ((winWidth) + (text[i].Length / 2) - leftBorder.Length) + "}", text[i]);
-                int offset = ((windowWidth / 2) - (text[i].Length / 2));
+                int offset = ((windowWidth / 2) - (text[i].Length / 2) +1);
                 Console.WriteLine("{0," + (offset) + "}", borderSide);
             }
-            Console.WriteLine("{0," + ((winWidth) + ((border.Length / 2))) + "}", bottomBorder);
+            Console.WriteLine("{0," + ((winWidth) + ((border.Length / 2)+1)) + "}", bottomBorder);
         }
 
 
@@ -273,6 +281,20 @@ namespace RPG_Project
             return new string(input.ToCharArray()
                 .Where(c => !Char.IsWhiteSpace(c))
                 .ToArray());
+        }
+
+        public void PrintMapReference()
+        {
+            PrintSingle("B = A magical portal that teleported you to these lands. (No gameplay use)", false, false, "", 0,ConsoleColor.DarkMagenta);
+            PrintSingle("R = Roads, you can travel on roads without risking combat                 ", false, false, "", 0, ConsoleColor.Yellow);
+            PrintSingle("S = Shop, here you can buy weapons and potions.                           ", false, false, "", 0, ConsoleColor.DarkBlue);
+            PrintSingle("D = Dungeon, beware this is where the powerful Demon King lives.          ", false, false, "", 0, ConsoleColor.DarkRed);
+            PrintSingle("M = Mountain, these towering giants are impossible to pass through.       ", false, false, "", 0, ConsoleColor.DarkGray);
+            PrintSingle("F = Forest, here you will find all sorts of dangerous foes                ", false, false, "", 0, ConsoleColor.DarkGreen);
+            PrintSingle("G - Grass-Land, the Demon King's armies patrol these areas.               ", false, false, "", 0, ConsoleColor.Green);
+            PrintSingle("W - Water, watch out for agressive fish here.                             ", false, false, "", 0, ConsoleColor.Cyan);
+            PrintSingle("", false, false);
+            PrintSingle("[ 1) Return ]", false, true);
         }
     }
 }

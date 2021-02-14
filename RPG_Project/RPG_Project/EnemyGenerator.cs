@@ -156,14 +156,15 @@ namespace RPG_Project
 
         public void BossBattle()
         {
-            //Boss();
-            //BasicEnemy[] theEnemies = new BasicEnemy[1];
-            //theEnemies[0] = boss;
-            //battleManager = new BattleManager(player, theEnemies);
-            //battleManager.BattleLoop();
+            Boss();
+            BasicEnemy[] theEnemies = new BasicEnemy[1];
+            theEnemies[0] = boss;
+            battleManager = new BattleManager(player, theEnemies);
+            battleManager.BattleLoop();
         }
 
 
+        //FOR TESTING ONLY
         public void forceEncounter(int enemies)
         {
             BasicEnemy[] theEnemies = new BasicEnemy[enemies];

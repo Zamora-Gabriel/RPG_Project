@@ -1,7 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using System.Media;
 using System.Threading.Tasks;
 
 namespace RPG_Project
@@ -10,72 +12,106 @@ namespace RPG_Project
     {
         static void Main(string[] args)
         {
+            //Sets console Size
+            int origWidth;
+            int origHeight;
+            int width;
+            int height;
+
+            origWidth = Console.WindowWidth;
+            origHeight = Console.WindowHeight;
+            width = 150;
+            height = 50;
+            Console.SetWindowSize(width, height);
+            //
+
+
+
+
+
+
+            //Disabled testing for game loop, can re-enable at any point. Purly for testing start of game
+
             //Test
-            Player player = new Player("Raph");
-            Weapon weap1 = new Weapon("gauntlet");
-            
-            Console.WriteLine(weap1.Name);
+            //Player player = new Player("Raph");
+            //Weapon weap1 = new Weapon("gauntlet");
 
-            string[] enemyOneArt = new string[] {"HP: {0}\\{1}","", "o~\\", "|_-__\\", "", "{2}" };
-            Weapon weap2 = new Weapon("pistol");
-            Console.WriteLine(weap2.Name);
+            //Console.WriteLine(weap1.Name);
 
-            Potion pot1 = new Potion(1,1);
-            Potion pot2 = new Potion(0,1);
-            player.PrintStats();
+            //string[] enemyOneArt = new string[] {"HP: {0}\\{1}","", "o~\\", "|_-__\\", "", "{2}" };
+            //Weapon weap2 = new Weapon("pistol");
+            //Console.WriteLine(weap2.Name);
+
+            //Potion pot1 = new Potion(1,1);
+            //Potion pot2 = new Potion(0,1);
+            //player.PrintStats();
 
 
 
-            //Player class Test
-            player.Exp = 120;
-            Console.WriteLine("Exp: {0}", player.Exp);
+            ////Player class Test
+            //player.Exp = 120;
+            //Console.WriteLine("Exp: {0}", player.Exp);
 
-            player.PrintInvent();
+            //player.PrintInvent();
 
-            
-            
-            player.AddPotionToInvent(pot1);
-            player.AddPotionToInvent(pot2);
-            player.AddPotionToInvent(pot2);
-            player.AddPotionToInvent(pot2);
-            player.AddWeaponToInvent(weap2);
-            //player.EquipWeapon(0);
-            //player.EquipWeapon(1);
-            //player.ChangeWeapons(0, 1);
-            player.AddWeaponToInvent(weap2);
 
-            player.PrintStats();
 
-            player.PrintInvent();
+            //player.AddPotionToInvent(pot1);
+            //player.AddPotionToInvent(pot2);
+            //player.AddPotionToInvent(pot2);
+            //player.AddPotionToInvent(pot2);
+            //player.AddWeaponToInvent(weap2);
+            ////player.EquipWeapon(0);
+            ////player.EquipWeapon(1);
+            ////player.ChangeWeapons(0, 1);
+            //player.AddWeaponToInvent(weap2);
 
-            player.RcvDamage(6);
-            Console.WriteLine("Current Health {0}:", player.Health);
+            //player.PrintStats();
 
-            player.RcvDamage(6);
-            Console.WriteLine("Current Health {0}:", player.Health);
+            //player.PrintInvent();
 
-            player.DrinkPotion(0);
+            //player.RcvDamage(6);
+            //Console.WriteLine("Current Health {0}:", player.Health);
 
-            player.PrintInvent();
+            //player.RcvDamage(6);
+            //Console.WriteLine("Current Health {0}:", player.Health);
 
-            player.RcvDamage(6);
-            Console.WriteLine("Current Health {0}:", player.Health);
-            
-            Printer printer = new Printer();
+            //player.DrinkPotion(0);
 
-            BasicEnemy[] enemies = new BasicEnemy[3];
+            //player.PrintInvent();
+
+            //player.RcvDamage(6);
+            //Console.WriteLine("Current Health {0}:", player.Health);
+
+            //Printer printer = new Printer();
+
+            //BasicEnemy[] enemies = new BasicEnemy[3];
             //enemies[0] = new BasicEnemy("tmp ", printer);
             //enemies[1] = new BasicEnemy("tmp ", printer);
             //enemies[2] = new BasicEnemy("tmp ", printer);
             //player.Health += 100;
+            //Player player = new Player("Test");
             //EnemyGenerator generator = new EnemyGenerator(player);
-            //generator.forceEncounter(3);
+            //generator.forceEncounter(2);
+
+            var soundPlayer = new SoundPlayer
+            {
+                SoundLocation = @"D:\0_School Work\GitHub\Intro_To_Html5\New folder\audio\mainMenu.wav"
+            };
+            Printer printer = new Printer();
+            soundPlayer.Play();
+            PrintMainMenu(printer, 1, soundPlayer);
+           
 
             //Starts Game
-            GameLoop();
+
         }
+
         static void GameLoop()
         {
+
+            
+
             while (true)
             {
                 Console.Clear();
@@ -93,6 +129,89 @@ namespace RPG_Project
                 DeathChoice(printer, thePlayer);
             }
             
+        }
+
+        static void PrintMainMenu(Printer printer, int menu, SoundPlayer soundPlayer)
+        {
+
+            string[] TitleArtOne = new string[] { "██████╗░███████╗███╗░░░███╗░█████╗░███╗░░██╗  ██╗░░██╗██╗███╗░░██╗░██████╗░██╗░██████╗", "██╔══██╗██╔════╝████╗░████║██╔══██╗████╗░██║  ██║░██╔╝██║████╗░██║██╔════╝░╚█║██╔════╝",
+                "██║░░██║█████╗░░██╔████╔██║██║░░██║██╔██╗██║  █████═╝░██║██╔██╗██║██║░░██╗░░╚╝╚█████╗░", "██║░░██║██╔══╝░░██║╚██╔╝██║██║░░██║██║╚████║  ██╔═██╗░██║██║╚████║██║░░╚██╗░░░░╚═══██╗",
+                "██████╔╝███████╗██║░╚═╝░██║╚█████╔╝██║░╚███║  ██║░╚██╗██║██║░╚███║╚██████╔╝░░░██████╔╝", "╚═════╝░╚══════╝╚═╝░░░░░╚═╝░╚════╝░╚═╝░░╚══╝  ╚═╝░░╚═╝╚═╝╚═╝░░╚══╝░╚═════╝░░░░╚═════╝░" };
+            string[] TitleArtTwo = new string[] { "██████╗░███████╗██╗░██████╗░███╗░░██╗  ░█████╗░███████╗  ████████╗███████╗██████╗░██████╗░░█████╗░██████╗░",
+            "██╔══██╗██╔════╝██║██╔════╝░████╗░██║  ██╔══██╗██╔════╝  ╚══██╔══╝██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔══██╗",
+            "██████╔╝█████╗░░██║██║░░██╗░██╔██╗██║  ██║░░██║█████╗░░  ░░░██║░░░█████╗░░██████╔╝██████╔╝██║░░██║██████╔╝",
+            "██╔══██╗██╔══╝░░██║██║░░╚██╗██║╚████║  ██║░░██║██╔══╝░░  ░░░██║░░░██╔══╝░░██╔══██╗██╔══██╗██║░░██║██╔══██╗",
+            "██║░░██║███████╗██║╚██████╔╝██║░╚███║  ╚█████╔╝██║░░░░░  ░░░██║░░░███████╗██║░░██║██║░░██║╚█████╔╝██║░░██║",
+            "╚═╝░░╚═╝╚══════╝╚═╝░╚═════╝░╚═╝░░╚══╝  ░╚════╝░╚═╝░░░░░  ░░░╚═╝░░░╚══════╝╚═╝░░╚═╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚═╝"};
+            string[] TitleMenuOptions = new string[] { "", "", "", "[ 1) Embark on a new journy ]", "", "", "[ 2) Instructions ]", "", "", "[ 3) Quit Game ]", "", "" };
+            string[] TitleMenuInstuctions = new string[] {"Instructions","","",
+                "To select an option enter the number next to it!", "", "Your goal it to defeat the demon king in his dungeon", "at the north-west corner of the world!",
+                "You can do this by fighting him when you're ready.","",
+                "You gain exp by fighting and beating enemies to level up.", "You also gain money from enemies that you can use to buy potions and weapons at the shop!",
+                "If you need to heal, go to one of the Cabins in the world, there you can rest for free!",
+                "","","Map Reference"
+                };
+            printer.PrintArray(TitleArtOne, true, false, true);
+            printer.PrintArray(TitleArtTwo, false, true, true);
+
+            switch (menu)
+            {
+                case 1:
+                    printer.PrintArray(TitleMenuOptions);
+                    ChooseMenuOptions(printer, soundPlayer);
+                    break;
+                case 2:
+                    printer.PrintArray(TitleMenuInstuctions, true, false);
+                    printer.PrintMapReference();
+                    InstructionMenu(printer, soundPlayer);
+                    break;
+            }
+            
+        }
+        static void ChooseMenuOptions(Printer printer, SoundPlayer soundPlayer)
+        {
+
+            int choice;
+            while (true)
+            {
+                //prompts for user input to choose name
+                choice = ReturnChoice(printer);
+                switch (choice)
+                {
+                    case 1:
+                        soundPlayer.Stop();
+                        GameLoop();
+                        return;
+                    case 2:
+                        Console.Clear();
+                        PrintMainMenu(printer, 2, soundPlayer);
+                        InstructionMenu(printer, soundPlayer);
+                        return;
+                    case 3:
+                        Environment.Exit(0);
+                        return;
+                }
+            }
+        }
+
+        static void InstructionMenu(Printer printer, SoundPlayer soundPlayer)
+        {
+
+            int choice;
+            while (true)
+            {
+                //prompts for user input to choose name
+                choice = ReturnChoice(printer);
+                switch (choice)
+                {
+                    case 1:
+                        Console.Clear();
+                        PrintMainMenu(printer, 1, soundPlayer);
+                        ChooseMenuOptions(printer, soundPlayer);
+
+                        return;
+                }
+            }
         }
 
         static string ChooseName(Printer thePrinter)

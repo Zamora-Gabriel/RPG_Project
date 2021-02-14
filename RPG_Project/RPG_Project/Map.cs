@@ -75,8 +75,6 @@ namespace RPG_Project
 
         public void GenerateMap()
         {
-            Console.WriteLine(Convert.ToInt32(Char.ToUpper('C')));
-            Console.ReadLine();
             //Generate special tiles
             playerTile = new MapTile(0, 0, MapTiles.Player, LevelCurve.No_Levels);
             defaultTile = new MapTile(0, 0, MapTiles.Mountian, LevelCurve.No_Levels);

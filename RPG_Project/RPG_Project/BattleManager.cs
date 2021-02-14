@@ -426,8 +426,9 @@ namespace RPG_Project
                     case 4:
                         if (abilities[1, 0] != "Locked")
                         {
-                            printer.PrintSingle("Using " + (Abilities)4 + " ability");
-                            ChooseAbilityTarget(playerChoice, 0);
+                            printer.PrintSingle("Using " + (Abilities)2 + " ability");
+                            PlayerChoice(4);
+                            ChooseAbilityTarget(playerChoice, 4);
                             return;
                         }
                         PlayerChoice(2);
@@ -436,9 +437,9 @@ namespace RPG_Project
                     case 5:
                         if (abilities[1, 1] != "Locked")
                         {
-                            printer.PrintSingle("Using " + (Abilities)5 + " ability");
-                            ChooseAbilityTarget(playerChoice, 0);
-                            return;
+                            printer.PrintSingle("Using " + (Abilities)2 + " ability");
+                            PlayerChoice(4);
+                            ChooseAbilityTarget(playerChoice, 4);
                         }
                         PlayerChoice(2);
                         return;
@@ -446,8 +447,9 @@ namespace RPG_Project
                     case 6:
                         if (abilities[1, 2] != "Locked")
                         {
-                            Console.WriteLine("Using {0} ability", (Abilities)6);
-                            ChooseAbilityTarget(playerChoice, 0);
+                            printer.PrintSingle("Using " + (Abilities)2 + " ability");
+                            PlayerChoice(4);
+                            ChooseAbilityTarget(playerChoice, 4);
                             return;
                         }
                         PlayerChoice(2);
@@ -711,13 +713,12 @@ namespace RPG_Project
                         return;
                     //Abilitiy
                     case 2:
-                        //TODO ADD ABILITIES
+                        //Prompts player to choose a new ability
                         printer.PrintSingle("You can't use that ability");
                         ChooseAbility();
                         return;
                     //Items
                     case 3:
-                        //TODO LET PLAYER USE ITEMS
                         UpdateBoard(choice);
                         //Choose player to attack and notify player that their choice is dead
                         printer.PrintSingle("You don't have any of those potions!");
@@ -726,7 +727,6 @@ namespace RPG_Project
                     //Run
                     case 4:
                         UpdateBoard(1);
-                       
                         return;
                     //Catch for invalid input
                     default:
