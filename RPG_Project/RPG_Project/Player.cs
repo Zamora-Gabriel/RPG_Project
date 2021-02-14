@@ -13,11 +13,12 @@ namespace RPG_Project
         /// <summary>
         /// Temporary skills, list can be reduced or added
         /// </summary>
-        Heal = 1, //--- heals 5 hp multiplied by x which increases each 5 levels starting at 1
-        Shatter, //--- Reduces 1/3 of enemy's defense for that attack only  
-        AvengerSoul, //--- Adds half of player's current accrued damage to the attack
-        Devour, //--- Takes 50% damage dealt to opponent as healing
-        WindGod //--- Five attacks at 50% of damage
+        Heal = 2, //--- heals 5 hp multiplied by x which increases each 5 levels starting at 1
+        Shatter =4, //--- Reduces 1/3 of enemy's defense for that attack only  
+        AvengerSoul = 6, //--- Adds half of player's current accrued damage to the attack
+        Devour = 8, //--- Takes 50% damage dealt to opponent as healing
+        WindGod = 10, //--- Five attacks at 50% of damage
+        EnergyBlast = 12 // --- Uses all remaining enemy doing 2 damage for each energy expended
     }
 
     //Maybe: Energy/Skills
@@ -30,6 +31,7 @@ namespace RPG_Project
 
         string name;
         int exp;
+        int levelUpExp = 100;
         int level;
         int money;
         //Testing
@@ -158,13 +160,13 @@ namespace RPG_Project
 
                 do
                 {
-                    if (exp >= 100)
+                    if (exp >= levelUpExp)
                     {
                         //save residual experience and level up
-                        exp =- exp;
                         LevelUp();
+                        levelUpExp = levelUpExp * 2;
                     }
-                } while (exp >= 100);
+                } while (exp >= levelUpExp);
                 
             }
         }
@@ -467,7 +469,7 @@ namespace RPG_Project
             int row = 3;
             int column = 2;
             string[,] abilityList = new string[column, row];
-            int multiplier = 1;
+            int multiplier = 2;
             var abilityName = (Abilities)1;
 
             for(int i = 0; i <= column-1; i++)
@@ -484,7 +486,7 @@ namespace RPG_Project
                     {
                         abilityList[i, j] = "Locked";
                     }
-                    multiplier++;
+                    multiplier += 2;
                 }
             }
 
@@ -519,9 +521,9 @@ namespace RPG_Project
                     //Shatter
                     outgoingDmg -= enemy.Defense;
                     outgoingDmg -= (enemy.Defense*2) / 3;
-                    if (outgoingDmg < 0)
+                    if (outgoingDmg <= 0)
                     {
-                        outgoingDmg = 0;
+                        outgoingDmg = 1;
                         break;
                     }
                     break;
@@ -529,18 +531,18 @@ namespace RPG_Project
                     //AvengerSoul
                     int accruedDmg = maxHealth - Health;
                     outgoingDmg -= enemy.Defense - accruedDmg;
-                    if (outgoingDmg < 0)
+                    if (outgoingDmg <= 0)
                     {
-                        outgoingDmg = 0;
+                        outgoingDmg = 1;
                         break;
                     }
                     break;
                 case 4:
                     //Devour
                     outgoingDmg -= enemy.Defense;
-                    if (outgoingDmg < 0)
+                    if (outgoingDmg <= 0)
                     {
-                        outgoingDmg = 0;
+                        outgoingDmg = 1;
                         break;
                     }
                     Health += outgoingDmg / 2;
@@ -548,12 +550,23 @@ namespace RPG_Project
                 case 5:
                     //WindGod
                     outgoingDmg -= enemy.Defense;
-                    if (outgoingDmg < 0)
+                    if (outgoingDmg <= 0)
                     {
-                        outgoingDmg = 0;
+                        outgoingDmg = 1;
                         break;
                     }
-                    outgoingDmg += (outgoingDmg/ 2) * 5;
+                    break;
+                case 6:
+                    //Energy Blast
+                    outgoingDmg += Energy;
+                    outgoingDmg -= enemy.Defense;
+                    if (outgoingDmg <= 0)
+                    {
+                        outgoingDmg = 1;
+                        Energy -= Energy;
+                        break;
+                    }
+                    Energy -= Energy;
                     break;
                 default:
                     Console.WriteLine("Error: Not a valid option");
