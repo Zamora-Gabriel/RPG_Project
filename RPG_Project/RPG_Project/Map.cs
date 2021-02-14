@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-
+using System.Reflection;
 namespace RPG_Project
 {
 
@@ -79,8 +79,10 @@ namespace RPG_Project
             playerTile = new MapTile(0, 0, MapTiles.Player, LevelCurve.No_Levels);
             defaultTile = new MapTile(0, 0, MapTiles.Mountian, LevelCurve.No_Levels);
 
-            //TODO Change this to a relative path
-            reader = File.OpenText("D:/0_School Work/GitHub/Intro_To_Html5/New folder/map/test.txt");
+            //Find map tile with relative path.
+            //TODO make this work when built and installed on seperate machine
+            //Should work with the source code but doesn't currently work when built
+            reader = File.OpenText(@"../../map/map.txt");
 
             //Finds maximum height and width of map
             Console.WriteLine("Generating map...");

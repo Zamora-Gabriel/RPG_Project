@@ -138,23 +138,31 @@ namespace RPG_Project
 
             var soundPlayer = new SoundPlayer
             {
-                SoundLocation = @"D:\0_School Work\GitHub\Intro_To_Html5\New folder\audio\combatMusic.wav"
+                SoundLocation = @"../../audio/combatMusic.wav"
             };
             var soundPlayer2 = new SoundPlayer
             {
-                SoundLocation = @"D:\0_School Work\GitHub\Intro_To_Html5\New folder\audio\bossBattle.wav"
+                SoundLocation = @"../../audio/combatMusic.wav"
             };
 
 
             if (play)
             {
-                if (bossBattle)
+                try
                 {
-                    soundPlayer2.PlayLooping();
+                    if (bossBattle)
+                    {
+                        soundPlayer2.PlayLooping();
+                        return;
+                    }
+                    soundPlayer.PlayLooping();
                     return;
                 }
-                soundPlayer.PlayLooping();
-                return;
+                catch
+                {
+
+                }
+
             }
             soundPlayer.Stop();
 

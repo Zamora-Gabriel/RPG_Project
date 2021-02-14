@@ -58,11 +58,19 @@ namespace RPG_Project
         {
             var soundPlayer = new SoundPlayer
             {
-                SoundLocation = @"D:\0_School Work\GitHub\Intro_To_Html5\New folder\audio\overWorld.wav"
+                SoundLocation = @"../../audio/overWorld.wav"
             };
             if (play)
             {
-                soundPlayer.PlayLooping();
+                try
+                {
+                    soundPlayer.PlayLooping();
+                }
+                catch
+                {
+
+                }
+                
                 musicPlaying = true;
                 return;
             }
@@ -716,11 +724,11 @@ namespace RPG_Project
                     //TODO ENTER SHOP INTERFACE
                     break;
                 case 5:
-                    //TODO RESTORE HP
+                    //Restores player hp and energy
                     inLocation = true;
                     printer.PrintSingle("You feel restored after a good sleep!");
-                    player.Health += 1000;
-                    player.Energy += 1000;
+                    player.Health = player.MaxHealth;
+                    player.Energy = player.MaxEnergy;
                     Console.ReadLine();
                     break;
                 case 6:

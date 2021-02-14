@@ -104,10 +104,18 @@ namespace RPG_Project
 
             var soundPlayer = new SoundPlayer
             {
-                SoundLocation = @"D:\0_School Work\GitHub\Intro_To_Html5\New folder\audio\mainMenu.wav"
+                SoundLocation = @"../../audio/mainMenu.wav"
             };
             Printer printer = new Printer();
-            soundPlayer.PlayLooping();
+            try
+            {
+                soundPlayer.PlayLooping();
+            }
+            catch
+            {
+
+            }
+
 
             //Starts Game
             PrintMainMenu(printer, 1, soundPlayer);
