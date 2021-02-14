@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Media;
 namespace RPG_Project
 {
     enum ActiveMenu
@@ -32,13 +32,13 @@ namespace RPG_Project
 
         Random rand = new Random();
 
-       
+        
 
         ActiveMenu currentMenu = ActiveMenu.General;
 
         bool hasMap = false;
         bool inLocation = false;
-
+        bool musicPlaying = false;
         string[] enemyArt = new string[] { "Movement Controls", "", "1) North", "3) West   4) East", "2) South" };
         string[] movementUI = new string[] { "Movement Controls", "", "1) Up",    "3) Left   4) Right", "2) Down", "" ,"5) Back" };
         string[] generalUI = new string[] { "Controls", "", "1) Movement      2) Inventory", "3) Stats         4) Abilities" };
@@ -53,20 +53,40 @@ namespace RPG_Project
             this.player = player;
         }
 
+        void PlayMusic(bool play)
+        {
+            var soundPlayer = new SoundPlayer
+            {
+                SoundLocation = @"D:\0_School Work\GitHub\Intro_To_Html5\New folder\audio\overWorld.wav"
+            };
+            if (play)
+            {
+                soundPlayer.PlayLooping();
+                musicPlaying = true;
+                return;
+            }
+            soundPlayer.Stop();
+            musicPlaying = false;
+        }
+
         //Draw map
         void DrawMap()
         {
+            
             if (!hasMap)
             {
                 hasMap = true;
+                
                 theMap.GenerateMap();
             }
         }
 
         public void UpdateMap()
         {
+
             DrawMap();
 
+            
             theMap.UpdatePlayerMap();
             printer.PrintArray(movementUI);
         }
@@ -80,6 +100,10 @@ namespace RPG_Project
         //TODO Draw UI on screen
         public void DrawUi()
         {
+            if (!musicPlaying)
+            {
+                PlayMusic(true);
+            }
             Console.Clear();
             if (player.HasDied)
             {
@@ -330,19 +354,28 @@ namespace RPG_Project
             {
                 //loop through posible choices
                 choice = ReturnChoice()-1;
-                for(int i =0; i < player.ReturnWeaponList().Length; i++)
+                
+                for (int i = 0; i < player.ReturnWeaponList().Length; i++)
                 {
-                    if(choice == i)
+                    if (choice == i)
                     {
                         InventroyItemStats(choice);
                         break;
                     }
-                    if(choice== player.ReturnWeaponList().Length)
+                    if (choice == player.ReturnWeaponList().Length)
                     {
                         currentMenu = ActiveMenu.Inventory;
                         DrawUi();
                         break;
                     }
+                }
+                Console.WriteLine(player.ReturnWeaponList().Length);
+                if (choice == 0)
+                {
+                    Console.WriteLine("Exiting menu");
+                    currentMenu = ActiveMenu.Inventory;
+                    DrawUi();
+                    break;
                 }
             }
         }
@@ -507,8 +540,8 @@ namespace RPG_Project
             switch (danger)
             {
                 case 1:
+                    PlayMusic(false);
                     enemylist.EasyGrassLandsEncounter();
-
                     break;
             }
         }
@@ -518,6 +551,7 @@ namespace RPG_Project
             switch (danger)
             {
                 case 1:
+                    PlayMusic(false);
                     enemyGenerator.EasyForestEncounter();
                     break;
             }
@@ -528,6 +562,7 @@ namespace RPG_Project
             switch (danger)
             {
                 case 1:
+                    PlayMusic(false);
                     enemyGenerator.EasyWaterEncounter();
                     break;
             }

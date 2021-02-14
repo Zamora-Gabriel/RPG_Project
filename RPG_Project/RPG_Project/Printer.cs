@@ -190,7 +190,7 @@ namespace RPG_Project
                         {
                             case 1:
                                 processedLine += string.Format("{0," + ((windowWidth) + (text[x][y].Length / 2) - processedLine.Length) + "}", text[x][y]);
-                                offset = ((windowWidth / 2) - (text[x][y].Length / 2));
+                                offset = (31);
                                 break;
                             case 2:
                                 processedLine += string.Format("{0," + ((windowWidth / 4) + (text[x][y].Length/2) + processedLine.Length/6) + "}", text[x][y]);

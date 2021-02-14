@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Media;
-using System.Threading.Tasks;
+using System.Threading;
+
 
 namespace RPG_Project
 {
@@ -85,33 +86,25 @@ namespace RPG_Project
 
             //Printer printer = new Printer();
 
-            //BasicEnemy[] enemies = new BasicEnemy[3];
-            //enemies[0] = new BasicEnemy("tmp ", printer);
-            //enemies[1] = new BasicEnemy("tmp ", printer);
-            //enemies[2] = new BasicEnemy("tmp ", printer);
-            //player.Health += 100;
+            ///Enable/Disable this to test combat
             //Player player = new Player("Test");
             //EnemyGenerator generator = new EnemyGenerator(player);
-            //generator.forceEncounter(2);
+            //generator.forceEncounter(1);
 
             var soundPlayer = new SoundPlayer
             {
                 SoundLocation = @"D:\0_School Work\GitHub\Intro_To_Html5\New folder\audio\mainMenu.wav"
             };
             Printer printer = new Printer();
-            soundPlayer.Play();
-            PrintMainMenu(printer, 1, soundPlayer);
-           
+            soundPlayer.PlayLooping();
 
             //Starts Game
-
+            PrintMainMenu(printer, 1, soundPlayer);
         }
 
-        static void GameLoop()
+        
+        static void GameLoop(SoundPlayer sound)
         {
-
-            
-
             while (true)
             {
                 Console.Clear();
@@ -121,8 +114,7 @@ namespace RPG_Project
                 Player thePlayer = new Player(ChooseName(printer));
 
                 OverWorldManager worldManager = new OverWorldManager(thePlayer);
-                thePlayer.AddWeaponToInvent(weap1);
-                Console.ReadLine();
+                sound.Stop();
                 worldManager.DrawUi();
 
                 Console.Clear();
@@ -147,8 +139,8 @@ namespace RPG_Project
             string[] TitleMenuInstuctions = new string[] {"Instructions","","",
                 "To select an option enter the number next to it!", "", "Your goal it to defeat the demon king in his dungeon", "at the north-west corner of the world!",
                 "You can do this by fighting him when you're ready.","",
-                "You gain exp by fighting and beating enemies to level up.", "You also gain money from enemies that you can use to buy potions and weapons at the shop!",
-                "If you need to heal, go to one of the Cabins in the world, there you can rest for free!",
+                "You gain exp by fighting and beating enemies to level up.", "You also gain money from enemies"," that you can use to buy potions and weapons at the shop!",
+                "If you need to heal,"," go to one of the Cabins in the world where you can rest for free!",
                 "","","Map Reference"
                 };
             printer.PrintArray(TitleArtOne, true, false, true);
@@ -179,8 +171,8 @@ namespace RPG_Project
                 switch (choice)
                 {
                     case 1:
-                        soundPlayer.Stop();
-                        GameLoop();
+                        
+                        GameLoop(soundPlayer);
                         return;
                     case 2:
                         Console.Clear();
@@ -208,7 +200,6 @@ namespace RPG_Project
                         Console.Clear();
                         PrintMainMenu(printer, 1, soundPlayer);
                         ChooseMenuOptions(printer, soundPlayer);
-
                         return;
                 }
             }

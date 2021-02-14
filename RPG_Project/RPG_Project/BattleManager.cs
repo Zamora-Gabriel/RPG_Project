@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Media;
 namespace RPG_Project
 {
 
@@ -29,6 +29,7 @@ namespace RPG_Project
         string[] bottomAbilitiesList = new string[] {"[ 1){0}] [ 2){1} ] [ 3){2}]", "[ 4){0}] [ 5){1} ] [ 6){2}]","TmpBack"};
 
         static int SPEED_TO_MOVE = 50;
+
 
         Player player;
         BasicEnemy[] enemy;
@@ -60,7 +61,8 @@ namespace RPG_Project
 
         public void BattleLoop()
         {
-            while(true)
+            PlayMusic(true);
+            while (true)
             {
                 switch (current)
                 {
@@ -125,11 +127,26 @@ namespace RPG_Project
                         rewards = string.Format("You gained {0} experience!", moneyFromBattle);
                         printer.PrintSingle(rewards, false, true);
                         Console.ReadLine();
+                        PlayMusic(false);
                         return;
                 }
             }
         }
 
+        void PlayMusic(bool play)
+        {
+            var soundPlayer = new SoundPlayer
+            {
+                SoundLocation = @"D:\0_School Work\GitHub\Intro_To_Html5\New folder\audio\combatMusic.wav"
+            };
+            if (play)
+            {
+                soundPlayer.PlayLooping();
+                return;
+            }
+            soundPlayer.Stop();
+
+        }
 
         void SwitchState()
         {
