@@ -47,18 +47,17 @@ namespace RPG_Project
             //Potion pot2 = new Potion(0, 1);
             //player.PrintStats();
 
-
-
-            ////Player class Test
-            //player.Exp = 120;
+            //Player class Test
+            //player.Exp = 420;
             //Console.WriteLine("Exp: {0}", player.Exp);
 
-
-            //Console.WriteLine("Exp: {0}", player.Exp);
-
-            ////Shop test
+            //Shop test
             //Shop shop1 = new Shop();
             //shop1.InitShop(player);
+
+            //Console.WriteLine("Exp: {0}", player.Exp);
+
+            //player.PrintInvent();
 
 
             //player.PrintInvent();

@@ -61,17 +61,18 @@ namespace RPG_Project
             Console.WriteLine("==================================== Shop ========================================");
             int lvl = player.Level;
             //Starting shop
-            ChooseWeaponMat(lvl);
-            DisplayPotions(player);
+            ChooseWeaponMat(lvl, player);
+            PotionBuy(player);
             Console.WriteLine("=================================================================================");
         }
 
 
         //According to player's level unlock items
-        private void ChooseWeaponMat(int lvl)
+        private void ChooseWeaponMat(int lvl, Player player)
         {
             int count = 1;
             var type = (WeaponTypes)1;
+            int option;
             Console.WriteLine("Choose the weapon material you want to buy");
            for (int i= 0; i < Enum.GetValues(typeof(WeaponTypes)).Length; i++)
             {
@@ -84,19 +85,110 @@ namespace RPG_Project
                 count++;
                 type = (WeaponTypes)count;
             }
+           //User typed validation
+            option = ValidateNumber(count+1);
+            WeaponTypes material = (WeaponTypes)option;
+            //TODO: Work in progress buying weapons
+
+            //WeaponBuy(player, material.ToString());
         }
 
-        private void DisplayPotions(Player player)
+        private void WeaponBuy(Player player, string material)
         {
             int choice;
             int amount;
-            int cost;
+            int cost = 0;
             int quality = 0;
             int type = 0;
             Potion potion;
             bool err = false;
             bool noMoney = false;
             bool noSpace = false;
+
+            Console.WriteLine("Choose the weapon you want to buy");
+            Console.WriteLine("1) Sword Cost: 10");
+            Console.WriteLine("2) Axe   Cost: 20");
+            Console.WriteLine("3) Lance Cost: 30");
+            Console.WriteLine("4) return to menu");
+
+            do
+            {
+                //Validate user input
+                choice = ValidateNumber(8);
+                if (choice == 4)
+                {
+                    return;
+                }
+                //Amount to buy
+                amount = AmountAsk();
+                switch (choice)
+                {
+                    case 1:
+                        cost = 10 * amount;
+                        quality = 0;
+                        type = 0;
+                        noMoney = ValidateMoney(cost, player);
+                        break;
+                    case 2:
+                        cost = 20 * amount;
+                        quality = 0;
+                        type = 1;
+                        noMoney = ValidateMoney(cost, player);
+                        break;
+                    case 3:
+                        cost = 30 * amount;
+                        quality = 0;
+                        type = 2;
+                        noMoney = ValidateMoney(cost, player);
+                        break;
+                    default:
+                        err = true;
+                        Console.WriteLine("Error: Not a valid option");
+                        break;
+                }
+
+                if (!noMoney)
+                {
+                    Console.WriteLine("Sorry, the total price is {0} and you have {1}... you can't afford it...", cost, player.Money);
+                    noSpace = true;
+                }
+
+                if (!player.InventHasSpace())
+                {
+                    Console.WriteLine("You don't have any more space on the inventory!");
+                    noSpace = true;
+                }
+
+                //Checkout
+                if (!noMoney && !noSpace)
+                {
+                    while (amount != 0)
+                    {
+                        potion = new Potion(quality, type);
+                        player.AddPotionToInvent(potion);
+                        amount--;
+                    }
+                    //Substract total from player's money
+                    player.Money -= cost;
+                    return;
+                }
+                Console.WriteLine("Error: Transaction failed");
+
+            } while (err);
+            return;
+        }
+
+        private void PotionBuy(Player player)
+        {
+            int choice;
+            int amount;
+            int cost=0;
+            int quality = 0;
+            int type = 0;
+            Potion potion;
+            bool err = false;
+            bool noMoney = false;
+            bool noSpace = false; 
 
             Console.WriteLine("Choose the potion you want to buy");
             Console.WriteLine("1) Normal-HP Potion Cost: 10");
@@ -161,6 +253,12 @@ namespace RPG_Project
                         break;
                 }
 
+                if (!noMoney)
+                {
+                    Console.WriteLine("Sorry, the total price is {0} and you have {1}... you can't afford it...", cost, player.Money);
+                    noSpace = true;
+                }
+
                 if (!player.InventHasSpace())
                 {
                     Console.WriteLine("You don't have any more space on the inventory!");
@@ -173,10 +271,14 @@ namespace RPG_Project
                     while(amount != 0)
                     {
                         potion = new Potion(quality, type);
-                        
+                        player.AddPotionToInvent(potion);
                         amount--;
                     }
+                    //Substract total from player's money
+                    player.Money -= cost;
+                    return;
                 }
+                Console.WriteLine("Error: Transaction failed");
 
             } while (err);
             return;

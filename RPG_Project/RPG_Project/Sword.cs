@@ -17,5 +17,6 @@ namespace RPG_Project
         }
 
         /***Methods***/
+        //TODO: Establish bonus stats for the weapon
     }
 }
