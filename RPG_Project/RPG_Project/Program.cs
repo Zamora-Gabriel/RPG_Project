@@ -46,11 +46,24 @@ namespace RPG_Project
             //Potion pot2 = new Potion(0,1);
             //player.PrintStats();
 
+<<<<<<< Updated upstream
 
 
             ////Player class Test
             //player.Exp = 120;
             //Console.WriteLine("Exp: {0}", player.Exp);
+=======
+            //Player class Test
+            player.Exp = 420;
+            Console.WriteLine("Exp: {0}", player.Exp);
+
+            //Shop test
+            Shop shop1 = new Shop();
+            shop1.InitShop(player);
+
+
+            player.PrintInvent();
+>>>>>>> Stashed changes
 
             //player.PrintInvent();
 
