@@ -37,19 +37,19 @@ namespace RPG_Project
 
         int xpFromBattle;
         int moneyFromBattle;
-
         int deadEnemies;
 
         BattleState current = BattleState.DeterminingState;
 
         bool fleeing = false;
+        bool bossBattle = false;
 
         int[] CombatentsSpeed = new int[4];
 
-        public BattleManager(Player player, BasicEnemy[] newenemy)
+        public BattleManager(Player player, BasicEnemy[] newenemy, bool bossBattle)
         {
             this.player = player;
-
+            this.bossBattle = bossBattle;
             enemy = new BasicEnemy[newenemy.Length];
             for (int i = 0; i < newenemy.Length; i++)
             {
@@ -135,12 +135,24 @@ namespace RPG_Project
 
         void PlayMusic(bool play)
         {
+
             var soundPlayer = new SoundPlayer
             {
                 SoundLocation = @"D:\0_School Work\GitHub\Intro_To_Html5\New folder\audio\combatMusic.wav"
             };
+            var soundPlayer2 = new SoundPlayer
+            {
+                SoundLocation = @"D:\0_School Work\GitHub\Intro_To_Html5\New folder\audio\bossBattle.wav"
+            };
+
+
             if (play)
             {
+                if (bossBattle)
+                {
+                    soundPlayer2.PlayLooping();
+                    return;
+                }
                 soundPlayer.PlayLooping();
                 return;
             }

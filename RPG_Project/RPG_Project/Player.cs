@@ -161,7 +161,7 @@ namespace RPG_Project
                     if (exp >= 100)
                     {
                         //save residual experience and level up
-                        exp = exp - 100;
+                        exp =- exp;
                         LevelUp();
                     }
                 } while (exp >= 100);
@@ -249,18 +249,18 @@ namespace RPG_Project
             Attack++;
             Defense++;
             Speed++;
-            Console.WriteLine("Congratulations {0}! Now you're level {1}", Name, Level);
+            printer.PrintSingle(string.Format("Congratulations {0}! Now you're level {1}", Name, Level));
         }
 
         public int AtkDamage(Enemy enemy)
         {
             int outgoingDmg = Attack;
 
-            //Calculate damage to enemy
+            //Calculate damage to enemy minimum of one damage
             outgoingDmg -= enemy.Defense;
-            if (outgoingDmg < 0)
+            if (outgoingDmg <= 0)
             {
-                outgoingDmg = 0;
+                outgoingDmg = 1;
             }
             //return damage;
             return outgoingDmg;

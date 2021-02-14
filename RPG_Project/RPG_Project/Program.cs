@@ -39,32 +39,30 @@ namespace RPG_Project
 
             //Console.WriteLine(weap1.Name);
 
-            //string[] enemyOneArt = new string[] {"HP: {0}\\{1}","", "o~\\", "|_-__\\", "", "{2}" };
+            //string[] enemyOneArt = new string[] { "HP: {0}\\{1}", "", "o~\\", "|_-__\\", "", "{2}" };
             //Weapon weap2 = new Weapon("pistol");
             //Console.WriteLine(weap2.Name);
 
-            //Potion pot1 = new Potion(1,1);
-            //Potion pot2 = new Potion(0,1);
+            //Potion pot1 = new Potion(1, 1);
+            //Potion pot2 = new Potion(0, 1);
             //player.PrintStats();
 
-<<<<<<< Updated upstream
 
 
             ////Player class Test
             //player.Exp = 120;
             //Console.WriteLine("Exp: {0}", player.Exp);
-=======
-            //Player class Test
-            player.Exp = 420;
-            Console.WriteLine("Exp: {0}", player.Exp);
-
-            //Shop test
-            Shop shop1 = new Shop();
-            shop1.InitShop(player);
 
 
-            player.PrintInvent();
->>>>>>> Stashed changes
+            //Console.WriteLine("Exp: {0}", player.Exp);
+
+            ////Shop test
+            //Shop shop1 = new Shop();
+            //shop1.InitShop(player);
+
+
+            //player.PrintInvent();
+
 
             //player.PrintInvent();
 
@@ -124,6 +122,7 @@ namespace RPG_Project
                 Weapon weap1 = new Weapon("Sword");
                 Printer printer = new Printer();
                 Console.Clear();
+                PrintMainMenu(printer, 3, sound);
                 Player thePlayer = new Player(ChooseName(printer));
 
                 OverWorldManager worldManager = new OverWorldManager(thePlayer);
@@ -156,6 +155,8 @@ namespace RPG_Project
                 "If you need to heal,"," go to one of the Cabins in the world where you can rest for free!",
                 "","","Map Reference"
                 };
+            string[] gameStartText = new string[] { "Hero... hero wake up!", "..." , "......", "..........", "Finally you're awake, you've been asleep far too long",
+            "and the Demon King has taken over the realm.", "", "You must set off to defeat him and free this land!", "" ,""};
             printer.PrintArray(TitleArtOne, true, false, true);
             printer.PrintArray(TitleArtTwo, false, true, true);
 
@@ -169,6 +170,9 @@ namespace RPG_Project
                     printer.PrintArray(TitleMenuInstuctions, true, false);
                     printer.PrintMapReference();
                     InstructionMenu(printer, soundPlayer);
+                    break;
+                case 3:
+                    printer.PrintArray(gameStartText, true, false);
                     break;
             }
             
@@ -224,7 +228,7 @@ namespace RPG_Project
             while (true)
             {
                 //prompts for user input to choose name
-                thePrinter.PrintSingle("What shall I call you hero?", true, true);
+                thePrinter.PrintSingle("Now then... What shall I call you hero?", false, true);
                 string tempName = Console.ReadLine();
                 //check to make sure the string is not empty
                 if (tempName != "")
@@ -238,7 +242,7 @@ namespace RPG_Project
                         {
                             return tempName;
                         }
-                        thePrinter.PrintSingle("Of course, what will it be then?", true, true);
+                        thePrinter.PrintSingle("Of course, what will it be then?", true, false);
                     }
                     else
                     {
@@ -250,8 +254,8 @@ namespace RPG_Project
                 }
                 else
                 {
-                    //Prints if the player enteres nothing, prompting them to name the pet something.
-                    thePrinter.PrintSingle("You must have a name Hero! How else will the land know who saved them!", true, true);
+                    //Prints if the player enteres nothing, prompting them to name the pet something.1
+                    thePrinter.PrintSingle("You must have a name Hero! How else will the land know who saved them!", true, false);
                 }
             }
         }

@@ -16,6 +16,7 @@ namespace RPG_Project
         Inventory_Weapon_Detail,
         Stats,
         Abilities,
+        Abilitie_Details,
         Dead
     }
     class OverWorldManager
@@ -120,6 +121,12 @@ namespace RPG_Project
                 case ActiveMenu.Movement:
                     UpdateMap();
                     MovementUi();
+                    break;
+                case ActiveMenu.Abilities:
+                    InventoryAbilities();
+                    break;
+                case ActiveMenu.Abilitie_Details:
+
                     break;
                 case ActiveMenu.Inventory:
                     printer.PrintArray(inventoryUiBase);
@@ -317,7 +324,6 @@ namespace RPG_Project
             return;
         }
 
-        
         //Generates list of weapons in inventory and dynamically sets number to each.
         void InventoryUiWeapons()
         {
@@ -410,7 +416,7 @@ namespace RPG_Project
                     case 1:
                         if (isEquiped)
                         {
-                            Console.WriteLine("Unequping");
+
                             player.UnequipWeapon(player.EquipedWeapon);
                             currentMenu = ActiveMenu.Inventory_Weapons;
                             DrawUi();
@@ -420,13 +426,13 @@ namespace RPG_Project
                         {
                             if(player.EquipedWeapon != null)
                             {
-                                Console.WriteLine("Swapping");
+
                                 player.ChangeWeapons(player.EquipedWeapon, item);
                                 currentMenu = ActiveMenu.Inventory_Weapons;
                                 DrawUi();
                                 return;
                             }
-                            Console.WriteLine("Equiping");
+
                             player.EquipWeapon(item);
                             currentMenu = ActiveMenu.Inventory_Weapons;
                             DrawUi();
@@ -475,7 +481,135 @@ namespace RPG_Project
             }
         }
 
+        void InventoryAbilities()
+        {
+            while (true)
+            {
+                
+                string[] bottomAbilitiesList = new string[] { "[ 1){0}] [ 2){1} ] [ 3){2}]", "[ 4){0}] [ 5){1} ] [ 6){2}]", "TmpBack" };
+                string[,] abilitiesList = player.ReturnUnlockedAbilities();
+                for (int i = 0; i < bottomAbilitiesList.Length - 1; i++)
+                {
+                    bottomAbilitiesList[i] = string.Format(bottomAbilitiesList[i], abilitiesList[i, 0], abilitiesList[i, 1], abilitiesList[i, 2]);
+                }
+                bottomAbilitiesList[2] = string.Format("[ 7): Return to menu ]");
+                printer.PrintArray(bottomAbilitiesList);
+                
 
+
+                int playerChoice = ReturnChoice();
+                switch (playerChoice)
+                {
+                    
+                    case 1:
+                        if (abilitiesList[0, 0] != "Locked")
+                        {
+                            currentMenu = ActiveMenu.Abilitie_Details;
+                            InventoryAbilitiesDetails(1);
+                            break;
+                        }
+                        break;
+                    //Shatter
+                    case 2:
+                        if (abilitiesList[0, 1] != "Locked")
+                        {
+                            currentMenu = ActiveMenu.Abilitie_Details;
+                            InventoryAbilitiesDetails(2);
+                            break;
+                        }
+                        break;
+
+                    case 3:
+                        if (abilitiesList[0, 1] != "Locked")
+                        {
+                            currentMenu = ActiveMenu.Abilitie_Details;
+                            InventoryAbilitiesDetails(3);
+                            break;
+                        }
+                        break;
+
+                    case 4:
+                        if (abilitiesList[1, 0] != "Locked")
+                        {
+                            currentMenu = ActiveMenu.Abilitie_Details;
+                            InventoryAbilitiesDetails(4);
+                            break;
+                        }
+                        break;
+
+                    case 5:
+                        if (abilitiesList[1, 1] != "Locked")
+                        {
+                            currentMenu = ActiveMenu.Abilitie_Details;
+                            InventoryAbilitiesDetails(5);
+                            break;
+                        }
+                        break;
+
+                    case 6:
+                        if (abilitiesList[1, 2] != "Locked")
+                        {
+                            currentMenu = ActiveMenu.Abilitie_Details;
+                            InventoryAbilitiesDetails(6);
+                            break;
+                        }
+                        break;
+
+                    case 7:
+                        currentMenu = ActiveMenu.General;
+                        DrawUi();
+                        return;
+                    default:
+                        currentMenu = ActiveMenu.General;
+                        DrawUi();
+                        return;
+                }
+                DrawUi();
+            }
+        }
+
+        void InventoryAbilitiesDetails(int abilitiyNumber)
+        { 
+            while(true)
+            {
+                DrawUi();
+                string[] abilty;
+                switch (abilitiyNumber)
+                {
+                    case 1:
+                        abilty = new string[] { "Heal", "", "heals 5 hp", " multiplied by x which increases each 5 levels starting at 1","","[ 1) Return ]" };
+                        printer.PrintArray(abilty);
+                        break;
+                    case 2:
+                        abilty = new string[] { "Shatter", "", "Reduces enemy defense by 1/3", "for the next attack only", "", "[ 1) Return ]" };
+                        printer.PrintArray(abilty);
+                        break;
+                    case 3:
+                        abilty = new string[] { "Avenger Soul", "", "Do bonus damage equal to half", "of your total missing hp", "", "[ 1) Return ]" };
+                        printer.PrintArray(abilty);
+                        break;
+                    case 4:
+                        abilty = new string[] { "Devour", "", "Heals 50% of damage done", "", "[ 1) Return ]" };
+                        printer.PrintArray(abilty);
+                        break;
+                    case 5:
+                        abilty = new string[] { "Wind God", "", "Attacks five times at once", "each attack does 50% of its normal damage", "", "[ 1) Return ]" };
+                        printer.PrintArray(abilty);
+                        break;
+                    case 6:
+                        abilty = new string[] { "Heal", "", "heals 5 hp", " multiplied by x which increases each 5 levels starting at 1", "", "[ 1) Return ]" };
+                        printer.PrintArray(abilty);
+                        break;
+                }
+                int playerChoice = ReturnChoice();
+                if(playerChoice == 1)
+                {
+                    currentMenu = ActiveMenu.Abilities;
+                    DrawUi();
+                    return;
+                }
+            }
+        }
 
         int ReturnChoice()
         {
