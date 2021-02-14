@@ -561,5 +561,10 @@ namespace RPG_Project
             }
             return outgoingDmg;
         }
+
+        public bool InventHasSpace()
+        {
+            return invent.CheckCapacity();
+        }
     }
 }

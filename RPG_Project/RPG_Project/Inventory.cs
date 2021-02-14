@@ -68,7 +68,7 @@ namespace RPG_Project
 
         /***Methods***/
 
-        private bool CheckCapacity()
+        public bool CheckCapacity()
         {
             if (capacity >= INVENTORY_CAPACITY)
             {
