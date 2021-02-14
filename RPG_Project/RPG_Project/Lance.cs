@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace RPG_Project
 {
-    class Sword : Weapon
+    class Lance : Weapon
     {
         //Default constructor
-        public Sword() { }
+        public Lance() { }
 
-        public Sword(string weapName)
+        public Lance(string weapName)
         {
             this.Name = weapName;
             this.cost = 10;
@@ -23,10 +23,10 @@ namespace RPG_Project
         {
             base.CreateWeapForShop(material);
 
-            //Update bonus points for swords (balanced)
+            //Update bonus points for lances (Spd focus)
             AtkBonus += 5;
-            SpdBonus += 5;
-            DefBonus += 5;
+            SpdBonus += 7;
+            DefBonus += 2;
 
             return cost;
         }

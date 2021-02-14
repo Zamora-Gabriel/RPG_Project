@@ -9,12 +9,17 @@ namespace RPG_Project
     class Weapon
     {
         /***Variables***/
+        const int WOODEN_COST = 10;
+        const int BRONZE_COST = 20;
+        const int STEEL_COST = 40;
+        const int LEGEND_COST = 100; //-- Celestial, Titan and Dragon weapons
+        
 
         string name;
         int atkbonus;
         int defbonus;
         int spdbonus;
-        int cost; //how much will it cost on shop
+        protected int cost; //how much will it cost on shop
 
         /***Properties***/
 
@@ -67,14 +72,65 @@ namespace RPG_Project
             AtkBonus = 1;
             DefBonus = 1;
             SpdBonus = 1;
-            cost = 1;
+            cost = 0;
         }
 
         /***Methods***/
 
-        public void CheckName()
+        //Check material and update price of the weapon
+        public virtual int CreateWeapForShop(string material)
         {
+            switch (material)
+            {
+                case "Wooden":
+                    cost = WOODEN_COST;
+                    AtkBonus = 1;
+                    DefBonus = 1;
+                    SpdBonus = 1;
+                    break;
 
+                case "Bronze":
+                    cost = BRONZE_COST;
+                    AtkBonus = 3;
+                    DefBonus = 3;
+                    SpdBonus = 3;
+                    break;
+
+                case "Steel":
+                    cost = STEEL_COST;
+                    AtkBonus = 6;
+                    DefBonus = 6;
+                    SpdBonus = 6;
+                    break;
+
+                case "Celestial":
+                    cost = LEGEND_COST;
+                    AtkBonus = 8;
+                    DefBonus = 8;
+                    SpdBonus = 10;
+                    break;
+
+                case "Titan":
+                    cost = LEGEND_COST;
+                    AtkBonus = 8;
+                    DefBonus = 10;
+                    SpdBonus = 8;
+                    break;
+
+                case "Dragon":
+                    cost = LEGEND_COST;
+                    AtkBonus = 10;
+                    DefBonus = 8;
+                    SpdBonus = 8;
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid option");
+                    break;
+
+            }
+
+            return cost;
         }
     }
 }
