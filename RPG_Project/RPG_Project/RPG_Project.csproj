@@ -43,11 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Axe.cs" />
     <Compile Include="BasicEnemy.cs" />
     <Compile Include="BattleManager.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="EnemyGenerator.cs" />
     <Compile Include="Inventory.cs" />
+    <Compile Include="Lance.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapTile.cs" />
     <Compile Include="OverWorldManager.cs" />

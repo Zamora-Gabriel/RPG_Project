@@ -312,7 +312,17 @@ namespace RPG_Project
             }
         }
 
-        //TODO: Make it public if user can fight barehanded
+        public bool IsTheWeaponOnInventory(string name)
+        {
+            Weapon weap = invent.CheckWeaponByName(name);
+            if(weap != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        //Make it public if user can fight barehanded
         public bool UnequipWeapon(Weapon weapon)
         {
             if (EquipedWeapon == null)
@@ -367,12 +377,26 @@ namespace RPG_Project
             }
         }
 
+        public void RemoveWeaponfromInvent(int option)
+        {
+            Weapon weap = invent.CheckWeapon(option);
+
+            //Check if user tries to remove the equiped weapon
+            if (equipedWeapon.Name == name)
+            {
+                Console.WriteLine("You can't remove the equiped weapon!");
+                return;
+            }
+
+            invent.RemoveWeapon(weap);
+        }
+
         public void AddPotionToInvent(Potion pot)
         {
             //check if user has that potion on inventory
             if (invent.AddPotion(pot))
             {
-                Console.WriteLine("Succesfully added potion!");
+                Console.WriteLine("Succesfully added {0} {1} potion!", pot.Quality, pot.Type);
             }
         }
         public string[] ReturnStats()
@@ -565,6 +589,11 @@ namespace RPG_Project
         public bool InventHasSpace()
         {
             return invent.CheckCapacity();
+        }
+
+        public int ReturnMaxCapacity()
+        {
+            return invent.MaxCapacity();
         }
     }
 }
