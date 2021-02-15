@@ -28,9 +28,8 @@ namespace RPG_Project
 
 
         Map theMap = new Map();
-
         Player player;
-
+        Shop theShop = new Shop();
         Random rand = new Random();
 
         
@@ -114,9 +113,10 @@ namespace RPG_Project
                 PlayMusic(true);
             }
             Console.Clear();
-            if (player.HasDied)
+            if (player.HasDied || player.HasWon)
             {
                 currentMenu = ActiveMenu.Dead;
+                return;
             }
             DrawOnlyMap();
 
@@ -162,7 +162,7 @@ namespace RPG_Project
         void GeneralUi()
         {
             int choice;
-            while (!player.HasDied)
+            while (!player.HasDied && !player.HasWon)
             {
                 choice = ReturnChoice();
                 switch (choice)
@@ -193,7 +193,7 @@ namespace RPG_Project
         {
 
             int choice;
-            while (!player.HasDied)
+            while (!player.HasDied && !player.HasWon)
             {
                 choice = ReturnChoice();
                 switch (choice)
@@ -233,7 +233,7 @@ namespace RPG_Project
         void InventoryUi()
         {
             int choice;
-            while (!player.HasDied)
+            while (!player.HasDied && !player.HasWon)
             {
                 choice = ReturnChoice();
                 switch (choice)
@@ -279,7 +279,7 @@ namespace RPG_Project
                 copyList[2] = string.Format("[ 7): Return to menu ]");
             printer.PrintArray(copyList);
 
-            while (!player.HasDied)
+            while (!player.HasDied && !player.HasWon)
             {
                 choice = ReturnChoice();
                 switch (choice)
@@ -364,7 +364,7 @@ namespace RPG_Project
             //print formated string
             printer.PrintArray(formatedString);
 
-            while (!player.HasDied)
+            while (!player.HasDied && !player.HasWon)
             {
                 //loop through posible choices
                 choice = ReturnChoice()-1;
@@ -683,7 +683,7 @@ namespace RPG_Project
             {
                 case 1:
                     PlayMusic(false);
-                    enemylist.EasyGrassLandsEncounter();
+                    enemylist.GrassLandEncounter(danger);
                     break;
             }
         }
@@ -694,7 +694,7 @@ namespace RPG_Project
             {
                 case 1:
                     PlayMusic(false);
-                    enemyGenerator.EasyForestEncounter();
+                    enemyGenerator.ForestEncounter(danger);
                     break;
             }
         }
@@ -705,7 +705,7 @@ namespace RPG_Project
             {
                 case 1:
                     PlayMusic(false);
-                    enemyGenerator.EasyWaterEncounter();
+                    enemyGenerator.WaterEncounter(danger);
                     break;
             }
         }
@@ -722,6 +722,9 @@ namespace RPG_Project
             {
                 case 4:
                     //TODO ENTER SHOP INTERFACE
+                    theShop.InitShop(player);
+                    currentMenu = ActiveMenu.General;
+                    DrawUi();
                     break;
                 case 5:
                     //Restores player hp and energy
@@ -735,6 +738,8 @@ namespace RPG_Project
                     //ENTER BOSS FIGHT!!
                     EnemyGenerator enemyGenerator = new EnemyGenerator(player);
                     enemyGenerator.BossBattle();
+                    player.HasWon = true;
+                    DrawUi();
                     break;
                 default:
 

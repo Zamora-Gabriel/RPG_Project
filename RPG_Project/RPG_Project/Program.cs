@@ -99,23 +99,15 @@ namespace RPG_Project
             //Printer printer = new Printer();
 
             ///Enable/Disable this to test combat
-            //Player player = new Player("Test");
-            //EnemyGenerator generator = new EnemyGenerator(player);
-            //generator.forceEncounter(1);
+            Player player = new Player("Test");
+            EnemyGenerator generator = new EnemyGenerator(player);
+            generator.forceEncounter(1);
 
             var soundPlayer = new SoundPlayer
             {
                 SoundLocation = @"../../audio/mainMenu.wav"
             };
             Printer printer = new Printer();
-            try
-            {
-                soundPlayer.PlayLooping();
-            }
-            catch
-            {
-
-            }
 
 
             //Starts Game
@@ -128,18 +120,38 @@ namespace RPG_Project
             while (true)
             {
                 Console.Clear();
-                Weapon weap1 = new Weapon("Sword");
                 Printer printer = new Printer();
-                Console.Clear();
+                PlaySound(sound, true);
+
                 PrintMainMenu(printer, 3, sound);
                 Player thePlayer = new Player(ChooseName(printer));
 
                 OverWorldManager worldManager = new OverWorldManager(thePlayer);
-                sound.Stop();
+                PlaySound(sound, false);
                 worldManager.DrawUi();
 
                 Console.Clear();
-                DeathChoice(printer, thePlayer);
+                EndGameChoice(printer, thePlayer, sound);
+            }
+            
+        }
+
+        static void PlaySound(SoundPlayer player, bool play)
+        {
+            if (play)
+            {
+                try
+                {
+                    player.PlayLooping();
+                }
+                catch
+                {
+
+                }
+            }
+            else
+            {
+                player.Stop();
             }
             
         }
@@ -268,24 +280,48 @@ namespace RPG_Project
                 }
             }
         }
-        static void DeathChoice(Printer printer, Player player)
+        static void EndGameChoice(Printer printer, Player player, SoundPlayer soundPlayer)
         {
             int choice;
-            string[] deathMessage = new string[] { "{0}, you have died", "The demon lord will now surely rule this land forever", "Unless, you want to try again? ", "1) Yes     2) No  " };
-            while (true)
+            if (player.HasDied)
             {
-                deathMessage[0] = string.Format(deathMessage[0], player.Name);
-                printer.PrintArray(deathMessage);
-                choice = ReturnChoice(printer);
-                switch (choice)
+                string[] deathMessage = new string[] { "{0}, you have died", "The demon lord will now surely rule this land forever", "Unless, you want to try again? ", "1) Yes     2) No  " };
+                while (true)
                 {
-                    case 1:
-                        return;
-                    case 2:
-                        printer.PrintSingle("Good bye.");
-                        Console.ReadLine();
-                        System.Environment.Exit(1);
-                        break;
+                    deathMessage[0] = string.Format(deathMessage[0], player.Name);
+                    printer.PrintArray(deathMessage);
+                    choice = ReturnChoice(printer);
+                    switch (choice)
+                    {
+                        case 1:
+                            return;
+                        case 2:
+                            printer.PrintSingle("Good bye.");
+                            Console.ReadLine();
+                            System.Environment.Exit(1);
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                PlaySound(soundPlayer, true);
+                string[] deathMessage = new string[] { "{0}, you have defeated the Demon King!!", "Your name will forever be remembered!", "But... evil does not rest, the world will need you again.","Shall you set off on another quest?","","1) Yes     2) No  " };
+                while (true)
+                {
+                    deathMessage[0] = string.Format(deathMessage[0], player.Name);
+                    printer.PrintArray(deathMessage);
+                    choice = ReturnChoice(printer);
+                    switch (choice)
+                    {
+                        case 1:
+                            return;
+                        case 2:
+                            printer.PrintSingle("Good bye, hero.");
+                            Console.ReadLine();
+                            System.Environment.Exit(1);
+                            break;
+                    }
                 }
             }
         }

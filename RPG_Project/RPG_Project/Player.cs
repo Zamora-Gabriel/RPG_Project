@@ -33,7 +33,7 @@ namespace RPG_Project
         int exp;
         int levelUpExp = 100;
         int level;
-        int money;
+        int money = 0;
         //Testing
         //string equipedWeapon;
         Weapon equipedWeapon;
@@ -52,6 +52,7 @@ namespace RPG_Project
         int speed;
 
         bool hasDied;
+        bool hasWon;
         /***Properties***/
 
         public string Name
@@ -207,6 +208,14 @@ namespace RPG_Project
             }
         }
 
+        public bool HasWon
+        {
+            get { return hasWon; }
+            set
+            {
+                hasWon = value;
+            }
+        }
         /***Constructors***/
 
         public Player(string name1)
@@ -466,11 +475,11 @@ namespace RPG_Project
                     if (pot.Type == 0)
                     {
                         //Regain health
-                        Health = pot.amount;
+                        Health += pot.amount;
                     }
                     else
                     {
-                        Energy = pot.amount;
+                        Energy += pot.amount;
                     }
                     printer.PrintSingle("Succesfully used potion");
                     Console.ReadLine();

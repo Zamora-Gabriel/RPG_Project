@@ -300,30 +300,7 @@ namespace RPG_Project
 
             foreach (Potion item in potionList)
             {
-                //if (item.Type == (int)PotionType.EnergyPotion)
-                //{
-                //    //if it's a Energy potion, change the default 
-                //    potiont = (PotionType)1;
-                //}
-                //else
-                //{
-                //    //potionType = 1;
-                //}
-                switch (item.Quality)
-                {
-                    case 0:
-                        potions[potionType, 0]++;
-                        break;
-                    case 1:
-                        potions[potionType, 1]++;
-                        break;
-                    case 2:
-                        potions[potionType, 2]++;
-                        break;
-                    default:
-                        break;
-                }
-
+                potions[item.Type, item.Quality]++;
             }
             return potions;
         }

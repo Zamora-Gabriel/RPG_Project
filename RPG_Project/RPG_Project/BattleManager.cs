@@ -330,6 +330,21 @@ namespace RPG_Project
             bool choosing = true;
             while (choosing)
             {
+                deadEnemies = 0;
+                foreach (Enemy allEnemies in enemy)
+                {
+                    if (allEnemies.HasDied)
+                    {
+                        deadEnemies++;
+                    }
+
+                    if (deadEnemies == enemy.Length)
+                    {
+                        current = BattleState.End;
+                        return;
+                    }
+                }
+
                 int playerChoice = ReturnChoice();
                 switch (playerChoice)
                 {
