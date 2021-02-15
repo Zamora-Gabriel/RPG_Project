@@ -35,7 +35,7 @@ namespace RPG_Project
 
             //Test
             //Player player = new Player("Raph");
-            //Weapon weap1 = new Weapon("gauntlet");
+            //Weapon weap1 = new Weapon("Steel Sword");
 
             //Console.WriteLine(weap1.Name);
 
@@ -47,18 +47,19 @@ namespace RPG_Project
             //Potion pot2 = new Potion(0, 1);
             //player.PrintStats();
 
-
-
-            ////Player class Test
-            //player.Exp = 120;
+            //Player class Test
+            //player.Exp = 420;
             //Console.WriteLine("Exp: {0}", player.Exp);
 
-
-            //Console.WriteLine("Exp: {0}", player.Exp);
-
-            ////Shop test
+            //Shop test
+            //player.Money = 500;
+            //player.Exp = 500;
             //Shop shop1 = new Shop();
             //shop1.InitShop(player);
+
+            //Console.WriteLine("Exp: {0}", player.Exp);
+
+            //player.PrintInvent();
 
 
             //player.PrintInvent();

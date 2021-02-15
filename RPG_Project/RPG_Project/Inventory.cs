@@ -82,17 +82,27 @@ namespace RPG_Project
 
         public bool AddWeapon(Weapon weap)
         {
-            capacity++;
+            
             if (CheckCapacity())
             {
                 weaponList.Add(weap);
+                capacity++;
                 return true;
             }
             return false;
         }
 
-        public bool RemoveWeapon()
+        public bool RemoveWeapon(Weapon weap)
         {
+            foreach (Weapon item in weaponList)
+            {
+                if (item.Name == weap.Name)
+                {
+                        weaponList.Remove(item);
+                        return true;
+                }
+            }
+            Console.WriteLine("No weapon was found");
             return false;
         }
 
@@ -179,10 +189,11 @@ namespace RPG_Project
 
         public bool AddPotion(Potion pot)
         {
-            capacity++;
+            
             if (CheckCapacity())
             {
                 potionList.Add(pot);
+                capacity++;
                 return true;
             }
             return false;
@@ -355,6 +366,11 @@ namespace RPG_Project
                 count++;
             }
             Console.WriteLine("");
+        }
+
+        public int MaxCapacity()
+        {
+            return INVENTORY_CAPACITY;
         }
     }
 }
