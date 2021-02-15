@@ -24,7 +24,7 @@ namespace RPG_Project
             width = 150;
             height = 50;
             Console.SetWindowSize(width, height);
-            //
+            
 
 
 
@@ -99,29 +99,29 @@ namespace RPG_Project
             //Printer printer = new Printer();
 
             ///Enable/Disable this to test combat
-            Player player = new Player("Test");
-            EnemyGenerator generator = new EnemyGenerator(player);
-            generator.forceEncounter(1);
+            //Player player = new Player("Test");
+            //EnemyGenerator generator = new EnemyGenerator(player);
+            //generator.forceEncounter(1);
 
             var soundPlayer = new SoundPlayer
             {
                 SoundLocation = @"../../audio/mainMenu.wav"
             };
             Printer printer = new Printer();
-
-
             //Starts Game
+            PlaySound(soundPlayer, true);
             PrintMainMenu(printer, 1, soundPlayer);
         }
 
         
         static void GameLoop(SoundPlayer sound)
         {
+            
             while (true)
             {
                 Console.Clear();
                 Printer printer = new Printer();
-                PlaySound(sound, true);
+                
 
                 PrintMainMenu(printer, 3, sound);
                 Player thePlayer = new Player(ChooseName(printer));
@@ -155,10 +155,10 @@ namespace RPG_Project
             }
             
         }
-
+        
         static void PrintMainMenu(Printer printer, int menu, SoundPlayer soundPlayer)
         {
-
+            
             string[] TitleArtOne = new string[] { "██████╗░███████╗███╗░░░███╗░█████╗░███╗░░██╗  ██╗░░██╗██╗███╗░░██╗░██████╗░██╗░██████╗", "██╔══██╗██╔════╝████╗░████║██╔══██╗████╗░██║  ██║░██╔╝██║████╗░██║██╔════╝░╚█║██╔════╝",
                 "██║░░██║█████╗░░██╔████╔██║██║░░██║██╔██╗██║  █████═╝░██║██╔██╗██║██║░░██╗░░╚╝╚█████╗░", "██║░░██║██╔══╝░░██║╚██╔╝██║██║░░██║██║╚████║  ██╔═██╗░██║██║╚████║██║░░╚██╗░░░░╚═══██╗",
                 "██████╔╝███████╗██║░╚═╝░██║╚█████╔╝██║░╚███║  ██║░╚██╗██║██║░╚███║╚██████╔╝░░░██████╔╝", "╚═════╝░╚══════╝╚═╝░░░░░╚═╝░╚════╝░╚═╝░░╚══╝  ╚═╝░░╚═╝╚═╝╚═╝░░╚══╝░╚═════╝░░░░╚═════╝░" };
@@ -178,9 +178,9 @@ namespace RPG_Project
                 };
             string[] gameStartText = new string[] { "Hero... hero wake up!", "..." , "......", "..........", "Finally you're awake, you've been asleep far too long",
             "and the Demon King has taken over the realm.", "", "You must set off to defeat him and free this land!", "" ,""};
+            bool musicPlaying;
             printer.PrintArray(TitleArtOne, true, false, true);
             printer.PrintArray(TitleArtTwo, false, true, true);
-
             switch (menu)
             {
                 case 1:

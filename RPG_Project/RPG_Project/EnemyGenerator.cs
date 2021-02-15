@@ -182,36 +182,39 @@ namespace RPG_Project
                     for (int i = 0; i < enemies; i++)
                     {
                         GrassLandEnemiesEasy();
-                        int rnd = rand.Next(0, forestEnemy.Length);
-                        theEnemies[i] = forestEnemy[rnd];
+                        Console.WriteLine(grassLandEnemy[i].Name);
+                        int rnd = rand.Next(0, grassLandEnemy.Length);
+                        theEnemies[i] = grassLandEnemy[rnd];
+                        
                     }
                     break;
                 case 2:
                     for (int i = 0; i < enemies; i++)
                     {
                         GrassLandEnemiesMedium();
-                        int rnd = rand.Next(0, forestEnemy.Length);
-                        theEnemies[i] = forestEnemy[rnd];
+                        int rnd = rand.Next(0, grassLandEnemy.Length);
+                        theEnemies[i] = grassLandEnemy[rnd];
                     }
                     break;
                 case 3:
                     for (int i = 0; i < enemies; i++)
                     {
                         GrassLandEnemiesHard();
-                        int rnd = rand.Next(0, forestEnemy.Length);
-                        theEnemies[i] = forestEnemy[rnd];
+                        int rnd = rand.Next(0, grassLandEnemy.Length);
+                        theEnemies[i] = grassLandEnemy[rnd];
                     }
                     break;
                 case 4:
                     for (int i = 0; i < enemies; i++)
                     {
                         GrassLandEnemiesMax();
-                        int rnd = rand.Next(0, forestEnemy.Length);
-                        theEnemies[i] = forestEnemy[rnd];
+                        int rnd = rand.Next(0, grassLandEnemy.Length);
+                        theEnemies[i] = grassLandEnemy[rnd];
                     }
                     break;
             }
             //Start Battle
+            Console.WriteLine("Danger: "+danger);
             battleManager = new BattleManager(player, theEnemies, false);
             battleManager.BattleLoop();
         }
@@ -281,32 +284,32 @@ namespace RPG_Project
                     for (int i = 0; i < enemies; i++)
                     {
                         WaterEnemiesEasy();
-                        int rnd = rand.Next(0, forestEnemy.Length);
-                        theEnemies[i] = forestEnemy[rnd];
+                        int rnd = rand.Next(0, waterEnemy.Length);
+                        theEnemies[i] = waterEnemy[rnd];
                     }
                     break;
                 case 2:
                     for (int i = 0; i < enemies; i++)
                     {
                         WaterEnemiesMedium();
-                        int rnd = rand.Next(0, forestEnemy.Length);
-                        theEnemies[i] = forestEnemy[rnd];
+                        int rnd = rand.Next(0, waterEnemy.Length);
+                        theEnemies[i] = waterEnemy[rnd];
                     }
                     break;
                 case 3:
                     for (int i = 0; i < enemies; i++)
                     {
                         WaterEnemiesHard();
-                        int rnd = rand.Next(0, forestEnemy.Length);
-                        theEnemies[i] = forestEnemy[rnd];
+                        int rnd = rand.Next(0, waterEnemy.Length);
+                        theEnemies[i] = waterEnemy[rnd];
                     }
                     break;
                 case 4:
                     for (int i = 0; i < enemies; i++)
                     {
                         WaterEnemiesMax();
-                        int rnd = rand.Next(0, forestEnemy.Length);
-                        theEnemies[i] = forestEnemy[rnd];
+                        int rnd = rand.Next(0, waterEnemy.Length);
+                        theEnemies[i] = waterEnemy[rnd];
                     }
                     break;
             }
