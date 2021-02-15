@@ -124,7 +124,7 @@ namespace RPG_Project
                         printer.PrintSingle("You win!", true, false);
                         string rewards = string.Format("You gained {0} money!", moneyFromBattle);
                         printer.PrintSingle(rewards, false, false);
-                        rewards = string.Format("You gained {0} experience!", moneyFromBattle);
+                        rewards = string.Format("You gained {0} experience!", xpFromBattle);
                         printer.PrintSingle(rewards, false, true);
                         Console.ReadLine();
                         PlayMusic(false);
@@ -430,7 +430,7 @@ namespace RPG_Project
                     case 1:
                         if (abilities[0, 0] != "Locked" && player.Energy > 3)
                         {
-                            printer.PrintSingle("Using " + (Abilities)1 + " ability");
+                            printer.PrintSingle("Using " + (Abilities)2 + " ability");
                             player.UseAbility(1, enemy[0]);
                             player.Energy -= 3;
                             return;
@@ -441,7 +441,7 @@ namespace RPG_Project
                     case 2:
                         if (abilities[0, 1] != "Locked" && player.Energy > 4)
                         {
-                            printer.PrintSingle("Using " + (Abilities)2 + " ability");
+                            printer.PrintSingle("Using " + (Abilities)4 + " ability");
                             PlayerChoice(4);
                             ChooseAbilityTarget(playerChoice, 4);
                             return;
@@ -452,7 +452,7 @@ namespace RPG_Project
                     case 3:
                         if (abilities[0, 2] != "Locked")
                         {
-                            printer.PrintSingle("Using " + (Abilities)2 + " ability");
+                            printer.PrintSingle("Using " + (Abilities)6 + " ability");
                             PlayerChoice(4);
                             ChooseAbilityTarget(playerChoice, 4);
                             return;
@@ -463,7 +463,7 @@ namespace RPG_Project
                     case 4:
                         if (abilities[1, 0] != "Locked")
                         {
-                            printer.PrintSingle("Using " + (Abilities)2 + " ability");
+                            printer.PrintSingle("Using " + (Abilities)8 + " ability");
                             PlayerChoice(4);
                             ChooseAbilityTarget(playerChoice, 4);
                             return;
@@ -474,9 +474,9 @@ namespace RPG_Project
                     case 5:
                         if (abilities[1, 1] != "Locked")
                         {
-                            printer.PrintSingle("Using " + (Abilities)2 + " ability");
                             PlayerChoice(4);
-                            ChooseAbilityTarget(playerChoice, 4);
+                            ChooseAbilityTarget(playerChoice, 10);
+                            return;
                         }
                         PlayerChoice(2);
                         return;
@@ -484,9 +484,9 @@ namespace RPG_Project
                     case 6:
                         if (abilities[1, 2] != "Locked")
                         {
-                            printer.PrintSingle("Using " + (Abilities)2 + " ability");
+                            printer.PrintSingle("Using " + (Abilities)12 + " ability");
                             PlayerChoice(4);
-                            ChooseAbilityTarget(playerChoice, 4);
+                            ChooseAbilityTarget(playerChoice, 0);
                             return;
                         }
                         PlayerChoice(2);
@@ -509,74 +509,83 @@ namespace RPG_Project
         //TODO Something is not quite right here, often targets twice. need to look further into this.
         void ChooseAbilityTarget(int abilityChosen, int abilityCost)
         {
-            while (true)
+            bool choosing = true;
+            while (choosing)
             {
                 int playerChoice = ReturnChoice();
                 switch (playerChoice)
                 {
+
                     case 1:
                         //Check if enemy is dead and prevent attacking it again.
                         if (enemy[0].HasDied)
                         {
                             PlayerChoice(2);
-                            return;
                         }
-                        //Attack enemy
-                        enemy[0].TakeDamage(player.UseAbility(abilityChosen,enemy[0]));
-                        player.Energy -= abilityCost;
-                        //if the enemy dies increase battle rewards
-                        if (enemy[0].HasDied)
+                        else
                         {
-                            IncreaseBattleRewards(0);
+                            //Attack enemy
+                            enemy[0].TakeDamage(player.UseAbility(abilityChosen, enemy[0]));
+                            player.Energy -= abilityCost;
+                            //if the enemy dies increase battle rewards
+                            if (enemy[0].HasDied)
+                            {
+                                IncreaseBattleRewards(0);
+                            }
                         }
-                        return;
-
+                        choosing = false;
+                        break;
                     case 2:
                         if (enemy.Length <= 1)
                         {
                             UpdateBoard();
                             PlayerChoice();
-                            return;
+                            break;
                         }
                         if (enemy[1].HasDied)
                         {
-                            PlayerChoice(2);
-                            return;
+                            PlayerChoice(1);
                         }
-                        enemy[1].TakeDamage(player.UseAbility(abilityChosen, enemy[1]));
-                        player.Energy -= abilityCost;
-                        if (enemy[1].HasDied)
+                        else
                         {
-                            IncreaseBattleRewards(1);
+                            enemy[1].TakeDamage(player.UseAbility(abilityChosen, enemy[1]));
+                            player.Energy -= abilityCost;
+                            if (enemy[1].HasDied)
+                            {
+                                IncreaseBattleRewards(1);
+                            }
                         }
-                        return;
+                        choosing = false;
+                        break;
 
                     case 3:
                         if (enemy.Length <= 2)
                         {
                             UpdateBoard();
                             PlayerChoice();
-                            return;
+                            break;
                         }
                         if (enemy[2].HasDied)
                         {
-                            PlayerChoice(2);
-                            return;
+                            PlayerChoice(1);
                         }
-                        enemy[2].TakeDamage(player.UseAbility(abilityChosen, enemy[2]));
-                        player.Energy -= abilityCost;
-                        if (enemy[2].HasDied)
+                        else
                         {
-                            IncreaseBattleRewards(2);
+                            enemy[2].TakeDamage(player.UseAbility(abilityChosen, enemy[2]));
+                            player.Energy -= abilityCost;
+                            if (enemy[2].HasDied)
+                            {
+                                IncreaseBattleRewards(2);
+                            }
                         }
-                        return;
+                        break;
 
                     case 4:
                         if (enemy.Length <= 3)
                         {
                             UpdateBoard();
                             PlayerChoice();
-                            return;
+                            break;
                         }
                         break;
 

@@ -16,7 +16,7 @@ namespace RPG_Project
 
         //string[] template = new string[] {"HP: {0}\\{1} ","            ","{2}"};
         ///
-        /// GRASSLAND ENEMIES ART
+        /// GRASSLAND ENEMIES ART Easy/Medium
         /// 
         string[] spearmanArt = new string[] { "HP: {0}\\{1} ", "    o ^     ", "   /|\\|     ", "    | |     ", "   / \\|     ", "{2}" };
         string[] swordmanArt = new string[] { "HP: {0}\\{1} ", "    o │     ", "   /|\\┼     ", "    |       ", "    / \\      ", "{2}" };
@@ -50,18 +50,38 @@ namespace RPG_Project
         ///
         /// GRASSLAND ENEMIES - EASY
         ///
-        void GrassLandEnemies()
+        void GrassLandEnemiesEasy()
+        {
+            grassLandEnemy[0] = new BasicEnemy("  Spearman   ", 13, 2, 1, 5, 1000000, 1, spearmanArt); //Weak Spearman
+            grassLandEnemy[1] = new BasicEnemy("  Swordman   ", 10, 3, 1, 5, 1000000, 5, swordmanArt); //Weal Swordman;
+            grassLandEnemy[2] = new BasicEnemy("   Archer    ", 5, 6, 0, 5, 1000000, 5, archerArt); //Weal Archer;
+
+        }
+        void GrassLandEnemiesMedium()
         {
             grassLandEnemy[0] = new BasicEnemy("  Spearman   ", 13, 2, 1, 5, 1000, 1, spearmanArt); //Weak Spearman
             grassLandEnemy[1] = new BasicEnemy("  Swordman   ", 10, 3, 1, 5, 1000, 5, swordmanArt); //Weal Swordman;
             grassLandEnemy[2] = new BasicEnemy("   Archer    ", 5, 6, 0, 5, 1000, 5, archerArt); //Weal Archer;
 
         }
+        void GrassLandEnemiesHard()
+        {
+            grassLandEnemy[0] = new BasicEnemy("  Spearman   ", 13, 2, 1, 5, 1000, 1, spearmanArt); //Weak Spearman
+            grassLandEnemy[1] = new BasicEnemy("  Swordman   ", 10, 3, 1, 5, 1000, 5, swordmanArt); //Weal Swordman;
+            grassLandEnemy[2] = new BasicEnemy("   Archer    ", 5, 6, 0, 5, 1000, 5, archerArt); //Weal Archer;
 
+        }
+        void GrassLandEnemiesVeryhard()
+        {
+            grassLandEnemy[0] = new BasicEnemy("  Spearman   ", 13, 2, 1, 5, 1000, 1, spearmanArt); //Weak Spearman
+            grassLandEnemy[1] = new BasicEnemy("  Swordman   ", 10, 3, 1, 5, 1000, 5, swordmanArt); //Weal Swordman;
+            grassLandEnemy[2] = new BasicEnemy("   Archer    ", 5, 6, 0, 5, 1000, 5, archerArt); //Weal Archer;
+
+        }
         ///
         /// FOREST ENEMIES - EASY
         ///
-        void ForestEnemies()
+        void ForestEnemiesEasy()
         {
             forestEnemy[0] = new BasicEnemy("    Wolf     ", 10, 1, 0, 10, 10, 5, wolfArt); //Weak wolf
             forestEnemy[1] = new BasicEnemy("   Jaguar    ", 7, 3, 0, 20, 10, 5, jaguarArt); //Weal jaguar;
@@ -71,7 +91,7 @@ namespace RPG_Project
         ///
         /// WATER ENEMIES - EASY
         ///
-        void WaterEnemies()
+        void WaterEnemiesEasy()
         {
 
             waterEnemy[0] = new BasicEnemy("  Fat Frog   ",5,1,0,10,2,2, fatFrogArt); //Weak wolf
@@ -96,7 +116,7 @@ namespace RPG_Project
             BasicEnemy[] theEnemies = new BasicEnemy[enemies];
             for (int i = 0; i < enemies; i++)
             {
-                GrassLandEnemies();
+                GrassLandEnemiesEasy();
                 int rnd = rand.Next(0, grassLandEnemy.Length);
                 theEnemies[i] = grassLandEnemy[rnd];
             }
@@ -105,7 +125,24 @@ namespace RPG_Project
             battleManager = new BattleManager(player, theEnemies, false);
             battleManager.BattleLoop();
         }
+        public void MediumGrassLandsEncounter()
+        {
+            //Decide how many enemies
+            int enemies = rand.Next(1, 3);
 
+            //Choose which enemies
+            BasicEnemy[] theEnemies = new BasicEnemy[enemies];
+            for (int i = 0; i < enemies; i++)
+            {
+                GrassLandEnemiesEasy();
+                int rnd = rand.Next(0, grassLandEnemy.Length);
+                theEnemies[i] = grassLandEnemy[rnd];
+            }
+
+            //Start Battle
+            battleManager = new BattleManager(player, theEnemies, false);
+            battleManager.BattleLoop();
+        }
         ///
         /// FOREST ENCOUNTERS EASY
         ///
@@ -118,7 +155,7 @@ namespace RPG_Project
             BasicEnemy[] theEnemies = new BasicEnemy[enemies];
             for(int i=0; i < enemies; i++)
             {
-                ForestEnemies();
+                ForestEnemiesEasy();
                 int rnd = rand.Next(0, forestEnemy.Length);
                 theEnemies[i] = forestEnemy[rnd];
             }
@@ -143,7 +180,7 @@ namespace RPG_Project
             BasicEnemy[] theEnemies = new BasicEnemy[enemies];
             for (int i = 0; i < enemies; i++)
             {
-                WaterEnemies();
+                WaterEnemiesEasy();
                 int rnd = rand.Next(0, waterEnemy.Length);
                 theEnemies[i] = waterEnemy[rnd];
             }
@@ -170,7 +207,7 @@ namespace RPG_Project
             BasicEnemy[] theEnemies = new BasicEnemy[enemies];
             for (int i = 0; i < enemies; i++)
             {
-                GrassLandEnemies();
+                GrassLandEnemiesEasy();
                 int rnd = rand.Next(0, grassLandEnemy.Length);
                 theEnemies[i] = grassLandEnemy[rnd];
             }

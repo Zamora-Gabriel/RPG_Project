@@ -100,7 +100,7 @@ namespace RPG_Project
                 height++;
             }
             reader.Close();
-            reader = File.OpenText("D:/0_School Work/GitHub/Intro_To_Html5/New folder/map/test.txt");
+            reader = File.OpenText(@"../../map/map.txt");
             Console.WriteLine("Width: {0} Height {1}",Width,Height);
             mapData = new MapTile[height,width+2];
             Console.WriteLine("Propgating data");
@@ -179,14 +179,26 @@ namespace RPG_Project
         LevelCurve ReturnDangerLevel(int y, int x)
         {
             LevelCurve returningCurve = LevelCurve.No_Levels;
-            if(y <= 24 && x <= 39)
+            //Top left danger zone
+            if (y <= 18 && x <= 36)
             {
                 returningCurve = LevelCurve.Max_Level;
             }
-            else if(y <= 24 && x > 39)
+            //Top right zone
+            else if (y <= 24 && x > 36)
             {
                 returningCurve = LevelCurve.High_Level;
-            }else if(y > 24 && x < 33)
+            }
+            else if(y > 18 && y < 25 && x <= 36)
+            {
+                returningCurve = LevelCurve.Mid_Level;
+            }
+            //Mid-left zone
+            else if (y > 24 && y < 37 && x < 51)
+            {
+                returningCurve = LevelCurve.Mid_Level;
+            }
+            else if (y >= 37 && x < 35)
             {
                 returningCurve = LevelCurve.Mid_Level;
             }
@@ -206,8 +218,8 @@ namespace RPG_Project
                     mapData[y, x].PrintSelf();
                 }
                 Console.Write("\n");
-
             }
+            Console.ReadLine();
         }
 
         public void UpdatePlayerMap()

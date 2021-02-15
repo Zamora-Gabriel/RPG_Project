@@ -29,8 +29,6 @@ namespace RPG_Project
         {
 
             this.name = name;
-            expValue = 5;
-            moneyValue = 5;
             //These are all temp and need to be removed eventually
             maxHealth = 10;
             health = 5;

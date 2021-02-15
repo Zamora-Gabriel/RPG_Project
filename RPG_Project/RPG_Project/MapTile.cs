@@ -63,6 +63,53 @@ namespace RPG_Project
 
         public void PrintSelf()
         {
+            //switch (levelRange)
+            //{
+            //    case LevelCurve.No_Levels:
+            //        Console.ForegroundColor = ConsoleColor.DarkGray;
+            //        Console.Write("N");
+            //        break;
+            //    case LevelCurve.Low_Level:
+            //        if (mapType == MapTiles.Water)
+            //        {
+            //            Console.ForegroundColor = ConsoleColor.Blue;
+            //            Console.Write("L");
+            //            break;
+            //        }
+            //        Console.ForegroundColor = ConsoleColor.Green;
+            //        Console.Write("L");
+            //        break;
+            //    case LevelCurve.Mid_Level:
+            //        if (mapType == MapTiles.Water)
+            //        {
+            //            Console.ForegroundColor = ConsoleColor.Blue;
+            //            Console.Write("M");
+            //            break;
+            //        }
+            //        Console.ForegroundColor = ConsoleColor.Yellow;
+            //        Console.Write("M");
+            //        break;
+            //    case LevelCurve.High_Level:
+            //        if (mapType == MapTiles.Water)
+            //        {
+            //            Console.ForegroundColor = ConsoleColor.Blue;
+            //            Console.Write("H");
+            //            break;
+            //        }
+            //        Console.ForegroundColor = ConsoleColor.Red;
+            //        Console.Write("H");
+            //        break;
+            //    case LevelCurve.Max_Level:
+            //        if (mapType == MapTiles.Water)
+            //        {
+            //            Console.ForegroundColor = ConsoleColor.Blue;
+            //            Console.Write("M");
+            //            break;
+            //        }
+            //        Console.ForegroundColor = ConsoleColor.DarkRed;
+            //        Console.Write("M");
+            //        break;
+            //}
             switch (mapType)
             {
                 case MapTiles.GrassLand:
