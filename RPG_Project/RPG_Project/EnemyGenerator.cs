@@ -214,7 +214,6 @@ namespace RPG_Project
                     break;
             }
             //Start Battle
-            Console.WriteLine("Danger: "+danger);
             battleManager = new BattleManager(player, theEnemies, false);
             battleManager.BattleLoop();
         }
