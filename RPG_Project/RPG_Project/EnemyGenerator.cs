@@ -330,6 +330,8 @@ namespace RPG_Project
         //FOR TESTING ONLY
         public void forceEncounter(int enemies)
         {
+            Console.WriteLine("Forest encounter");
+            Console.ReadLine();
             BasicEnemy[] theEnemies = new BasicEnemy[enemies];
             for (int i = 0; i < enemies; i++)
             {

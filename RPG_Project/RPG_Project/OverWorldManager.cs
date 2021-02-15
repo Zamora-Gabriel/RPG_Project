@@ -679,35 +679,22 @@ namespace RPG_Project
         void GrassLandEncounterGen(int danger)
         {
             EnemyGenerator enemylist = new EnemyGenerator(player);
-            switch (danger)
-            {
-                case 1:
-                    PlayMusic(false);
-                    enemylist.GrassLandEncounter(danger);
-                    break;
-            }
+            PlayMusic(false);
+            enemylist.GrassLandEncounter(danger);
         }
         void ForestEncounterGen(int danger)
         {
             EnemyGenerator enemyGenerator = new EnemyGenerator(player);
-            switch (danger)
-            {
-                case 1:
-                    PlayMusic(false);
-                    enemyGenerator.ForestEncounter(danger);
-                    break;
-            }
+            PlayMusic(false);
+            enemyGenerator.ForestEncounter(danger);
+                 
+
         }
         void WaterEncounterGen(int danger)
         {
             EnemyGenerator enemyGenerator = new EnemyGenerator(player);
-            switch (danger)
-            {
-                case 1:
-                    PlayMusic(false);
-                    enemyGenerator.WaterEncounter(danger);
-                    break;
-            }
+            PlayMusic(false);
+            enemyGenerator.WaterEncounter(danger);
         }
 
 
