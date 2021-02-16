@@ -74,30 +74,30 @@ namespace RPG_Project
         ///
         void GrassLandEnemiesEasy()
         {
-            grassLandEnemy[0] = new BasicEnemy("  Spearman   ", 13, 2, 1, 5, 1000000, 1000, spearmanArt); //Weak Spearman
-            grassLandEnemy[1] = new BasicEnemy("  Swordman   ", 10, 3, 1, 5, 1000000, 1000, swordmanArt); //Weal Swordman;
-            grassLandEnemy[2] = new BasicEnemy("   Archer    ", 5, 6, 0, 5, 1000000, 1000, archerArt); //Weal Archer;
+            grassLandEnemy[0] = new BasicEnemy("  Spearman   ", 13, 2, 1, 5, 10, 5, spearmanArt); //Weak Spearman
+            grassLandEnemy[1] = new BasicEnemy("  Swordman   ", 10, 3, 1, 5, 10, 5, swordmanArt); //Weak Swordman;
+            grassLandEnemy[2] = new BasicEnemy("   Archer    ", 5, 6, 0, 5, 5, 5, archerArt); //Weak Archer;
 
         }
         void GrassLandEnemiesMedium()
         {
-            grassLandEnemy[0] = new BasicEnemy("  Spearman   ", 13, 2, 1, 5, 1000000, 1000, spearmanArt); //Weak Spearman
-            grassLandEnemy[1] = new BasicEnemy("  Swordman   ", 10, 3, 1, 5, 1000000, 1000, swordmanArt); //Weal Swordman;
-            grassLandEnemy[2] = new BasicEnemy("   Archer    ", 5, 6, 0, 5, 1000000, 1000, archerArt); //Weal Archer;
+            grassLandEnemy[0] = new BasicEnemy("  Spearman   ", 20, 8, 5, 15, 15, 10, spearmanArt); //Mid Spearman
+            grassLandEnemy[1] = new BasicEnemy("  Swordman   ", 18, 10, 6, 10, 15, 10, swordmanArt); //Mid Swordman;
+            grassLandEnemy[2] = new BasicEnemy("   Archer    ", 15, 12, 2, 15, 10, 10, archerArt); //Mid Archer;
 
         }
         void GrassLandEnemiesHard()
         {
-            grassLandEnemy[0] = new BasicEnemy("Sword_Master ", 13, 2, 1, 5, 1000000, 1000, swordMasterArt); //Weak Spearman
-            grassLandEnemy[1] = new BasicEnemy("   Giant    ", 10, 3, 1, 5, 1000000, 1000, giantArt); //Weal Swordman;
-            grassLandEnemy[2] = new BasicEnemy("  Wizard    ", 5, 6, 0, 5, 1000000, 1000, wizardArt); //Weal Archer;
+            grassLandEnemy[0] = new BasicEnemy("Sword_Master ", 25, 18, 6, 20, 20, 20, swordMasterArt); //Hard Spearman
+            grassLandEnemy[1] = new BasicEnemy("   Giant    ", 30, 14, 8, 20, 30, 15, giantArt); //Hard Swordman;
+            grassLandEnemy[2] = new BasicEnemy("  Wizard    ", 30, 16, 5, 25, 20, 20, wizardArt); //Hard Archer;
 
         }
         void GrassLandEnemiesMax()
         {
-            grassLandEnemy[0] = new BasicEnemy("Sword_Master ", 13, 2, 1, 5, 1000000, 1000, swordMasterArt); //Weak Spearman
-            grassLandEnemy[1] = new BasicEnemy("   Giant    ", 10, 3, 1, 5, 1000000, 1000, giantArt); //Weal Swordman;
-            grassLandEnemy[2] = new BasicEnemy("  Wizard    ", 5, 6, 0, 5, 1000000, 1000, wizardArt); //Weal Archer;
+            grassLandEnemy[0] = new BasicEnemy("Sword_Master ", 45, 22, 10, 25, 40, 25, swordMasterArt); //S.Hard Spearman
+            grassLandEnemy[1] = new BasicEnemy("   Giant    ", 50, 18, 12, 25, 40, 25, giantArt); //S.Hard Swordman;
+            grassLandEnemy[2] = new BasicEnemy("  Wizard    ", 40, 20, 8, 30, 40, 25, wizardArt); //S.Hard Archer;
 
         }
 
@@ -106,28 +106,28 @@ namespace RPG_Project
         ///
         void ForestEnemiesEasy()
         {
-            forestEnemy[0] = new BasicEnemy("    Wolf     ", 10, 1, 0, 10, 10, 5, wolfArt); 
-            forestEnemy[1] = new BasicEnemy("   Jaguar    ", 7, 3, 0, 20, 10, 5, jaguarArt);
-            forestEnemy[2] = new BasicEnemy("    Snake    ", 5, 2, 0, 10, 5, 3, snakeArt); 
+            forestEnemy[0] = new BasicEnemy("    Wolf     ", 10, 4, 1, 5, 10, 5, wolfArt); 
+            forestEnemy[1] = new BasicEnemy("   Jaguar    ", 7, 3, 0, 10, 10, 5, jaguarArt);
+            forestEnemy[2] = new BasicEnemy("    Snake    ", 5, 2, 0, 5, 5, 5, snakeArt); 
         }
         void ForestEnemiesMedium()
         {
-            forestEnemy[0] = new BasicEnemy("    Wolf     ", 10, 1, 0, 10, 10, 5, wolfArt); 
-            forestEnemy[1] = new BasicEnemy("   Jaguar    ", 7, 3, 0, 20, 10, 5, jaguarArt); 
-            forestEnemy[2] = new BasicEnemy("    Snake    ", 5, 2, 0, 10, 5, 3, snakeArt); 
+            forestEnemy[0] = new BasicEnemy("    Wolf     ", 22, 10, 5, 15, 15, 10, wolfArt); 
+            forestEnemy[1] = new BasicEnemy("   Jaguar    ", 19, 8, 2, 20, 15, 10, jaguarArt); 
+            forestEnemy[2] = new BasicEnemy("    Snake    ", 16, 8, 2, 15, 10, 10, snakeArt); 
 
         }
         void ForestEnemiesHard()
         {
-            forestEnemy[0] = new BasicEnemy("    Bird     ", 10, 1, 0, 10, 10, 5, birdArt);
-            forestEnemy[1] = new BasicEnemy("   Shrub     ", 7, 3, 0, 20, 10, 5, shrubArt);
-            forestEnemy[2] = new BasicEnemy("  Treeguard  ", 5, 2, 0, 10, 5, 3, treeguardArt); 
+            forestEnemy[0] = new BasicEnemy("    Bird     ", 20, 18, 5, 25, 30, 15, birdArt);
+            forestEnemy[1] = new BasicEnemy("   Shrub     ", 25, 16, 5, 25, 20, 20, shrubArt);
+            forestEnemy[2] = new BasicEnemy("  Treeguard  ", 30, 16, 8, 15, 20, 20, treeguardArt); 
         }
         void ForestEnemiesMax()
         {
-            forestEnemy[0] = new BasicEnemy("    Bird     ", 10, 1, 0, 10, 10, 5, birdArt);
-            forestEnemy[1] = new BasicEnemy("   Shrub     ", 7, 3, 0, 20, 10, 5, shrubArt);
-            forestEnemy[2] = new BasicEnemy("  Treeguard  ", 5, 2, 0, 10, 5, 3, treeguardArt);
+            forestEnemy[0] = new BasicEnemy("    Bird     ", 40, 22, 8, 25, 30, 25, birdArt);
+            forestEnemy[1] = new BasicEnemy("   Shrub     ", 45, 18, 8, 25, 30, 25, shrubArt);
+            forestEnemy[2] = new BasicEnemy("  Treeguard  ", 50, 18, 12, 30, 40, 25, treeguardArt);
         }
         ///
         /// WATER ENEMIES - EASY
@@ -135,36 +135,36 @@ namespace RPG_Project
         void WaterEnemiesEasy()
         {
 
-            waterEnemy[0] = new BasicEnemy("  Fat Frog   ",5,1,0,10,2,2, fatFrogArt);
-            waterEnemy[1] = new BasicEnemy("    Fish     ",5,4,0,25,5,5, fishArt);
-            waterEnemy[2] = new BasicEnemy("   Lobster   ",15,2,4,10,10,5, lobsterArt); 
+            waterEnemy[0] = new BasicEnemy("  Fat Frog   ",10,6,0,5,5,5, fatFrogArt);
+            waterEnemy[1] = new BasicEnemy("    Fish     ",5,3,0,10,10,5, fishArt);
+            waterEnemy[2] = new BasicEnemy("   Lobster   ",15,2,4,5,10,5, lobsterArt); 
         }
         void WaterEnemiesMedium()
         {
 
-            waterEnemy[0] = new BasicEnemy("  Fat Frog   ", 5, 1, 0, 10, 2, 2, fatFrogArt); 
-            waterEnemy[1] = new BasicEnemy("    Fish     ", 5, 4, 0, 25, 5, 5, fishArt); 
-            waterEnemy[2] = new BasicEnemy("   Lobster   ", 15, 2, 4, 10, 10, 5, lobsterArt); 
+            waterEnemy[0] = new BasicEnemy("  Fat Frog   ", 18, 12, 4, 15, 10, 10, fatFrogArt); 
+            waterEnemy[1] = new BasicEnemy("    Fish     ", 15, 10, 4, 20, 15, 10, fishArt); 
+            waterEnemy[2] = new BasicEnemy("   Lobster   ", 25, 8, 6, 15, 15, 10, lobsterArt); 
         }
         void WaterEnemiesHard()
         {
 
-            waterEnemy[0] = new BasicEnemy("    Squid    ", 5, 1, 0, 10, 2, 2, squidArt); 
-            waterEnemy[1] = new BasicEnemy("    Crab     ", 5, 4, 0, 25, 5, 5, crabArt); 
-            waterEnemy[2] = new BasicEnemy("  Giant_Bug  ", 15, 2, 4, 10, 10, 5, waterbugArt); 
+            waterEnemy[0] = new BasicEnemy("    Squid    ", 20, 16, 4, 25, 30, 15, squidArt); 
+            waterEnemy[1] = new BasicEnemy("    Crab     ", 35, 4, 8, 20, 20, 20, crabArt); 
+            waterEnemy[2] = new BasicEnemy("  Giant_Bug  ", 25, 2, 4, 25, 20, 20, waterbugArt); 
         }
         void WaterEnemiesMax()
         {
 
-            waterEnemy[0] = new BasicEnemy("    Squid    ", 5, 1, 0, 10, 2, 2, squidArt);
-            waterEnemy[1] = new BasicEnemy("    Crab     ", 5, 4, 0, 25, 5, 5, crabArt);
-            waterEnemy[2] = new BasicEnemy("  Giant_Bug  ", 15, 2, 4, 10, 10, 5, waterbugArt);
+            waterEnemy[0] = new BasicEnemy("    Squid    ", 40, 20, 8, 30, 30, 25, squidArt);
+            waterEnemy[1] = new BasicEnemy("    Crab     ", 60, 16, 14, 25, 40, 25, crabArt);
+            waterEnemy[2] = new BasicEnemy("  Giant_Bug  ", 30, 22, 5, 30, 30, 25, waterbugArt);
         }
 
         //BOSS
         void Boss()
         {
-            boss = new BasicEnemy("Demon Lord", 10, 50, 25, 0, 1000, 1000, demonLordArt);
+            boss = new BasicEnemy("Demon Lord", 70, 25, 15, 35, 100, 1000, demonLordArt);
         }
 
         /// <summary>

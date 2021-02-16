@@ -85,42 +85,42 @@ namespace RPG_Project
                 case "Wooden":
                     cost = WOODEN_COST;
                     AtkBonus = 1;
-                    DefBonus = 1;
+                    DefBonus = 0;
                     SpdBonus = 1;
                     break;
 
                 case "Bronze":
                     cost = BRONZE_COST;
                     AtkBonus = 3;
-                    DefBonus = 3;
+                    DefBonus = 1;
                     SpdBonus = 3;
                     break;
 
                 case "Steel":
                     cost = STEEL_COST;
                     AtkBonus = 6;
-                    DefBonus = 6;
+                    DefBonus = 2;
                     SpdBonus = 6;
                     break;
 
                 case "Celestial":
                     cost = LEGEND_COST;
                     AtkBonus = 8;
-                    DefBonus = 8;
+                    DefBonus = 3;
                     SpdBonus = 10;
                     break;
 
                 case "Titan":
                     cost = LEGEND_COST;
                     AtkBonus = 8;
-                    DefBonus = 10;
+                    DefBonus = 6;
                     SpdBonus = 8;
                     break;
 
                 case "Dragon":
                     cost = LEGEND_COST;
                     AtkBonus = 10;
-                    DefBonus = 8;
+                    DefBonus = 3;
                     SpdBonus = 8;
                     break;
 

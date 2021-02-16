@@ -709,7 +709,7 @@ namespace RPG_Project
                         return;
                     //Abilitiy
                     case 2:
-                        //TODO ADD ABILITIES
+                        //ABILITIES
                         UpdateBoard();
                         PlayerChoice();
                         return;

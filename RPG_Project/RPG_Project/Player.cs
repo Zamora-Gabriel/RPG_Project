@@ -21,7 +21,7 @@ namespace RPG_Project
         EnergyBlast = 12 // --- Uses all remaining enemy doing 2 damage for each energy expended
     }
 
-    //Maybe: Energy/Skills
+
     class Player
     {
         /***Variables***/
@@ -259,7 +259,10 @@ namespace RPG_Project
             Energy = maxEnergy;
             Attack++;
             Defense++;
-            Speed++;
+            if(Level%4 == 0)
+            {
+                Speed+= 5;
+            }
             printer.PrintSingle(string.Format("Congratulations {0}! Now you're level {1}", Name, Level));
         }
 

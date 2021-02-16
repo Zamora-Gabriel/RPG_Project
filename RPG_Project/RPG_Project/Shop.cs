@@ -30,9 +30,9 @@ namespace RPG_Project
     class Shop
     {
         /***Constants***/
-        const int BRONZE_LEVEL_LOCK = 3;
-        const int STEEL_LEVEL_LOCK = 6;
-        const int LEGEND_LEVEL_LOCK = 10;
+        const int BRONZE_LEVEL_LOCK = 5;
+        const int STEEL_LEVEL_LOCK = 8;
+        const int LEGEND_LEVEL_LOCK = 12;
 
         /***Variables***/
         List<Weapon> weaponList;
